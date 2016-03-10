@@ -1,0 +1,2 @@
+# MeanStack-Template
+MeanStack Template
