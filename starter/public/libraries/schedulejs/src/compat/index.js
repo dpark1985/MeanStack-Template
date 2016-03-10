@@ -1,2 +1,0 @@
-import "isarray";
-import "indexof";
