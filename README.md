@@ -26,9 +26,22 @@ Folder Structure
 |-bin
 |-node_modules
 |-public
+  |-images
+  |-javascripts
+  |-libraries
+  |-stylesheets
+  |-templates
 |-routes
+  |-utilities
+    auth.js
+  customModel.js
+  customView.js
 |-views
+  error.ejs
+  index.ejs
+  login.ejs
+  register.ejs
 app.js
 package.json
 ```
-- [ ] this is an incomplete item
+
