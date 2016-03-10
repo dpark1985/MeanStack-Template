@@ -21,6 +21,12 @@ Before starting the server, redis & mongoDB must be running
 * `mongod`
 
 Folder Structure
-- starter
---- bin
+-starter
+|-bin
+|-node_modules
+|-public
+|-routes
+|-views
+app.js
+package.json
 
