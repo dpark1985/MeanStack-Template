@@ -17,7 +17,8 @@ To start the server
 `npm start`
 
 Before starting the server, redis & mongoDB must be running
-`redis-server`
-`mongod`
- 
+* `redis-server`
+* `mongod`
+
+
 
