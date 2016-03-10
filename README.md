@@ -21,6 +21,7 @@ Before starting the server, redis & mongoDB must be running
 * `mongod`
 
 Folder Structure
+```
 -starter
 |-bin
 |-node_modules
@@ -29,5 +30,5 @@ Folder Structure
 |-views
 app.js
 package.json
-
+```
 - [ ] this is an incomplete item
