@@ -13,6 +13,11 @@ General purpose basic template for mean stack. The following npms are used to bu
 6. redis
 7. connect-redis
 
+To start the server
+`npm start`
 
+Before starting the server, redis & mongoDB must be running
+`redis-server`
+`mongod`
  
 
