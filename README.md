@@ -28,9 +28,19 @@ Folder Structure
 |-public
   |-images
   |-javascripts
+    |-controllers
+      commonCtrl.js
+      indexCtrl.js
+      logCtrl.js
   |-libraries
+    |-angular
+    |-bootstrap
+    |-font-awesome
+    |-jquery
   |-stylesheets
   |-templates
+    |-common
+      navBar.html
 |-routes
   |-utilities
     auth.js
