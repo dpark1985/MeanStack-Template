@@ -58,6 +58,12 @@ exports.active = function(everyauth, db, crypto){
 				errors.push('이미 등록된 아이디 입니다.');	
 			} 
 			if(errors.length){
+				/************************************************************************
+				*   promise.fulfill(errors);           		                        	*
+				*-----------------------------------------------------------------------*
+				*   This function is called when user input is incorrect.				*
+				*   The parameter [errors] is an array of error messages				*
+				************************************************************************/				
 				promise.fulfill(errors);
 			} else {
 				var cryptoPassword = 'MEANSTACK';
@@ -66,6 +72,13 @@ exports.active = function(everyauth, db, crypto){
 				var cipheredOut = cipher.final('base64');
 				userAttribute.password = cipheredOut;
 
+
+				/************************************************************************
+				*   promise.fulfill(userAttribute);                                   	*
+				*-----------------------------------------------------------------------*
+				*   This function is called when user input is correct and done		  	*
+				*   validation. This is called only once.								*
+				************************************************************************/
 				promise.fulfill(userAttribute);
 			}
 		});

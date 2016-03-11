@@ -12,13 +12,13 @@ var expressSession = require('express-session');
 var RedisStore = require('connect-redis')(expressSession);
 
 
-/**************    Route COnfiguration   ******************************/
+/*****************    Route Configuration   ***************************/
 var views = require('./routes/customView')
 var models = require('./routes/customModel');
 /**********************************************************************/
 
 
-/**************    EveryAuth COnfiguration   **************************/
+/*****************    EveryAuth COnfiguration   ***********************/
 var customAuth = require('./routes/utilities/auth'); 
 /**********************************************************************/
 
@@ -35,6 +35,10 @@ var sessionStore = new RedisStore(options);
 *   MONGODB                                                           *
 *     baseURL = server address / database name (example.com/mydb)     *
 *     collections = list of collections                               *
+*                                                                     *
+*   Database server must be located outside of the hosting server for *
+*   the security reason. Otherwise, database server may have great    *
+*   chance being exposed to outworld.                                 *
 **********************************************************************/
 var baseURL = 'localhost/testing';
 var collections = ['users'];
@@ -45,7 +49,7 @@ var db = mongojs(baseURL, collections);
 var app = express();
 
 
-/**************    EveryAuth Configuration   **************************/
+/*****************    EveryAuth Configuration   ***********************/
 customAuth.active(everyauth, db, crypto);
 /**********************************************************************/
 
@@ -74,7 +78,7 @@ app.use(everyauth.middleware(app));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-/**************************     Database     **************************/
+/*****************    Database     ************************************/
 app.use(function (req, res, next) {
     req.db = db;
     next();
