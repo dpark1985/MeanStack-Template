@@ -3,7 +3,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* /modal/ */
+/* /model/ */
 router.get('/', function(req, res, next) {
 
 });
