@@ -23,11 +23,11 @@
 
 <body>
     <script>
-        var isLoggedIn = <%= everyauth.loggedIn %>
         <% if(everyauth.loggedIn) { %>
             window.location = '/';
         <% } %>
     </script>
+    
     <div ng-app="log" ng-controller="registCtrl">
         <nav-custom></nav-custom>
     </div>
@@ -57,9 +57,10 @@
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
-            
+
         </div><!-- /.row -->
     </div><!-- /.container -->
+
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

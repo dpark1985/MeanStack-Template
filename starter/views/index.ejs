@@ -22,21 +22,21 @@
 </head>
 
 <body ng-controller="indexCtrl">
-    <script>
-        var isLoggedIn = <%= everyauth.loggedIn %>;
-        <% if(everyauth.loggedIn) { %>
-            var userID = "<%= userID %>";
-        <% } %>
-    </script>
+
 	<nav-custom></nav-custom>
 
     <div class="container">
     	<div class="row">
-            <button ng-if="!isLoggedIn" type="button" class="btn btn-primary" data-toggle="modal" data-target=".modal-login">Login</button>
-            <button ng-if="isLoggedIn" type="button" class="btn btn-primary" ng-click="doLogout()">Logout</button>
+
+            <% if(everyauth.loggedIn) { %>
+            <button type="button" class="btn btn-primary" ng-click="toLogout()">Logout</button>
+            <% } else { %>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modal-login">Login</button>
+            <% } %>
+
+             <%= everyauth.loggedIn %>
+             <%= everyauth.user %>
     	</div>
-
-
     </div>
 
 
@@ -83,6 +83,14 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
+
+    <script>
+        var isLoggedIn = <%= everyauth.loggedIn %>;
+        <% if(everyauth.loggedIn) { %>
+        var userID = "<%= userID %>";
+        <% } %>
+    </script>
 
 
 

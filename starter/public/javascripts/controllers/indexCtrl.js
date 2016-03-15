@@ -15,6 +15,10 @@ angular.module('index', ['common'])
 		window.location = "/register";
 	};
 
+	$scope.toLogout = function(){
+		window.location = "/logout";
+	};
+
 	$scope.doLogin = function(){
 		$('#modal-login').modal('hide');
 		var data = {
@@ -34,14 +38,7 @@ angular.module('index', ['common'])
 		});
 	};
 
-	$scope.doLogout = function(){
-		$http.get('/logout')
-		.then(function successCallback(res){
-			window.location = '/';
-		}, function errorCallback(res){
-			console.log(res)
-		});
-	};
+	
 
 
 }]);

@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 var everyauth = require('everyauth');
 var mongojs = require('mongojs');
 var crypto = require('crypto');
-var redis = require('redis');
 var expressSession = require('express-session');
-var RedisStore = require('connect-redis')(expressSession);
+//var redis = require('redis');
+//var RedisStore = require('connect-redis')(expressSession);
 
 
 /*****************    Route Configuration   ***************************/
@@ -24,10 +24,20 @@ var customAuth = require('./routes/utilities/auth');
 
 
 /*****************    SessionStore Redis   ****************************/
+/*
 var client = redis.createClient();
-process.on('exit', function(){ client.quit(); });
-var options = { client: client }
+process.on('exit', function(){ 
+  client.quit(); 
+});
+*/
+
+/*
+var options = { 
+  client: client 
+}
 var sessionStore = new RedisStore(options);
+*/
+
 /**********************************************************************/
 
 
@@ -68,9 +78,8 @@ app.use(expressSession({
     secret: 'meanstack',
     name: 'meanstack',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
-
 
 /*****************    EveryAuth Middleware   **************************/
 app.use(everyauth.middleware(app));
@@ -84,7 +93,6 @@ app.use(function (req, res, next) {
     next();
 });
 /**********************************************************************/
-
 
 
 
@@ -102,6 +110,7 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
+// if (app.get('env') === 'production') {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
