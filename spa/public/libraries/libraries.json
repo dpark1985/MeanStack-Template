@@ -1,0 +1,6 @@
+{
+	"bootstrap" : "~3.4.4",
+	"angular" : "~1.5.2",
+	"jquery" : "~1.11.3",
+	"font-awsome" : "~4.5.0"
+}
