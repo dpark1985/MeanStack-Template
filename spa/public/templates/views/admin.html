@@ -1,123 +1,41 @@
 
 <div class="row">
+	<h1>Admin Page</h1>
+
+</div>
+<div class="row">
 	<div class="col-md-3">
 		<nav id="adminSideNav">
-			<ul class="nav nav-pills nav-stacked">
-				<li><a ng-href="#title">Title</a></li>
-				<li><a ng-href="#favicon">favicon</a></li>
-				<li><a ng-href="#title2">Title</a></li>
-				<li><a ng-href="#favicon2">favicon</a></li>
-				<li><a ng-href="#title3">Title</a></li>
-				<li><a ng-href="#favicon3">favicon</a></li>
-				<li><a ng-href="#title4">Title</a></li>
-				<li><a ng-href="#favicon4">favicon</a></li>
+			<ul id="adminTab" class="nav nav-pills nav-stacked" role="tablist">
+				<li><a href="#title" role="tab" data-toggle="tab">Title</a></li>
+				<li><a href="#header" role="tab" data-toggle="tab">Header</a></li>
 			</ul>
 		</nav>
 	</div>
 
 	<div class="col-md-9">
-		<h1>Admin Page</h1>
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade" id="title">
+				<h5>Change title block</h5>
+				<form ng-submit="admin.editTitle()">
+					<div class="form-group">
+						<label for="titleText">Title</label>
+						<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
+					</div>
 
-		<div id="title" style="margin-bottom: 20px;">
-			<h5>Change title block</h5>
-			<form ng-submit="admin.editTitle()">
-				<div class="form-group">
-					<label for="titleText">Title</label>
-					<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
-				</div>
+					<button type="submit" class="btn btn-default">Edit</button>
+				</form>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="header">
+				<h5>Header Code</h5>
 
-				<button type="submit" class="btn btn-default">Edit</button>
-			</form>
-		</div>
+			</div>
 
-		<div id="favicon" style="margin-bottom: 20px;">
-
-			<h5>favicon</h5>
-			<form ng-submit="admin.editTitle()">
-				<div class="form-group">
-					<label for="titleText">Title</label>
-					<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
-				</div>
-
-				<button type="submit" class="btn btn-default">Edit</button>
-			</form>
-		</div>
-
-		<div id="title2" style="margin-bottom: 20px;">
-			<h5>Change title block</h5>
-			<form ng-submit="admin.editTitle()">
-				<div class="form-group">
-					<label for="titleText">Title</label>
-					<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
-				</div>
-
-				<button type="submit" class="btn btn-default">Edit</button>
-			</form>
-		</div>
-
-		<div id="favicon2" style="margin-bottom: 20px;">
-
-			<h5>favicon</h5>
-			<form ng-submit="admin.editTitle()">
-				<div class="form-group">
-					<label for="titleText">Title</label>
-					<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
-				</div>
-
-				<button type="submit" class="btn btn-default">Edit</button>
-			</form>
-		</div>
-
-		<div id="title3" style="margin-bottom: 20px;">
-			<h5>Change title block</h5>
-			<form ng-submit="admin.editTitle()">
-				<div class="form-group">
-					<label for="titleText">Title</label>
-					<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
-				</div>
-
-				<button type="submit" class="btn btn-default">Edit</button>
-			</form>
-		</div>
-
-		<div id="favicon3" style="margin-bottom: 20px;">
-
-			<h5>favicon</h5>
-			<form ng-submit="admin.editTitle()">
-				<div class="form-group">
-					<label for="titleText">Title</label>
-					<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
-				</div>
-
-				<button type="submit" class="btn btn-default">Edit</button>
-			</form>
 		</div>
 
 
-		<div id="title4" style="margin-bottom: 20px;">
-			<h5>Change title block</h5>
-			<form ng-submit="admin.editTitle()">
-				<div class="form-group">
-					<label for="titleText">Title</label>
-					<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
-				</div>
 
-				<button type="submit" class="btn btn-default">Edit</button>
-			</form>
-		</div>
-
-		<div id="favicon4" style="margin-bottom: 20px;">
-
-			<h5>favicon</h5>
-			<form ng-submit="admin.editTitle()">
-				<div class="form-group">
-					<label for="titleText">Title</label>
-					<input type="text" class="form-control" id="titleText" placeholder="{{admin.titleText}}" ng-model="admin.inputData.title">
-				</div>
-
-				<button type="submit" class="btn btn-default">Edit</button>
-			</form>
-		</div>
+		
 
 
 

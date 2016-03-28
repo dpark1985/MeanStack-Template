@@ -1,10 +1,11 @@
-<h1>Hello, world!</h1>
+<h1>{{title}}</h1>
 
 
 <a ng-if="!userData.loggedIn" class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#modal-login">Login</a>
 <a ng-if="userData.loggedIn" class="btn btn-default" href="/#" ng-click="logout()" role="button">Logout</a>
 
 <a class="btn btn-default" href="testing" role="button">testing</a>
+
 
 
 <div class="modal fade" id="modal-warning" tabindex="-1" role="dialog">

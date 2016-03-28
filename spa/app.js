@@ -13,6 +13,7 @@ var crypto          = require('crypto');
 // import routes
 var views = require('./routes/customView');
 var models = require('./routes/customModel');
+var controlls = require('./routes/customControll');
 
 // import custom module
 var customAuth = require('./routes/utilities/auth');
@@ -61,6 +62,8 @@ app.use(function (req, res, next) {
     next();
 });
 
+
+app.use('/ctrls', controlls);
 app.use('/models', models);
 app.use('/', views);
 

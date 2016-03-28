@@ -9,7 +9,7 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 
 }])
 
-.controller('indexCtrl', ['$http', '$scope', '$SPAaccount', function ($http, $scope, $SPAaccount) {
+.controller('indexCtrl', ['$http', '$scope', '$SPAaccount', '$location', function ($http, $scope, $SPAaccount, $location) {
 
 
 	this.doLogin = function(){
@@ -40,7 +40,7 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 
 }])
 
-.controller('logCtrl', ['$http', '$location', '$scope', '$SPAaccount', function ($http, $location, $scope, $SPAaccount) {
+.controller('logCtrl', ['$http', '$location', '$scope', '$window', '$SPAaccount', function ($http, $location, $scope, $window, $SPAaccount) {
 
 	$SPAaccount.isUserLoggedIn().then(function (res){
 		if(res.data.userID !== null){
@@ -68,7 +68,7 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 			if($scope.errMsgs.length > 0){
 				$('#modal-warning').modal('show');
 			} else {
-				window.location = '/';
+				$window.location = '/';
 			}
 		}, function (err){
 			console.log(err);
@@ -89,7 +89,7 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 			if($scope.errMsgs.length > 0){
 				$('#modal-warning').modal('show');
 			} else {
-				window.location = '/';
+				$window.location = '/';
 			}
 		}, function (err){
 			console.log(err);
@@ -100,7 +100,7 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 }])
 
 .controller('adminCtrl', ['$scope', '$http', '$location', '$route', '$window', '$SPAaccount', function ($scope, $http, $location, $route, $window, $SPAaccount) {
-
+	// check user loggin
 	$SPAaccount.isUserLoggedIn().then(function (res){
 		if(res.data.userID === null){
 			$location.path('/');
@@ -108,6 +108,8 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 	}, function (err){
 		console.log(err);
 	});
+
+
 
 
 
@@ -121,25 +123,52 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 			old: this.titleText,
 			title: this.inputData.title
 		};
-
-		$http.post('/models/set/title', data)
+		$http.post('/ctrls/set/title', data)
 		.then(function successCallback(res) {
-			//console.log(res);
 			if(res.data == 'OK. Redirecting to /'){
-				$SPAaccount.logout();
-
-				$window.location.reload();
-
-				//$route.reload();
-				$location.path('/');
-				//window.location.reload()
-				//window.location = '/';
+				$window.location = '/';
 			}
-
-		}, function errorCallback(res) {
-
+		}, function errorCallback(err) {
+			console.log(err);
 		});
+	};
+
+	function dataRetrive(category){
+
+		console.log(category);
+
+		var data = {};
+
+		if(category == 'header'){
+
+			data = {category: category};
+
+			$http.post('/ctrls/get/blockCode', data)
+			.then(function successCallback(res){
+				console.log(res);
+			}, function errorCallback(err){
+				console.log(err)
+			})
+
+
+
+		}
+		
+
+	
+
 	}
+
+
+	$('#adminTab a').click(function (e){
+		e.preventDefault();
+		$(this).tab('show');
+		
+		dataRetrive($(this).attr('href').replace('#', ''));
+
+	});
+
+
 
 
 }])
@@ -149,16 +178,22 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 	// automatically adds/removes class="active" 
 	var current = $location.url().replace("/", "");
 	var navList = $('.nav.navbar-nav li');
+	function clearRightActive(location){
+		$("a[href="+location+"]").parent().siblings().removeClass('active');
+		$("a[href="+location+"]").parent().siblings().children().children(".sr-only").remove();
+	};
 	function clearActive(){
+		clearRightActive('login');
+		clearRightActive('register');
 		navList.siblings().removeClass('active');
 		navList.siblings().children().children(".sr-only").remove();
-	}
+	};
 	if(current != ""){
 		$("a[href="+current+"]").parent().addClass('active');
 		$("a[href="+current+"]").append('<span class="sr-only">(current)</span>');
 	}
 	$('.navbar-brand').click(function(){
-		clearActive();
+		clearActive();	
 	});
 	navList.click(function(){
 		if(!$(this).hasClass("dropdown")){
@@ -173,9 +208,14 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 	
 
 	// nav.clearNav() must be called when ng-* is used
-	this.clearNav = function(){
+	this.rightActive = function(location){
 		clearActive();
+		$("a[href="+location+"]").parent().siblings().removeClass('active');
+		$("a[href="+location+"]").parent().siblings().children().children(".sr-only").remove();
+		$("a[href="+location+"]").parent().addClass('active');
+		$("a[href="+location+"]").append('<span class="sr-only">(current)</span>');
 	};
+
 
 }])
 
