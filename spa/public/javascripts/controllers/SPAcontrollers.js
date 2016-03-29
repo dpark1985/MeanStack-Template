@@ -1,5 +1,5 @@
 
-angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
+angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives', 'ui.ace'])
 
 
 
@@ -14,34 +14,39 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 
 	this.doLogin = function(){
 		$('#modal-login').modal('hide');
-
 		var data = {
 			login: this.loginData.userID,
 			password: this.loginData.userPW
 		};
-
-		$SPAaccount.login(data).success(function (res){
-			$scope.errMsgs = $SPAaccount.validation(res);
-
+		$SPAaccount.login(data).then(function (res){
+			$scope.errMsgs = $SPAaccount.validation(res.data);
 			if($scope.errMsgs.length > 0){
-				console.log($scope.errMsgs);
 				$('#modal-warning').modal('show');
 			} else {
 				window.location = '/';
 			}
+		}, function (err){
+			console.log(err);
 		});
 	};
 
 
 }])
 
+
+
+
+
 .controller('blogCtrl', ['$scope', function ($scope) {
 
 
 }])
 
-.controller('logCtrl', ['$http', '$location', '$scope', '$window', '$SPAaccount', function ($http, $location, $scope, $window, $SPAaccount) {
 
+
+
+
+.controller('logCtrl', ['$http', '$location', '$scope', '$window', '$SPAaccount', function ($http, $location, $scope, $window, $SPAaccount) {
 	$SPAaccount.isUserLoggedIn().then(function (res){
 		if(res.data.userID !== null){
 			$location.path('/');
@@ -54,15 +59,11 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 	}, function (err){
 		console.log(err);
 	});
-
-
-
 	this.doLogin = function(){
 		var data = {
 			login: this.loginData.userID,
 			password: this.loginData.userPW
 		};
-
 		$SPAaccount.login(data).then(function (res){
 			$scope.errMsgs = $SPAaccount.validation(res.data);
 			if($scope.errMsgs.length > 0){
@@ -75,15 +76,12 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 		});
 	};
 
-
-
 	this.doRegister = function(){
 		var data = {
 			login: this.registerData.userID,
 			password: this.registerData.userPW,
 			passwordConfirm: this.registerData.userPWC
 		};
-
 		$SPAaccount.register(data).then(function (res){
 			$scope.errMsgs = $SPAaccount.validation(res.data);
 			if($scope.errMsgs.length > 0){
@@ -95,11 +93,14 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 			console.log(err);
 		});
 	};
-
-
 }])
 
-.controller('adminCtrl', ['$scope', '$http', '$location', '$route', '$window', '$SPAaccount', function ($scope, $http, $location, $route, $window, $SPAaccount) {
+
+
+
+
+
+.controller('adminCtrl', ['$scope', '$http', '$location', '$window', '$sce', '$route', '$routeParams', '$SPAaccount', function ($scope, $http, $location, $window, $sce, $route, $routeParams, $SPAaccount) {
 	// check user loggin
 	$SPAaccount.isUserLoggedIn().then(function (res){
 		if(res.data.userID === null){
@@ -110,73 +111,126 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 	});
 
 
-
-
-
+	
 
 
 	this.titleText = $('title').text();
 
 	this.editTitle = function(){
-
 		var data = {
 			old: this.titleText,
 			title: this.inputData.title
 		};
-		$http.post('/ctrls/set/title', data)
-		.then(function successCallback(res) {
+		$http.post('/ctrls/set/title', data).then(function (res) {
 			if(res.data == 'OK. Redirecting to /'){
 				$window.location = '/';
 			}
-		}, function errorCallback(err) {
+		}, function (err){
 			console.log(err);
 		});
 	};
 
-	function dataRetrive(category){
-
-		console.log(category);
-
-		var data = {};
-
-		if(category == 'header'){
-
-			data = {category: category};
-
-			$http.post('/ctrls/get/blockCode', data)
-			.then(function successCallback(res){
-				console.log(res);
-			}, function errorCallback(err){
-				console.log(err)
-			})
-
-
-
-		}
+	this.editChange = function(code){
 		
 
-	
+		var data = {data: code};
 
+		$http.post('/ctrls/set/blockCode/header', data).then(function (res){
+			console.log(res);
+
+			if(res.data === 'OK.'){
+				$window.location = '/admin/header';
+				
+			}
+		}, function (err){
+			console.log(err);
+		});
 	}
 
 
-	$('#adminTab a').click(function (e){
-		e.preventDefault();
-		$(this).tab('show');
+
+	this.dataRetrive = function(category){
+		if(category === 'header'){
+			$http.get('/ctrls/get/blockCode/header').then(function (res){
+				$scope.codeData = res.data;
+			}, function (err){
+				console.log(err);
+			});
+		}
+	};
+
+
+	function resetActive(at) {
+		$('#'+at).parent().siblings().removeClass('active');
+		$('#'+at).parent().addClass('active');
+	}
+
+
+	this.toSubmenu = function(category){
+		$location.path('/admin/'+category);
+		resetActive(category);
+	}
+
+
+	$scope.aceLoaded = function(_editor) {
+		//_editor.setReadOnly(true);
+		//_editor.setValue($scope.codeData);
+		var _session = _editor.getSession();
+    	var _renderer = _editor.renderer;
+
+    	_editor.setValue($scope.codeData);
+	};
+
+	$scope.aceChanged = function(e){
+
+	};
+
+	$scope.params = $routeParams;
+
+	if($scope.params.category === 'title'){
+		resetActive($scope.params.category);
+
+		$scope.contentView = "../../templates/views/admin/title.html";
 		
-		dataRetrive($(this).attr('href').replace('#', ''));
+	} else if ($scope.params.category === 'header'){
+		resetActive($scope.params.category);
+		this.dataRetrive($scope.params.category);
+		
 
-	});
 
+
+
+
+		$scope.contentView = "../../templates/views/admin/header.html";
+
+
+
+
+
+	} else if ($scope.params.category === 'footer'){
+		resetActive($scope.params.category);
+
+		$scope.contentView = "../../templates/views/admin/footer.html";
+	}
 
 
 
 }])
 
-.controller('navCtrl', ['$location', function ($location) {
+
+
+
+
+
+
+
+
+.controller('navCtrl', ['$location', '$window', function ($location, $window) {
 
 	// automatically adds/removes class="active" 
-	var current = $location.url().replace("/", "");
+	var current = $location.url().split('/')[1];
+
+
 	var navList = $('.nav.navbar-nav li');
 	function clearRightActive(location){
 		$("a[href="+location+"]").parent().siblings().removeClass('active');

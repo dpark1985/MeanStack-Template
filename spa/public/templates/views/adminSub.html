@@ -1,0 +1,26 @@
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>Admin Page</h1>
+	</div>
+	
+</div>
+
+
+<div class="row">
+	<div class="col-md-3">
+		<nav>
+			<ul class="nav nav-pills nav-stacked">
+				<li role="presentation"><a href="#" id="title" ng-click="admin.toSubmenu('title')">Title</a></li>
+				<li role="presentation"><a href="#" id="header" ng-click="admin.toSubmenu('header')">Header</a></li>
+				<li role="presentation"><a href="#" id="footer" ng-click="admin.toSubmenu('footer')">Footer</a></li>
+			</ul>
+
+		</nav>
+	</div>
+
+	<div class="col-md-9">
+		<div ng-include="contentView"></div>
+	</div>
+
+</div>

@@ -30,7 +30,10 @@ angular.module('SPAroutes', ['ngRoute', 'SPAcontrollers', 'SPAdirectives'])
 			controllerAs: 'testing'
 		})
 		.when('/admin', {
-			templateUrl: 'templates/views/admin.html',
+			templateUrl: 'templates/views/admin.html'
+		})
+		.when('/admin/:category', {
+			templateUrl: 'templates/views/adminSub.html',
 			controller: 'adminCtrl',
 			controllerAs: 'admin'
 		})
