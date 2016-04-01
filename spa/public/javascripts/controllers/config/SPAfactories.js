@@ -55,7 +55,14 @@ angular.module('SPAfactories', [])
 				errMsgs.push("입력하신 비밀번호가 일치하지 않습니다.");
 			}
 
-			return errMsgs
+			return errMsgs;
+		},
+		setUserData: function (data){
+			userStatus.loggedIn = data.loggedIn;
+			userStatus.userID = data.userID;
+		},
+		getUserData: function (data){
+			return userStatus;
 		}
 	};
 }])

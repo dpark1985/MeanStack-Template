@@ -15,13 +15,15 @@ var views = require('./routes/customView');
 var models = require('./routes/customModel');
 var controlls = require('./routes/customControll');
 
+var config = require('./config/config');
+
 // import custom module
 var customAuth = require('./routes/utilities/auth');
 
 // MongoDB setup
-var baseURL = 'localhost/spa';
-var collections = ['structure', 'users'];
-var db = mongojs(baseURL, collections);
+var connection = config().connection();
+var collections = config().dbCollections();
+var db = mongojs(connection, collections);
 
 // Express
 var app = express();
@@ -34,6 +36,7 @@ app.io = io;
 customAuth.active(everyauth, db, crypto);
 
 // view engine setup
+app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -52,10 +55,12 @@ app.use(expressSession({
 app.use(everyauth.middleware(app));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use(function (req, res, next) {
     req.db = db;
     next();
 });
+
 
 app.use(function (req, res, next) {
     req.io = app.io;

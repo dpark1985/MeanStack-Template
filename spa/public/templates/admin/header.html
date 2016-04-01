@@ -1,0 +1,36 @@
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Preview
+	</div>
+	<div class="panel-body" >
+		<div style="zoom: 70%;" ng-bind-html="admin.codeDataTrusted"></div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading" style="height: 55px; line-height: 34px;">
+		Code 
+		<button style="float: right;" class="btn btn-default" type="submit" ng-click="admin.editData()">Edit</button>
+	</div>
+	<div class="panel-body" style="padding: 1px;">
+		<div ui-ace="{
+  useWrapMode : true,
+  showGutter: true,
+  theme:'monokai',
+  mode: 'html',
+  firstLineNumber: 1,
+  onLoad: admin.aceLoaded,
+  onChange: admin.aceChanged,
+  onBlur: admin.aceBlured
+}" ng-model="admin.codeData"></div>
+	</div>
+</div>
+
+
+
+
+
+
+

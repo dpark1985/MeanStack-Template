@@ -1,9 +1,10 @@
 {
   "name": "spa",
   "version": "0.0.0",
+  "description": "testing",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "supervisor -i public,javascripts,controllers ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

@@ -1,35 +1,20 @@
 
-angular.module('SPA', ['ngRoute', 'SPAroutes'])
+angular.module('SPA', ['ngRoute', 'SPAroutes', 'SPAcustomConfig'])
 .controller('mainCtrl', ['$scope', '$SPAaccount', '$SPAsocket', function ($scope, $SPAaccount, $SPAsocket) {
 	// mainCtrl is a global controller.
 	// every controllers can access to mainCtrl's $scope variable
 	$SPAaccount.isUserLoggedIn().success(function (data){
 		if(data.userID === null){
-			$scope.userData = {
-				loggedIn: false,
-				userID: null
-			};
+			$SPAaccount.setUserData({ loggedIn: false, userID: null });
 		} else {
-			$scope.userData = {
-				loggedIn: true,
-				userID: data.userID
-			};
+			$SPAaccount.setUserData({ loggedIn: true, userID: data.userID });
 		}
 	});
 
-	
-
 	$SPAsocket.setSocket(socket);
 
-	$scope.title = $('title').text();
+	$scope.titleText = "SPA CMS";
 
-	$scope.logout = function(){
-		$SPAaccount.logout();
-	};
-
-
-	
-
-
+	$scope.bodyStyle = {background: "rgb(255, 255, 255)"};
 
 }]);

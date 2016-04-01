@@ -1,11 +1,17 @@
-<h1>{{title}}</h1>
+<div class="container">
+
+    <h1>{{index.title}}</h1>
 
 
-<a ng-if="!userData.loggedIn" class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#modal-login">Login</a>
-<a ng-if="userData.loggedIn" class="btn btn-default" href="/#" ng-click="logout()" role="button">Logout</a>
-<a ng-if="userData.loggedIn" class="btn btn-default" href="admin" role="button">Admin</a>
+    <a ng-if="!index.userData.loggedIn" class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#modal-login">Login</a>
+    <a ng-if="index.userData.loggedIn" class="btn btn-default" href="/#" ng-click="index.doLogout()" role="button">Logout</a>
+    <a ng-if="index.userData.loggedIn" class="btn btn-default" href="admin" role="button">Admin</a>
 
-<a class="btn btn-default" href="testing" role="button">testing</a>
+    <a class="btn btn-default" href="testing" role="button">testing</a>
+    <a class="btn btn-default" href="#" role="button" ng-click="index.testing()">testing2</a>
+
+
+</div>
 
 
 
@@ -18,7 +24,7 @@
             </div>
             <div class="modal-body">
             	<ul>
-            		<li ng-repeat="err in errMsgs">{{err}}</li>
+            		<li ng-repeat="err in index.errMsgs">{{err}}</li>
             	</ul>
 
             </div>
@@ -60,3 +66,4 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+

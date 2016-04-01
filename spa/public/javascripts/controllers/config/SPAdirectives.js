@@ -1,10 +1,6 @@
 
 angular.module('SPAdirectives', ['ngRoute'])
 
-
-
-
-
 .directive('navCustom', function() {
 	return {
 		restrict: 'E',

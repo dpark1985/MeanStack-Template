@@ -9,7 +9,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 
-    <title><%= title %></title>
+    <title ng-bind="titleText"></title>
 
     <!-- Bootstrap -->
     <link href="libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,17 +26,14 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect();
-
     </script>
 </head>
 
-<body>
+<body ng-style="bodyStyle">
 
 	<nav-custom></nav-custom>
-    
-	<div class="container">
-		<div ng-view></div>	
-	</div>
+	
+	<div ng-view></div>	
 
     <footer-custom></footer-custom>
     
@@ -58,12 +55,13 @@
 
 
 
-    <script src="javascripts/controllers/SPAfactories.js"></script>
-    <script src="javascripts/controllers/SPAdirectives.js"></script>
-    <script src="javascripts/controllers/SPAcontrollers.js"></script>
-    <script src="javascripts/controllers/SPAroutes.js"></script>
+    <script src="javascripts/controllers/config/SPAfactories.js"></script>
+    <script src="javascripts/controllers/config/SPAdirectives.js"></script>
+    <script src="javascripts/controllers/config/SPAcontrollers.js"></script>
+    <script src="javascripts/controllers/config/SPAroutes.js"></script>
+    <script src="javascripts/controllers/SPAcustomConfig.js"></script>
 
-    <script src="javascripts/controllers/SPAglobal.js"></script>
+    <script src="javascripts/controllers/config/SPAglobal.js"></script>
 
 
 
