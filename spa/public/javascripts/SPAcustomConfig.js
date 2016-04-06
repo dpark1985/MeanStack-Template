@@ -23,6 +23,7 @@ angular.module('SPAcustomConfig', ['ngRoute', 'SPAfactories'])
     $locationProvider.html5Mode(true).hashPrefix('!');
 }])
 
+
 .controller('indexCtrl', ['$http', '$window', '$SPAaccount', function ($http, $window, $SPAaccount) {
 	var index = this;
 
@@ -61,7 +62,12 @@ angular.module('SPAcustomConfig', ['ngRoute', 'SPAfactories'])
 		}, function (res){
 
 		})
+	};
+
+	index.toAdmin = function(){
+		$window.location = '/admin';
 	}
+
 }])
 
 .controller('blogCtrl', ['$http', function ($http) {
@@ -73,7 +79,6 @@ angular.module('SPAcustomConfig', ['ngRoute', 'SPAfactories'])
 
 .controller('testingCtrl', ['$http', function ($http) {
 	var testing = this;
-
 
 
 

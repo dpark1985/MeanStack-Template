@@ -1,5 +1,5 @@
 
-angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives', 'ui.ace'])
+angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 
 
 
@@ -63,112 +63,7 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives', 'u
 
 
 
-.controller('adminCtrl', ['$http', '$location', '$window', '$sce', '$route', '$routeParams', '$SPAaccount', function ($http, $location, $window, $sce, $route, $routeParams, $SPAaccount) {
-	var admin = this;
 
-	// check user loggin
-	$SPAaccount.isUserLoggedIn().then(function (res){
-		if(res.data.userID === null){
-			$location.path('/');
-		}
-	}, function (err){
-		console.log(err);
-	});
-
-	admin.titleText = $('title').text();
-	admin.params = $routeParams;
-
-
-	
-
-	admin.editTitle = function(){
-		var data = {
-			oldTitle: admin.titleText,
-			newTitle: admin.inputData.title
-		};
-
-		//console.log(data);
-
-
-		$http.post('/ctrls/set/title', data).then(function (res) {
-			if(res.data == 'OK. Redirecting to /'){
-				$window.location = '/';
-			}
-		}, function (err){
-			console.log(err);
-		});
-
-
-	};
-
-
-	admin.dataRetrive = function(category){
-		admin.codeData = null;
-		$http.get('/ctrls/get/blockCode/'+category).then(function (res){
-			admin.codeDataTrusted = $sce.trustAsHtml(res.data);
-			admin.codeData = res.data;
-		}, function (err){
-			console.log(err);
-		});
-	};
-
-
-	function resetActive(at) {
-		$('#'+at).parent().siblings().removeClass('active');
-		$('#'+at).parent().addClass('active');
-	}
-
-
-	admin.toSubmenu = function(category){
-		$location.path('/admin/'+category);
-		resetActive(category);
-	}
-
-
-	admin.aceLoaded = function(_editor) {
-    	_editor.setHighlightActiveLine(true);
-    	_editor.$blockScrolling = Infinity;
-
-    	admin.editData = function(){
-    		//console.log(admin.params);
-    		var data = {data: _editor.getValue()};
-			$http.post('/ctrls/set/blockCode/'+admin.params.category, data).then(function (res){
-				if(res.data === 'OK.'){
-					$window.location = '/admin/'+admin.params.category;
-				}
-			}, function (err){
-				console.log(err);
-			});
-    	};
-	};
-
-	admin.aceChanged = function(e){
-		admin.codeDataTrusted = $sce.trustAsHtml(admin.codeData);
-	};
-
-	admin.aceBlured = function(e){
-		//console.log($scope.codeData);
-		//var preview = e.getValue();
-		//admin.codeDataTrusted = $sce.trustAsHtml(preview);
-	};
-
-	
-
-
-	if(admin.params.category === 'title'){
-		resetActive(admin.params.category);
-		admin.contentView = "../../templates/admin/title.html";
-	} else if (admin.params.category === 'header'){
-		resetActive(admin.params.category);
-		admin.dataRetrive(admin.params.category);
-		admin.contentView = "../../templates/admin/header.html";
-	} else if (admin.params.category === 'footer'){
-		resetActive(admin.params.category);
-		admin.dataRetrive(admin.params.category);
-		admin.contentView = "../../templates/admin/footer.html";
-	}
-
-}])
 
 
 

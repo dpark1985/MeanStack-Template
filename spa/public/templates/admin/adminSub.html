@@ -1,4 +1,6 @@
-<div class="container">
+
+<!--
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
 			<h1>Admin Page</h1>
@@ -9,16 +11,96 @@
 		<div class="col-md-3">
 			<nav>
 				<ul class="nav nav-pills nav-stacked">
-					<li role="presentation"><a href="#" id="title" ng-click="admin.toSubmenu('title')">Title</a></li>
-					<li role="presentation"><a href="#" id="header" ng-click="admin.toSubmenu('header')">Header</a></li>
-					<li role="presentation"><a href="#" id="footer" ng-click="admin.toSubmenu('footer')">Footer</a></li>
+					<li role="presentation"><a href="#" id="title" ng-click="adminSub.toSubmenu('title')">Title</a></li>
+					<li role="presentation"><a href="#" id="header" ng-click="adminSub.toSubmenu('header')">Header</a></li>
+					<li role="presentation"><a href="#" id="footer" ng-click="adminSub.toSubmenu('footer')">Footer</a></li>
 				</ul>
 			</nav>
 		</div>
 
 		<div class="col-md-9">
-			<div ng-include="admin.contentView"></div>
+			<div ng-include="adminSub.contentView"></div>
 		</div>
 
 	</div>
 </div>
+
+-->
+
+<div class="nav-side-menu">
+    <div class="brand">Brand Logo</div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+  
+        <div class="menu-list">
+  
+            <ul id="menu-content" class="menu-content collapse out">
+                <li class="singleLink">
+                	<a href="#"> <i class="fa fa-dashboard fa-lg"></i> Dashboard </a>
+                </li>
+
+                <li  data-toggle="collapse" data-target="#configuration" class="collapsed">
+                  <a href="#"><i class="fa fa-gift fa-lg"></i> Configuration <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="configuration">
+                    <li class=""><a href="#">Summay</a></li>
+                    <li><a href="#">Server</a></li>
+                    <li><a href="#">SiteMap</a></li>
+
+                </ul>
+
+                <li  data-toggle="collapse" data-target="#products" class="collapsed active">
+                  <a href="#"><i class="fa fa-gift fa-lg"></i> UI Elements <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products">
+                    <li class="active"><a href="#">CSS3 Animation</a></li>
+                    <li><a href="#">General</a></li>
+                    <li><a href="#">Buttons</a></li>
+                    <li><a href="#">Tabs & Accordions</a></li>
+                    <li><a href="#">Typography</a></li>
+                    <li><a href="#">FontAwesome</a></li>
+                    <li><a href="#">Slider</a></li>
+                    <li><a href="#">Panels</a></li>
+                    <li><a href="#">Widgets</a></li>
+                    <li><a href="#">Bootstrap Model</a></li>
+                </ul>
+
+
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                  	<a href="#"><i class="fa fa-globe fa-lg"></i> Services <span class="arrow"></span></a>
+                </li>  
+                <ul class="sub-menu collapse" id="service">
+                  	<li>New Service 1</li>
+                  	<li>New Service 2</li>
+                  	<li>New Service 3</li>
+                </ul>
+
+
+                <li data-toggle="collapse" data-target="#new" class="collapsed">
+                	<a href="#"><i class="fa fa-car fa-lg"></i> New <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="new">
+                  	<li>New New 1</li>
+                  	<li>New New 2</li>
+                  	<li>New New 3</li>
+                </ul>
+
+
+            	<li class="singleLink">
+                  	<a href="#"> <i class="fa fa-user fa-lg"></i> Profile </a>
+            	</li>
+
+                 <li class="singleLink">
+                  	<a href="#"> <i class="fa fa-users fa-lg"></i> Users </a>
+                </li>
+            </ul>
+     </div>
+</div>
+
+<div class="adminContent">
+	<div class="container-fluid">
+		<div ng-include="adminSub.contentView"></div>
+	</div>
+	
+</div>
+
+

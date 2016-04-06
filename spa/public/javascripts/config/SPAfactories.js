@@ -61,7 +61,7 @@ angular.module('SPAfactories', [])
 			userStatus.loggedIn = data.loggedIn;
 			userStatus.userID = data.userID;
 		},
-		getUserData: function (data){
+		getUserData: function (){
 			return userStatus;
 		}
 	};

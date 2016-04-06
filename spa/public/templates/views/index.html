@@ -5,7 +5,7 @@
 
     <a ng-if="!index.userData.loggedIn" class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#modal-login">Login</a>
     <a ng-if="index.userData.loggedIn" class="btn btn-default" href="/#" ng-click="index.doLogout()" role="button">Logout</a>
-    <a ng-if="index.userData.loggedIn" class="btn btn-default" href="admin" role="button">Admin</a>
+    <a ng-if="index.userData.loggedIn" class="btn btn-default" href="#" ng-click="index.toAdmin()" role="button">Admin</a>
 
     <a class="btn btn-default" href="testing" role="button">testing</a>
     <a class="btn btn-default" href="#" role="button" ng-click="index.testing()">testing2</a>

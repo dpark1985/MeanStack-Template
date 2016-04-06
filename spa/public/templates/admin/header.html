@@ -1,18 +1,19 @@
 
-
-<div class="panel panel-default">
+<div id="previewCode" class="panel panel-default">
 	<div class="panel-heading">
 		Preview
 	</div>
 	<div class="panel-body" >
-		<div style="zoom: 70%;" ng-bind-html="admin.codeDataTrusted"></div>
+		<div style="zoom: 70%;" ng-bind-html="adminSub.codeDataTrusted"></div>
 	</div>
 </div>
 
 <div class="panel panel-default">
 	<div class="panel-heading" style="height: 55px; line-height: 34px;">
 		Code 
-		<button style="float: right;" class="btn btn-default" type="submit" ng-click="admin.editData()">Edit</button>
+		<button id="editBtn" style="float: right;" class="btn btn-success" type="submit" ng-click="adminSub.editData()">Edit</button>
+		<a id="previewBtn" href="admin/header/preview" target="blank_" style="float: right; margin-right: 10px;" class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Fullscreen"> <i class="fa fa-arrows-alt"></i> </a>
+		<button id="refreshBtn" style="float: right; margin-right: 10px;" class="btn btn-default" type="submit" ng-click="adminSub.doRefresh()" data-toggle="tooltip" data-placement="top" title="Refresh"> <i class="fa fa-refresh"></i> </button>
 	</div>
 	<div class="panel-body" style="padding: 1px;">
 		<div ui-ace="{
@@ -21,16 +22,15 @@
   theme:'monokai',
   mode: 'html',
   firstLineNumber: 1,
-  onLoad: admin.aceLoaded,
-  onChange: admin.aceChanged,
-  onBlur: admin.aceBlured
-}" ng-model="admin.codeData"></div>
+  onLoad: adminSub.aceLoaded,
+  onChange: adminSub.aceChanged,
+  onBlur: adminSub.aceBlured
+}" ng-model="adminSub.codeData"></div>
 	</div>
 </div>
 
-
-
-
-
-
-
+<script>
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip()
+});
+</script>
