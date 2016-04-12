@@ -1,7 +1,14 @@
 {
-	"bootstrap" : "~3.4.4",
+	"ace" : "1,2,3",
 	"angular" : "~1.5.2",
+	"angular-ui-ace" : "~0.2.3",
+	"bootstrap" : "~3.4.4",
+	"chartist.js" : "~0.9.7",
+	"chartist-plugin-axistitle": "",
+	"chartist-plugin-pointlabels": "",
+	"font-awsome" : "~4.5.0",
 	"jquery" : "~1.11.3",
-	"jquery-ui" : "~1.12.2",
-	"font-awsome" : "~4.5.0"
+	"jquery-ui" : "~1.12.2"
+	
+	
 }

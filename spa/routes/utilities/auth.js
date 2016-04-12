@@ -101,7 +101,7 @@ exports.active = function(everyauth, db, crypto){
 		});
 		return promise;
 	});
-	auth.registerSuccessRedirect('/');
+	auth.registerSuccessRedirect('/logsuccess');
 
 
 
@@ -131,5 +131,5 @@ exports.active = function(everyauth, db, crypto){
 		
 		return promise;
 	});
-	auth.loginSuccessRedirect('/');
+	auth.loginSuccessRedirect('/logsuccess');
 };

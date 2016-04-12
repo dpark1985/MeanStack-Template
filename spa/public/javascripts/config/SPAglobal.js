@@ -11,6 +11,8 @@ angular.module('SPA', ['ngRoute', 'SPAroutes', 'SPAcustomConfig'])
 		}
 	});
 
+
+
 	$SPAsocket.setSocket(socket);
 
 	$scope.titleText = "ABC";

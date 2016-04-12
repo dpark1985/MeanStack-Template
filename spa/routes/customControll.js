@@ -58,6 +58,47 @@ router.post('/set/blockCode/:category', function (req, res, next){
 	}
 });
 
+router.get('/get/dashboard', function (req, res, next){
+	var os = require('os');
+	var data = {};
+
+	req.db.admin.find({}, function (err, visits){
+
+
+		data = {
+			os: {
+				freemem : os.freemem(),
+				totalmem : os.totalmem(),
+				type : os.type(),
+				cpus : os.cpus(),
+				totalmem : os.totalmem(),
+				uptime : os.uptime()
+			},
+			visits: visits
+		}
+		res.json(data);
+
+
+	});
+
+
+
+})
+
+
+router.get('/get/configuration', function (req, res, next){
+	var data = {};
+
+	data = {
+		sys: {
+			projectFolder: process.cwd()
+		}
+	}
+
+	res.json(data);
+
+})
+
 
 
 

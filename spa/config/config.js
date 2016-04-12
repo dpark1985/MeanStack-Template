@@ -29,7 +29,7 @@ module.exports = function(){
 	var connection = credentials + uri + "/" + dbName + authMechanism + authSource;
 	
 	// Collections
-	var dbCollections = ['users', 'blog'];
+	var dbCollections = ['admin', 'users', 'blog'];
 
 	// return function
 	// config = require(./config/config');

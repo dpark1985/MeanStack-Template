@@ -2,10 +2,6 @@
 angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 
 
-
-
-
-
 .controller('logCtrl', ['$location', '$scope', '$window', '$SPAaccount', function ($location, $scope, $window, $SPAaccount) {
 	var log = this;
 
@@ -57,18 +53,6 @@ angular.module('SPAcontrollers', ['ngRoute', 'SPAfactories', 'SPAdirectives'])
 		});
 	};
 }])
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

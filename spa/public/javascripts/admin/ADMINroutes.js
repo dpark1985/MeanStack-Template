@@ -9,6 +9,7 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 			controllerAs: 'admin' 
 		});
 
+
 		$routeProvider.when('/admin/:category', { 
 			templateUrl: 'templates/admin/adminSub.html', 
 			controller: 'adminSubCtrl', 
@@ -58,29 +59,15 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 		$window.location = "/";
 	}
 
-	$scope.bodyStyle = {background: "rgb(222, 222, 222)"};
+	$scope.bodyStyle = {background: "rgb(247, 247, 247)"};
 
 	$http.get('/models/get/adminStatus').then(function (res){
 		$adminFactory.setUserData({userID : res.data.userID});
-		$scope.userData = $adminFactory.getUserData();
-		
 	}, function (err){
 		console.log(err);
 	});
 
-	$scope.doLogout = function(){
-		$SPAaccount.logout();
-	};
 
-	$('a.navbar-brand').mouseenter(function(){
-		$(this).children().removeClass("fa fa-arrow-circle-o-left");
-		$(this).children().addClass("fa fa-arrow-circle-left");
-	});
-
-	$('a.navbar-brand').mouseleave(function(){
-		$(this).children().removeClass("fa fa-arrow-circle-left");
-		$(this).children().addClass("fa fa-arrow-circle-o-left");
-	});
 
 
 }])
@@ -106,38 +93,141 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 	};
 }])
 
+
+
 .controller('adminSubCtrl', ['$http', '$location', '$window', '$sce', '$route', '$timeout', '$routeParams', '$SPAaccount', '$adminFactory', function ($http, $location, $window, $sce, $route, $timeout, $routeParams, $SPAaccount, $adminFactory) {
 	var adminSub = this;
 
-	// side menu active state (collapse)
-	$('ul.sub-menu li').click(function(){
-		var elId = $(this).parent().attr("id");
-		$('li[data-target="#'+ elId +'"]').siblings().removeClass("active");
-		$('ul.sub-menu').children().removeClass("active");
-		$('li[data-target="#'+ elId +'"]').addClass("active");
-		$(this).siblings().removeClass("active");
-		$(this).addClass("active");
-	});
 
-	// side menu active state (non collapse)
-	$('li.singleLink').click(function(){
-		$('li[data-toggle="collapse"]').siblings().removeClass("active");
-		$('ul.sub-menu li').siblings().removeClass("active");
-		$(this).siblings().removeClass("active");
-		$(this).addClass("active");
-	});
+//** Helper functions
+	adminSub.doRefresh = function(){
+		$window.location = '/admin/'+adminSub.params.category;
+	};
 
-	// get user authority status
-	adminSub.userStatus = $adminFactory.getUserData();
-	console.log(adminSub.userStatus.loggedIn);
-	if(!adminSub.userStatus.loggedIn){
-		$location.path('/admin');
-	}
+	adminSub.toSubMenu = function(linkTo){
+		if(adminSub.params.category != linkTo){
+			$location.path('/admin/'+linkTo);
+		}
+	};
 
-	adminSub.titleText = $('title').text();
-	adminSub.params = $routeParams;
+	adminSub.toMain = function(){
+		$window.location = "/";
+	};
+// Helper functions
 
 
+	function calcMemSize (memSize) {
+		var count = 0;
+		var divSize = 1024;
+		var remain = memSize;
+		var sign = null;
+		var loop = true;
+		while(loop){
+			remain = remain / divSize;
+			count++;
+			if(remain < divSize){
+				loop = false;
+			}
+		}
+		if(count === 1){ sign = "KB"; } 
+		else if (count === 2){ sign = "MB"; } 
+		else if (count === 3){ sign = "GB"; } 
+		else if (count === 4){ sign = "TB"; }
+		return {mem: remain, unit: sign};
+	};
+
+	function convertSectoTime (sec){
+		var date = new Date(sec * 1000);
+		var hh = date.getUTCHours();
+		var mm = date.getUTCMinutes();
+		var ss = date.getSeconds();
+		if (hh < 10) {hh = "0"+hh;}
+		if (mm < 10) {mm = "0"+mm;}
+		if (ss < 10) {ss = "0"+ss;}
+		var t = hh+":"+mm+":"+ss;
+		return t;
+	};
+
+	adminSub.dashboard = function(){
+		$http.get('/ctrls/get/dashboard').then(function (res) {
+			console.log(res);
+			var osData = res.data.os;
+			adminSub.osData = {
+				cpus: {
+					model: osData.cpus[0].model,
+					speed: osData.cpus[0].speed,
+					counts: osData.cpus.length
+				},
+				memoryies: {
+					freemem: calcMemSize(osData.freemem),
+					totalmem: calcMemSize(osData.totalmem),
+					usedmem: calcMemSize(osData.totalmem - osData.freemem)
+				},
+				type: osData.type,
+				uptime: convertSectoTime(osData.uptime)
+			};
+
+			
+			var visits = res.data.visits
+			var totalV = 0;
+			for(v = 0; v < visits.length; v++){
+				totalV += visits[v].count;
+			}
+
+			adminSub.visitCharts(visits);
+			adminSub.visitors = {
+				today: visits[visits.length - 1].count,
+				total: totalV
+			};
+		}, function (err){
+			console.log(err);
+		});
+	};
+
+	adminSub.visitCharts = function(data){
+
+		var labels = [];
+		var series = [];
+		for(i = 0; i<data.length; i++){
+			labels.push(data[i].vDate);
+			series.push(data[i].count);
+		}	
+		var vcData = { labels: labels, series: [series] };
+		var options = {
+			distributeSeries: true,
+			low: 0,
+			axisX: {  
+				onlyInteger: true, 
+				position: 'start' 
+			},
+			plugins: [
+				Chartist.plugins.ctAxisTitle({
+					axisX: {
+				        axisTitle: 'Date',
+				        axisClass: 'ct-axis-title',
+				        offset: { x: 0, y: 0 },
+				        textAnchor: 'middle'
+					},
+					axisY: {
+				        axisTitle: 'Visits',
+				        axisClass: 'ct-axis-title',
+				        offset: { x: 0, y: 0 },
+				        textAnchor: 'middle',
+				        flipTitle: false
+					}
+				}),
+				Chartist.plugins.ctPointLabels({
+      				textAnchor: 'middle'
+    			})
+			]
+		};
+		new Chartist.Line('.ct-chart', vcData, options);
+	};
+
+
+
+
+	
 	adminSub.editTitle = function(){
 		var data = {
 			oldTitle: adminSub.titleText,
@@ -148,17 +238,16 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 			if(res.data == 'OK. Redirecting to /'){
 				$window.location = '/';
 			}
-		}, function (err){
+		}, function (err) {
 			console.log(err);
 		});
-
-
 	};
 
-	adminSub.doRefresh = function(){
-		$window.location = '/admin/'+adminSub.params.category;
-	}
 
+
+
+
+//*** Design Change Pages
 	adminSub.dataRetrive = function(category){
 		adminSub.codeData = null;
 		$http.get('/ctrls/get/blockCode/'+category).then(function (res){
@@ -198,7 +287,6 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
     	};
 	};
 
-
 	adminSub.aceChanged = function(e){
 		$('#previewCode').removeClass('panel-default');
 		$('#previewCode').addClass('panel-warning');
@@ -215,29 +303,98 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 
 
 	};
+// Design Change Pages
 
-	function resetActive(at) {
+
+
+//*** Initialization
+
+	// get user authority status
+	adminSub.userStatus = $adminFactory.getUserData();
+	//console.log(adminSub.userStatus.loggedIn);
+	if(!adminSub.userStatus.loggedIn){
+		$location.path('/admin');
+	}
+
+	adminSub.titleText = $('title').text();
+	adminSub.params = $routeParams;
+
+	$('div.brand').mouseenter(function(){
+		$(this).children().removeClass("fa fa-arrow-circle-o-left");
+		$(this).children().addClass("fa fa-arrow-circle-left");
+		$(this).css("cursor", "pointer");
+		$(this).css("background-color", "#4C6788");
+	});
+
+	$('div.brand').mouseleave(function(){
+		$(this).children().removeClass("fa fa-arrow-circle-left");
+		$(this).children().addClass("fa fa-arrow-circle-o-left");
+		$(this).css("background-color", "#23282e");
+	});
+
+	// side menu active state (collapse)
+	$('ul.sub-menu li').click(function(){
+		var elId = $(this).parent().attr("id");
+		$('li[data-target="#'+ elId +'"]').siblings().removeClass("active");
+		$('ul.sub-menu').children().removeClass("active");
+		$('li[data-target="#'+ elId +'"]').addClass("active");
+		$(this).siblings().removeClass("active");
+		$(this).addClass("active");
+	});
+
+	// side menu active state (non collapse)
+	$('li.singleLink').click(function(){
+		$('li[data-toggle="collapse"]').siblings().removeClass("active");
+		$('ul.sub-menu li').siblings().removeClass("active");
+		$(this).siblings().removeClass("active");
+		$(this).addClass("active");
+	});
+
+	function activateLink (linkTitle){
+		if(linkTitle === 'dashboard'){
+			$('li[data-toggle="collapse"]').siblings().removeClass("active");
+			$('ul.sub-menu li').siblings().removeClass("active");
+			$('li.singleLink').siblings().removeClass("active");
+			$('li[data-target="#'+linkTitle+'"]').addClass("active");
+		}
+
+		else {
+			$('a[href="admin/'+linkTitle+'"]').parent().siblings().removeClass("active");
+
+			$('a[href="admin/'+linkTitle+'"]').parent().addClass("active");
+			$('a[href="admin/'+linkTitle+'"]').parent().parent().addClass("in");
+			var elId = $('a[href="admin/'+linkTitle+'"]').parent().parent().attr("id");
+			$('li[data-target="#'+ elId +'"]').addClass("active");
+		}
+	}
+
+	function resetActive (at) {
 		$('#'+at).parent().siblings().removeClass('active');
 		$('#'+at).parent().addClass('active');
 	}
 
-	adminSub.toSubmenu = function(category){
-		$location.path('/admin/'+category);
-		resetActive(category);
-	};
-
+	if(adminSub.params.category === 'dashboard'){
+		adminSub.dashboard();
+		activateLink(adminSub.params.category);
+		adminSub.contentView = "../../templates/admin/dashboard.html";
+	}
 	if(adminSub.params.category === 'title'){
 		resetActive(adminSub.params.category);
 		adminSub.contentView = "../../templates/admin/title.html";
-	} else if (adminSub.params.category === 'header'){
-		resetActive(adminSub.params.category);
+	} 
+	if (adminSub.params.category === 'header'){
+		activateLink(adminSub.params.category);
 		adminSub.dataRetrive(adminSub.params.category);
 		adminSub.contentView = "../../templates/admin/header.html";
-	} else if (adminSub.params.category === 'footer'){
-		resetActive(adminSub.params.category);
+	} 
+	if (adminSub.params.category === 'footer'){
+		activateLink(adminSub.params.category);
 		adminSub.dataRetrive(adminSub.params.category);
 		adminSub.contentView = "../../templates/admin/footer.html";
 	}
+
+// Initialization
+
 
 }]);
 

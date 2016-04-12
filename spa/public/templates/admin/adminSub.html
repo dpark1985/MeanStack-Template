@@ -28,14 +28,18 @@
 -->
 
 <div class="nav-side-menu">
-    <div class="brand">Brand Logo</div>
+    <div class="brand" ng-click="adminSub.toMain()"><i class="fa fa-arrow-circle-o-left"></i> Back to Web</div>
+
+
+
+
     <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
   
         <div class="menu-list">
   
             <ul id="menu-content" class="menu-content collapse out">
-                <li class="singleLink">
-                	<a href="#"> <i class="fa fa-dashboard fa-lg"></i> Dashboard </a>
+                <li data-target="#dashboard" class="singleLink" ng-click="adminSub.toSubMenu('dashboard')">
+                	<a href="admin/dashboard" id="dashboard"> <i class="fa fa-dashboard fa-lg"></i> Dashboard </a>
                 </li>
 
                 <li  data-toggle="collapse" data-target="#configuration" class="collapsed">
@@ -61,7 +65,8 @@
                     <li><a href="#">Slider</a></li>
                     <li><a href="#">Panels</a></li>
                     <li><a href="#">Widgets</a></li>
-                    <li><a href="#">Bootstrap Model</a></li>
+                    <li ng-click="adminSub.toSubMenu('header')"><a href="admin/header">Header</a></li>
+                    <li ng-click="adminSub.toSubMenu('footer')"><a href="admin/footer">Footer</a></li>
                 </ul>
 
 
@@ -97,9 +102,9 @@
 </div>
 
 <div class="adminContent">
-	<div class="container-fluid">
-		<div ng-include="adminSub.contentView"></div>
-	</div>
+	
+	<div ng-include="adminSub.contentView"></div>
+
 	
 </div>
 
