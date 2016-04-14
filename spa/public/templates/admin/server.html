@@ -1,0 +1,145 @@
+<div class="container-fluid" style="margin-top: 20px;">
+	<div class="row" style="margin: 0;">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">System Information</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-6">
+							<table class="table table-bordered">
+								<thead></thead>
+								<tbody>
+									<tr>
+										<th rowspan="3">CPUs</th>
+										<td>{{adminSub.osData.cpus.model}}</td>
+									</tr>
+									<tr>
+										<td>{{adminSub.osData.cpus.speed}} MHz</td>
+									</tr>
+									<tr>
+										<td>{{adminSub.osData.cpus.counts}} cores</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-6">
+							<table class="table table-bordered">
+								<thead></thead>
+								<tbody>
+									<tr>
+										<th rowspan="3">Memory</th>
+										<td>Total Mem: {{adminSub.osData.memoryies.totalmem.mem | number:2}} {{adminSub.osData.memoryies.totalmem.unit}}</td>
+									</tr>
+									<tr>
+										<td>Used Mem: {{adminSub.osData.memoryies.usedmem.mem | number:2}} {{adminSub.osData.memoryies.usedmem.unit}}</td>
+									</tr>
+									<tr>
+										<td>Free Mem: {{adminSub.osData.memoryies.freemem.mem | number:2}} {{adminSub.osData.memoryies.freemem.unit}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-12">
+							<table class="table table-bordered">
+								<thead></thead>
+								<tbody>
+									<tr>
+										<th>Opereating System Platform</th>
+										<td>{{adminSub.osData.platform}}</td>
+									</tr>
+									<tr>
+										<th>Opereating System Name</th>
+										<td>{{adminSub.osData.type}}</td>
+									</tr>
+									<tr>
+										<th>System uptime</th>
+										<td>{{adminSub.osData.uptime}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="container-fluid" style="margin-top: 20px;">
+	<div class="row" style="margin: 0;">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Server Information</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-6">
+							<table class="table table-bordered">
+								<thead></thead>
+								<tbody>
+									<tr>
+										<th rowspan="3">CPUs</th>
+										<td>{{adminSub.osData.cpus.model}}</td>
+									</tr>
+									<tr>
+										<td>{{adminSub.osData.cpus.speed}} MHz</td>
+									</tr>
+									<tr>
+										<td>{{adminSub.osData.cpus.counts}} cores</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-6">
+							<table class="table table-bordered">
+								<thead></thead>
+								<tbody>
+									<tr>
+										<th rowspan="3">Heap Memory Status</th>
+										<td>RSS: {{adminSub.serverData.heap.rss.mem | number:2}} {{adminSub.serverData.heap.rss.unit}}</td>
+									</tr>
+									<tr>
+										<td>Total Heap Mem: {{adminSub.serverData.heap.heapTotal.mem | number:2}} {{adminSub.serverData.heap.heapTotal.unit}}</td>
+									</tr>
+									<tr>
+										<td>Used Heap Mem: {{adminSub.serverData.heap.heapUsed.mem | number:2}} {{adminSub.serverData.heap.heapUsed.unit}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-12">
+							<table class="table table-bordered">
+								<thead></thead>
+								<tbody>
+									<tr>
+										<th>Server dir</th>
+										<td>{{adminSub.serverData.path}}</td>
+									</tr>
+									<tr>
+										<th>Server pid</th>
+										<td>{{adminSub.serverData.pid}}</td>
+									</tr>
+									<tr>
+										<th>Server uptime</th>
+										<td>{{adminSub.serverData.uptime}}</td>
+									</tr>
+									<tr>
+										<th>Server version</th>
+										<td>{{adminSub.serverData.version}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+</div>

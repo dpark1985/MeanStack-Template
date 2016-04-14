@@ -53,7 +53,7 @@ router.get('/*', function (req, res, next) {
 	else { var dd = today.getDate().toString(); }
 
 	var t = yyyy + mm + dd;
-	console.log(t);
+	//console.log(t);
 	req.db.admin.find({"vDate": t}, function (err, data){
 		if (err) console.log(err);
 
@@ -67,7 +67,7 @@ router.get('/*', function (req, res, next) {
 		} else {
 			req.db.admin.update({"vDate": t}, 
 			{"$inc" : {"count" : 1}}, function (err, result){
-				console.log(result);
+				//console.log(result);
 			});
 		}
 	});

@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var util = require('util');
 
 
 
@@ -63,8 +64,6 @@ router.get('/get/dashboard', function (req, res, next){
 	var data = {};
 
 	req.db.admin.find({}, function (err, visits){
-
-
 		data = {
 			os: {
 				freemem : os.freemem(),
@@ -77,11 +76,40 @@ router.get('/get/dashboard', function (req, res, next){
 			visits: visits
 		}
 		res.json(data);
-
-
 	});
 
+})
 
+router.get('/get/server', function (req, res, next){
+	var os = require('os');
+	var data = {};
+
+	req.db.admin.find({}, function (err, visits){
+		data = {
+			os: {
+				freemem : os.freemem(),
+				totalmem : os.totalmem(),
+				platform: os.platform(),
+				type : os.type(),
+				cpus : os.cpus(),
+				totalmem : os.totalmem(),
+				uptime : os.uptime()
+			},
+			server: {
+				heap: {
+					rss : process.memoryUsage().rss,
+					heapTotal: process.memoryUsage().heapTotal,
+					heapUsed: process.memoryUsage().heapUsed
+				},
+				heap: util.inspect(process.memoryUsage()),
+				path: process.cwd(),
+				pid: process.pid,
+				uptime: process.uptime(),
+				version: process.version
+			}
+		}
+		res.json(data);
+	});
 
 })
 

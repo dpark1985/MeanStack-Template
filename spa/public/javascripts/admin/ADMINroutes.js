@@ -163,6 +163,7 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 					totalmem: calcMemSize(osData.totalmem),
 					usedmem: calcMemSize(osData.totalmem - osData.freemem)
 				},
+				platform: osData.platform,
 				type: osData.type,
 				uptime: convertSectoTime(osData.uptime)
 			};
@@ -179,6 +180,45 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 				today: visits[visits.length - 1].count,
 				total: totalV
 			};
+		}, function (err){
+			console.log(err);
+		});
+	};
+
+	adminSub.server = function(){
+		$http.get('/ctrls/get/server').then(function (res) {
+			//console.log(res);
+			var osData = res.data.os;
+			var serverData = res.data.server;
+			adminSub.osData = {
+				cpus: {
+					model: osData.cpus[0].model,
+					speed: osData.cpus[0].speed,
+					counts: osData.cpus.length
+				},
+				memoryies: {
+					freemem: calcMemSize(osData.freemem),
+					totalmem: calcMemSize(osData.totalmem),
+					usedmem: calcMemSize(osData.totalmem - osData.freemem)
+				},
+				platform: osData.platform,
+				type: osData.type,
+				uptime: convertSectoTime(osData.uptime)
+			};
+			adminSub.serverData = {
+				heap: {
+					rss : calcMemSize(Number(serverData.heap.match(/\s[0-9]*/g)[1])),
+					heapTotal: calcMemSize(Number(serverData.heap.match(/\s[0-9]*/g)[3])),
+					heapUsed: calcMemSize(Number(serverData.heap.match(/\s[0-9]*/g)[5]))
+				},
+				path: serverData.path,
+				pid: serverData.pid,
+				version: serverData.version,
+				uptime: convertSectoTime(serverData.uptime)
+			}
+
+			//console.log(adminSub.serverData);
+
 		}, function (err){
 			console.log(err);
 		});
@@ -360,6 +400,9 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 
 		else {
 			$('a[href="admin/'+linkTitle+'"]').parent().siblings().removeClass("active");
+			$('li[data-toggle="collapse"]').siblings().removeClass("active");
+			$('ul.sub-menu').children().removeClass("active");
+
 
 			$('a[href="admin/'+linkTitle+'"]').parent().addClass("active");
 			$('a[href="admin/'+linkTitle+'"]').parent().parent().addClass("in");
@@ -378,6 +421,12 @@ angular.module('SPAadmin', ['ngRoute', 'SPAfactories', 'ui.ace'])
 		activateLink(adminSub.params.category);
 		adminSub.contentView = "../../templates/admin/dashboard.html";
 	}
+	if(adminSub.params.category === 'server'){
+		adminSub.server();
+		activateLink(adminSub.params.category);
+		adminSub.contentView = "../../templates/admin/server.html";
+	}
+
 	if(adminSub.params.category === 'title'){
 		resetActive(adminSub.params.category);
 		adminSub.contentView = "../../templates/admin/title.html";
