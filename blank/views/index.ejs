@@ -32,48 +32,43 @@
 <body ng-style="bodyStyle">
 
 	<nav-custom></nav-custom>
-
 	<div ng-view></div>
-
   <footer-custom></footer-custom>
 
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="libraries/jquery/jquery.min.js"></script>
   <script src="libraries/jquery-ui/jquery-ui.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+  <!-- Bootstrap -->
   <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
 
-  <script src="libraries/ace-builds/src-min-noconflict/ace.js"></script>
-
-
+  <!-- Angular -->
   <script src="libraries/angular/angular.min.js"></script>
   <script src="libraries/angular/angular-route.min.js"></script>
   <script src="libraries/angular/angular-sanitize.min.js"></script>
 
-
-  <script src="libraries/angular-ui-ace/ui-ace.js"></script>
-
   <!-- Global Config -->
-  <script src="javascripts/config/mainConfig.js"></script>
-  <script src="javascripts/config/routeConfig.js"></script>
+  <script src="javascripts/main/mainConfig.js"></script>
+  <script src="javascripts/main/config/routeConfig.js"></script>
 
-  <!-- Providers -->
+  <!-- Common Providers -->
+  <script src="javascripts/providers/providerConfig.js"></script>
   <script src="javascripts/providers/socketProvider.js"></script>
   <script src="javascripts/providers/accountProvider.js"></script>
 
   <!-- Directives -->
-  <script src="javascripts/directives/navDirective.js"></script>
-  <script src="javascripts/directives/footerDirective.js"></script>
+  <script src="javascripts/main/directives/navDirective.js"></script>
+  <script src="javascripts/main/directives/footerDirective.js"></script>
 
   <!-- Controllers -->
-  <script src="javascripts/controllers/mainCtrl.js"></script>
-  <script src="javascripts/controllers/indexCtrl.js"></script>
-  <script src="javascripts/controllers/logCtrl.js"></script>
-  <script src="javascripts/controllers/navCtrl.js"></script>
-  <script src="javascripts/controllers/footerCtrl.js"></script>
-  <script src="javascripts/controllers/blogCtrl.js"></script>
-  <script src="javascripts/controllers/testingCtrl.js"></script>
+  <script src="javascripts/main/controllers/mainCtrl.js"></script>
+  <script src="javascripts/main/controllers/indexCtrl.js"></script>
+  <script src="javascripts/main/controllers/logCtrl.js"></script>
+  <script src="javascripts/main/controllers/navCtrl.js"></script>
+  <script src="javascripts/main/controllers/footerCtrl.js"></script>
+  <script src="javascripts/main/controllers/blogCtrl.js"></script>
+  <script src="javascripts/main/controllers/testingCtrl.js"></script>
 
 
 </body>

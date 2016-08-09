@@ -1,5 +1,5 @@
 
-var aitch3Framework = angular.module('aitch3Framework')
+var aitch3FrameworkProviders = angular.module('aitch3FrameworkProviders')
 
 .factory('$SPAsocket', function(){
 	var socket;

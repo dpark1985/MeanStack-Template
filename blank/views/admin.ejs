@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="aitch3Framework" ng-controller="mainCtrl" ng-cloack>
+<html lang="en" ng-app="aitch3AdminFramework" ng-controller="mainCtrl" ng-cloack>
 
 <head>
     <base href="/admin">
@@ -40,13 +40,30 @@
     <script src="libraries/jquery/jquery.min.js"></script>
     <script src="libraries/jquery-ui/jquery-ui.min.js"></script>
 
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-
+    <!-- Bootstrap -->
     <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Angular -->
     <script src="libraries/angular/angular.min.js"></script>
     <script src="libraries/angular/angular-route.min.js"></script>
-    <script src="javascripts/admin/ADMINroutes.js"></script>
+
+    <!-- Global config -->
+    <script src="javascripts/admin/adminConfig.js"></script>
+    <script src="javascripts/admin/config/routeConfig.js"></script>
+
+    <!-- Common Providers -->
+    <script src="javascripts/providers/providerConfig.js"></script>
     <script src="javascripts/providers/accountProvider.js"></script>
+
+    <!-- Admin Providers -->
+    <script src="javascripts/admin/providers/adminProvider.js"></script>
+
+    <!-- Controllers -->
+    <script src="javascripts/admin/controllers/mainCtrl.js"></script>
+    <script src="javascripts/admin/controllers/adminCtrl.js"></script>
+    <script src="javascripts/admin/controllers/adminSubCtrl.js"></script>
+
+    <!-- Ace Plugin -->
     <script src="libraries/ace-builds/src-min-noconflict/ace.js"></script>
     <script src="libraries/angular-ui-ace/ui-ace.js"></script>
 
