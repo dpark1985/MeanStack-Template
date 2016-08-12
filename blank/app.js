@@ -14,7 +14,8 @@ var crypto          = require('crypto');
 var views = require('./routes/customView');
 var models = require('./routes/customModel');
 var controlls = require('./routes/customControll');
-var admin = require('./routes/customAdmin');
+var admin = require('./routes/admin/adminRouteConfig');
+var adminCtrl = require('./routes/admin/adminCtrlConfig');
 
 
 // import custom module
@@ -69,9 +70,14 @@ app.use(function (req, res, next) {
 });
 
 
+
 app.use('/ctrls', controlls);
 app.use('/models', models);
+
+app.use('/adminCtrl', adminCtrl);
 app.use('/admin', admin);
+
+
 app.use('/', views);
 
 

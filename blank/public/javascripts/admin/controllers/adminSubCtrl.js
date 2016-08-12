@@ -20,112 +20,6 @@ var aitch3AdminFramework = angular.module('aitch3AdminFramework')
 // Helper functions
 
 
-	function calcMemSize (memSize) {
-		var count = 0;
-		var divSize = 1024;
-		var remain = memSize;
-		var sign = null;
-		var loop = true;
-		while(loop){
-			remain = remain / divSize;
-			count++;
-			if(remain < divSize){
-				loop = false;
-			}
-		}
-		if(count === 1){ sign = "KB"; }
-		else if (count === 2){ sign = "MB"; }
-		else if (count === 3){ sign = "GB"; }
-		else if (count === 4){ sign = "TB"; }
-		return {mem: remain, unit: sign};
-	};
-
-	function convertSectoTime (sec){
-		var date = new Date(sec * 1000);
-		var hh = date.getUTCHours();
-		var mm = date.getUTCMinutes();
-		var ss = date.getSeconds();
-		if (hh < 10) {hh = "0"+hh;}
-		if (mm < 10) {mm = "0"+mm;}
-		if (ss < 10) {ss = "0"+ss;}
-		var t = hh+":"+mm+":"+ss;
-		return t;
-	};
-
-	adminSub.dashboard = function(){
-		$http.get('/ctrls/get/dashboard').then(function (res) {
-			var osData = res.data.os;
-			adminSub.osData = {
-				cpus: {
-					model: osData.cpus[0].model,
-					speed: osData.cpus[0].speed,
-					counts: osData.cpus.length
-				},
-				memoryies: {
-					freemem: calcMemSize(osData.freemem),
-					totalmem: calcMemSize(osData.totalmem),
-					usedmem: calcMemSize(osData.totalmem - osData.freemem)
-				},
-				platform: osData.platform,
-				type: osData.type,
-				uptime: convertSectoTime(osData.uptime)
-			};
-
-
-			var visits = res.data.visits
-			var totalV = 0;
-			for(var v = 0; v < visits.length; v++){
-				totalV += visits[v].count;
-			}
-
-			// adminSub.visitCharts(visits);
-			adminSub.visitors = {
-				today: visits[visits.length - 1].count,
-				total: totalV
-			};
-		}, function (err){
-			console.log(err);
-		});
-	};
-
-	adminSub.server = function(){
-		$http.get('/ctrls/get/server').then(function (res) {
-			//console.log(res);
-			var osData = res.data.os;
-			var serverData = res.data.server;
-			adminSub.osData = {
-				cpus: {
-					model: osData.cpus[0].model,
-					speed: osData.cpus[0].speed,
-					counts: osData.cpus.length
-				},
-				memoryies: {
-					freemem: calcMemSize(osData.freemem),
-					totalmem: calcMemSize(osData.totalmem),
-					usedmem: calcMemSize(osData.totalmem - osData.freemem)
-				},
-				platform: osData.platform,
-				type: osData.type,
-				uptime: convertSectoTime(osData.uptime)
-			};
-			adminSub.serverData = {
-				heap: {
-					rss : calcMemSize(Number(serverData.heap.match(/\s[0-9]*/g)[1])),
-					heapTotal: calcMemSize(Number(serverData.heap.match(/\s[0-9]*/g)[3])),
-					heapUsed: calcMemSize(Number(serverData.heap.match(/\s[0-9]*/g)[5]))
-				},
-				path: serverData.path,
-				pid: serverData.pid,
-				version: serverData.version,
-				uptime: convertSectoTime(serverData.uptime)
-			}
-
-			//console.log(adminSub.serverData);
-
-		}, function (err){
-			console.log(err);
-		});
-	};
 
 
 	adminSub.editTitle = function(){
@@ -253,66 +147,69 @@ var aitch3AdminFramework = angular.module('aitch3AdminFramework')
 	}
 
 	function activateLink (linkTitle){
-		if(linkTitle === 'dashboard'){
+		if(linkTitle === 'dashboard' || linkTitle === 'users'){
 			singleMenuActive(linkTitle);
 		} else {
 			collapseMenuActive(linkTitle);
 		}
 	}
 
-	function resetActive (at) {
-		$('#'+at).parent().siblings().removeClass('active');
-		$('#'+at).parent().addClass('active');
-	}
 
 	if(adminSub.params.category === 'dashboard'){
 		adminSub.dashboard();
 		activateLink(adminSub.params.category);
-		adminSub.contentView = "../../templates/admin/dashboard.html";
+		adminSub.contentView = "../../templates/admin/views/dashboard.html";
 	}
+
 	if(adminSub.params.category === 'server'){
 		adminSub.server();
 		activateLink(adminSub.params.category);
-		adminSub.contentView = "../../templates/admin/server.html";
+		adminSub.contentView = "../../templates/admin/views/server.html";
 	}
 
 	if(adminSub.params.category === 'title'){
-		resetActive(adminSub.params.category);
-		adminSub.contentView = "../../templates/admin/title.html";
+
+		adminSub.contentView = "../../templates/admin/views/title.html";
 	}
 
 	if (adminSub.params.category === 'header'){
 		activateLink(adminSub.params.category);
 		adminSub.dataRetrive(adminSub.params.category);
-		adminSub.contentView = "../../templates/admin/header.html";
+		adminSub.contentView = "../../templates/admin/views/header.html";
 	}
 
 	if (adminSub.params.category === 'footer'){
 		activateLink(adminSub.params.category);
 		adminSub.dataRetrive(adminSub.params.category);
-		adminSub.contentView = "../../templates/admin/footer.html";
+		adminSub.contentView = "../../templates/admin/views/footer.html";
+	}
+
+	if(adminSub.params.category === 'users'){
+
+		activateLink(adminSub.params.category);
+		adminSub.contentView = "../../templates/admin/views/user.html";
 	}
 
 
 	// side menu active state (collapse)
 	// DELETE same as collapseMenuActive (linkTitle);
-	$('ul.sub-menu li').click(function(){
-		var elId = $(this).parent().attr("id");
-		$('li[data-target="#'+ elId +'"]').siblings().removeClass("active");
-		$('ul.sub-menu').children().removeClass("active");
-		$('li[data-target="#'+ elId +'"]').addClass("active");
-		$(this).siblings().removeClass("active");
-		$(this).addClass("active");
-	});// DELETE same as collapseMenuActive (linkTitle);
+	// $('ul.sub-menu li').click(function(){
+	// 	var elId = $(this).parent().attr("id");
+	// 	$('li[data-target="#'+ elId +'"]').siblings().removeClass("active");
+	// 	$('ul.sub-menu').children().removeClass("active");
+	// 	$('li[data-target="#'+ elId +'"]').addClass("active");
+	// 	$(this).siblings().removeClass("active");
+	// 	$(this).addClass("active");
+	// });// DELETE same as collapseMenuActive (linkTitle);
 
 	// side menu active state (non collapse)
 	// DELETE same as singleMenuActive (linkTitle);
-	$('li.singleLink').click(function(){
-		$('li[data-toggle="collapse"]').siblings().removeClass("active");
-		$('ul.sub-menu li').siblings().removeClass("active");
-		$(this).siblings().removeClass("active");
-		$(this).addClass("active");
-	});// DELETE same as singleMenuActive (linkTitle);
+	// $('li.singleLink').click(function(){
+	// 	$('li[data-toggle="collapse"]').siblings().removeClass("active");
+	// 	$('ul.sub-menu li').siblings().removeClass("active");
+	// 	$(this).siblings().removeClass("active");
+	// 	$(this).addClass("active");
+	// });// DELETE same as singleMenuActive (linkTitle);
 
 // Initialization
 

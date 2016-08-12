@@ -1,9 +1,12 @@
 
 var aitch3AdminFramework = angular.module('aitch3AdminFramework')
 
-.controller('adminCtrl', ['$scope', '$http', '$window', '$adminFactory', '$SPAaccount', function ($scope, $http, $window, $adminFactory, $SPAaccount) {
+.controller('adminCtrl', ['$window', '$adminFactory', '$SPAaccount', function ($window, $adminFactory, $SPAaccount) {
 	var $admin = this;
+	$admin.modalOn = false;
+
 	$admin.userStatus = $adminFactory.getUserData();
+
 	$admin.doLogin = function(){
 		var data = {
 			login: $admin.userInput.userID,
@@ -12,7 +15,7 @@ var aitch3AdminFramework = angular.module('aitch3AdminFramework')
 		$SPAaccount.login(data).then(function (res){
 			$admin.errMsgs = $SPAaccount.validation(res.data);
 			if($admin.errMsgs.length > 0){
-				$('#modal-warning').modal('show');
+				$admin.showModal();
 			} else {
 				$window.location = '/admin';
 			}
@@ -20,4 +23,22 @@ var aitch3AdminFramework = angular.module('aitch3AdminFramework')
 			console.log(err);
 		});
 	};
+
+	$admin.showModal = function(){
+		$('#modal-warning').modal({
+			backdrop: false,
+			show: true,
+			keyboard: false
+		});
+		$admin.modalOn = true;
+	};
+
+	$admin.closeModal = function(){
+		$('#modal-warning').modal('hide');
+	};
+
+	$('#modal-warning').on('hide.bs.modal', function(e){
+		$admin.modalOn = false;
+	})
+
 }]);

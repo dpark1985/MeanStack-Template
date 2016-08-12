@@ -1,4 +1,4 @@
-<div ng-if="!admin.userStatus.loggedIn" class="container">
+<div ng-if="!admin.userStatus.loggedIn" class="container-fluid">
 
 
 	<div class="row">
@@ -8,7 +8,7 @@
 			<div class="panel panel-warning">
 				<div class="panel-heading">login as Administrator</div>
 				<div class="panel-body">
-					If you are logged in and get this page, this means you don't have the admin authority. 
+					If you are logged in and get this page, this means you don't have the admin authority.
 					<p>Request your admin to gain right authority.<p>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 
 
 
-<div ng-if="admin.userStatus.loggedIn" class="container">
+<div ng-if="admin.userStatus.loggedIn" class="container-fluid">
 	<div class="jumbotron">
 		<h1>Admin Page</h1>
 		<p>Configure your web application</p>
@@ -59,8 +59,8 @@
 
 
 
-
-<div class="modal fade" id="modal-warning" tabindex="-1" role="dialog">
+<div ng-if="admin.modalOn" class="modal-backdrop fade in" ></div>
+<div class="modal fade" id="modal-warning" tabindex="-1" role="dialog" ng-click="admin.closeModal()">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

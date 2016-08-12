@@ -1,71 +1,96 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="aitch3AdminFramework" ng-controller="mainCtrl" ng-cloack>
+<html lang="en" ng-app="aitch3AdminFramework" ng-controller="mainCtrl" ng-cloak>
 
 <head>
-    <base href="/admin">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <base href="/admin">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 
-    <title>admin</title>
+  <title>admin</title>
 
-    <!-- Bootstrap -->
-    <link href="../libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../stylesheets/admin-style.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="../libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../libraries/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../stylesheets/admin-style.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
 
 </head>
 
 <body ng-style="bodyStyle">
+<!-- Side Menu -->
+<div class="nav-side-menu" ng-if="userStatus.loggedIn">
+  <div class="brand" ng-click="toMain()"><i class="fa fa-arrow-circle-o-left"></i> Back to Web</div>
 
-    <div ng-view></div>
+  <div class="menu-list">
+    <ul id="menu-content" class="menu-content collapse out">
+      <li ng-repeat="single in singleMenuConfig" data-target="#{{single.id}}" class="singleLink" ng-class="{active: single.activate}" ng-click="singleMenuReDirect(single)">
+      	<a href="#" id="{{single.id}}"> <i class="{{single.icon}}"></i> {{single.name}} </a>
+      </li>
+      <div ng-repeat="collapse in collapseMenuConfig">
+        <li data-toggle="collapse" data-target="#{{collapse.id}}" class="collapsed" ng-class="{active: collapse.activate}">
+          <a href="#"><i class="{{collapse.icon}}"></i> {{collapse.name}} <span class="arrow"></span></a>
+        </li>
+        <ul class="sub-menu collapse in" id="{{collapse.id}}">
+          <li ng-class="{active: subMenu.activate}" ng-repeat="subMenu in collapse.subMenus" ng-click="subMenuReDirect(collapse, subMenu)">
+            <a href="#">{{subMenu.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </ul>
+  </div>
+</div>
 
-    <nav class="navbar navbar-inverse navbar-fixed-bottom" style="min-height: 20px;">
-        <div class="text-right text-muted" style="font-size: 10px; margin-right:20px;">Powered by <strong>SPA CMS</strong></div>
-    </nav>
+<div ng-view class="mainContent"></div>
 
+<nav class="navbar navbar-inverse navbar-fixed-bottom" style="min-height: 20px;">
+    <div class="text-right text-muted" style="font-size: 10px; margin-right:20px;">Powered by <strong>SPA CMS</strong></div>
+</nav>
 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="libraries/jquery/jquery.min.js"></script>
+<script src="libraries/jquery-ui/jquery-ui.min.js"></script>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="libraries/jquery/jquery.min.js"></script>
-    <script src="libraries/jquery-ui/jquery-ui.min.js"></script>
+<!-- Bootstrap -->
+<script src="libraries/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Bootstrap -->
-    <script src="libraries/bootstrap/js/bootstrap.min.js"></script>
+<!-- Angular -->
+<script src="libraries/angular/angular.min.js"></script>
+<script src="libraries/angular/angular-route.min.js"></script>
 
-    <!-- Angular -->
-    <script src="libraries/angular/angular.min.js"></script>
-    <script src="libraries/angular/angular-route.min.js"></script>
+<!-- Global config -->
+<script src="javascripts/admin/adminConfig.js"></script>
+<script src="javascripts/admin/config/routeConfig.js"></script>
 
-    <!-- Global config -->
-    <script src="javascripts/admin/adminConfig.js"></script>
-    <script src="javascripts/admin/config/routeConfig.js"></script>
+<!-- Common Providers -->
+<script src="javascripts/providers/providerConfig.js"></script>
+<script src="javascripts/providers/accountProvider.js"></script>
 
-    <!-- Common Providers -->
-    <script src="javascripts/providers/providerConfig.js"></script>
-    <script src="javascripts/providers/accountProvider.js"></script>
+<!-- Admin Providers -->
+<script src="javascripts/admin/providers/adminProvider.js"></script>
+<script src="javascripts/admin/providers/calcMemSizeProvider.js"></script>
+<script src="javascripts/admin/providers/secToTimeProvider.js"></script>
 
-    <!-- Admin Providers -->
-    <script src="javascripts/admin/providers/adminProvider.js"></script>
+<!-- Controllers -->
+<script src="javascripts/admin/controllers/mainCtrl.js"></script>
+<script src="javascripts/admin/controllers/adminCtrl.js"></script>
+<script src="javascripts/admin/controllers/adminSubCtrl.js"></script>
+<script src="javascripts/admin/controllers/dashboardCtrl.js"></script>
+<script src="javascripts/admin/controllers/serverCtrl.js"></script>
+<script src="javascripts/admin/controllers/usersCtrl.js"></script>
 
-    <!-- Controllers -->
-    <script src="javascripts/admin/controllers/mainCtrl.js"></script>
-    <script src="javascripts/admin/controllers/adminCtrl.js"></script>
-    <script src="javascripts/admin/controllers/adminSubCtrl.js"></script>
-
-    <!-- Ace Plugin -->
-    <script src="libraries/ace-builds/src-min-noconflict/ace.js"></script>
-    <script src="libraries/angular-ui-ace/ui-ace.js"></script>
+<!-- Ace Plugin -->
+<script src="libraries/ace-builds/src-min-noconflict/ace.js"></script>
+<script src="libraries/angular-ui-ace/ui-ace.js"></script>
 
 
 </body>

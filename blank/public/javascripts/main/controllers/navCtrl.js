@@ -5,12 +5,12 @@ var aitch3Framework = angular.module('aitch3Framework')
 
 	var $nav = this;
 
+	// Init navCtrl
 	$nav.init = function() {
-		// Pull user data
-		$nav.userData = $SPAaccount.getUserData();
 
-		// Set nav title
-		$nav.title = $('title').text();
+		$nav.userData = $SPAaccount.getUserData(); // Pull user data
+
+		$nav.title = $('title').text(); // Set nav title
 
 		// Menu route config
 		$nav.menuRouteConfig = [
@@ -46,6 +46,13 @@ var aitch3Framework = angular.module('aitch3Framework')
 		route.active = true;
 	}
 
+	// Add active class to the log menu
+	$nav.addActiveClassLog = function(route) {
+		$nav.removeActiveClassMenu();
+		$nav.removeActiveClassLog();
+		route.active = true;
+	}
+
 	// Remove all active class from menu
 	$nav.removeActiveClassMenu = function(){
 		for(let i in $nav.menuRouteConfig){
@@ -53,12 +60,6 @@ var aitch3Framework = angular.module('aitch3Framework')
 		}
 	}
 
-	// Add active class to the log menu
-	$nav.addActiveClassLog = function(route) {
-		$nav.removeActiveClassMenu();
-		$nav.removeActiveClassLog();
-		route.active = true;
-	}
 
 	// Remove all active calss from log Menu
 	$nav.removeActiveClassLog = function(){
@@ -72,7 +73,7 @@ var aitch3Framework = angular.module('aitch3Framework')
 		$SPAaccount.logout();
 	};
 
-
+	// Start navCtrol
 	$nav.init();
 
 }]);

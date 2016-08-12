@@ -6,16 +6,16 @@ module.exports = function(){
 	var password = "";
 	var credentials = ""
 	if(username.trim() != "" && password.trim() != ""){ credentials = username + ":" + password + "@"; }
-	
+
 	// Databse server
 	var uri = "localhost";
 
 	// Database name
 	var dbName = "spa";
-	
-	// SCRAM-SHA-1 mechanism 
+
+	// SCRAM-SHA-1 mechanism
 	// ?authMechanism=SCRAM-SHA-1
-	var mechanism = ""; 
+	var mechanism = "";
 	var authMechanism = "";
 	if(mechanism.trim() != ""){ authMechanism = "?authMechanism=" + mechanism; }
 
@@ -27,7 +27,7 @@ module.exports = function(){
 
 	// Database connection
 	var connection = credentials + uri + "/" + dbName + authMechanism + authSource;
-	
+
 	// Collections
 	var dbCollections = ['admin', 'users', 'blog'];
 

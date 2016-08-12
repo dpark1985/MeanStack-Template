@@ -11,7 +11,7 @@ var util = require('util');
 router.post('/set/title', function (req, res, next){
 	var oldTitle = req.body.oldTitle;
 	var newTitle = req.body.newTitle;
-	
+
 	fs.readFile(process.cwd()+'/routes/customView.js', 'utf8', function (err, data){
 		if (err) throw err;
 		var result = data.replace(oldTitle, newTitle);
@@ -29,14 +29,14 @@ router.get('/get/blockCode/:category', function (req, res, next){
 			if (err) throw err;
 			var result = data;
 			res.send(result);
-		});	
+		});
 	}
 	if(category === 'footer'){
 		fs.readFile(process.cwd()+'/public/templates/common/footer.html', 'utf8', function (err, data){
 			if (err) throw err;
 			var result = data;
 			res.send(result);
-		});	
+		});
 	}
 });
 
@@ -59,77 +59,6 @@ router.post('/set/blockCode/:category', function (req, res, next){
 	}
 });
 
-router.get('/get/dashboard', function (req, res, next){
-	var os = require('os');
-	var data = {};
-
-	req.db.admin.find({}, function (err, visits){
-		data = {
-			os: {
-				freemem : os.freemem(),
-				totalmem : os.totalmem(),
-				type : os.type(),
-				cpus : os.cpus(),
-				totalmem : os.totalmem(),
-				uptime : os.uptime()
-			},
-			visits: visits
-		}
-		res.json(data);
-	});
-
-})
-
-router.get('/get/server', function (req, res, next){
-	var os = require('os');
-	var data = {};
-
-	req.db.admin.find({}, function (err, visits){
-		data = {
-			os: {
-				freemem : os.freemem(),
-				totalmem : os.totalmem(),
-				platform: os.platform(),
-				type : os.type(),
-				cpus : os.cpus(),
-				totalmem : os.totalmem(),
-				uptime : os.uptime()
-			},
-			server: {
-				heap: {
-					rss : process.memoryUsage().rss,
-					heapTotal: process.memoryUsage().heapTotal,
-					heapUsed: process.memoryUsage().heapUsed
-				},
-				heap: util.inspect(process.memoryUsage()),
-				path: process.cwd(),
-				pid: process.pid,
-				uptime: process.uptime(),
-				version: process.version
-			}
-		}
-		res.json(data);
-	});
-
-})
-
-
-router.get('/get/configuration', function (req, res, next){
-	var data = {};
-
-	data = {
-		sys: {
-			projectFolder: process.cwd()
-		}
-	}
-
-	res.json(data);
-
-})
-
-
-
-
 router.post('/create/file', function (req, res, next){
 
 
@@ -140,7 +69,7 @@ router.post('/create/file', function (req, res, next){
 
 		var index = result.indexOf("router.get('/', function (req, res, next)");
 
-		res.send(index.toString());	
+		res.send(index.toString());
 
 
 
@@ -150,7 +79,7 @@ router.post('/create/file', function (req, res, next){
 		});
 
 
-	});	
+	});
 */
 
 
@@ -166,7 +95,7 @@ router.post('/create/file', function (req, res, next){
 			if (err) return console.log(err);
 			res.status(200).send('OK.');
 		});
-	});	
+	});
 */
 
 
@@ -180,14 +109,14 @@ router.post('/create/file', function (req, res, next){
 		count = result.match().length;   //** regex
 
 		for(var i=0; i<count; i++){
-			result = result.replace("//**", "");	
+			result = result.replace("//**", "");
 		}
-		
+
 		fs.writeFile(process.cwd()+'/app.js', result, 'utf8', function (err){
 			if (err) return console.log(err);
 			res.status(200).send(result);
 		});
-	});	
+	});
 */
 
 
@@ -203,7 +132,7 @@ router.post('/create/file', function (req, res, next){
 			if (err) return console.log(err);
 			res.status(200).send('OK.');
 		});
-	});	
+	});
 */
 
 
@@ -221,7 +150,7 @@ router.post('/create/file', function (req, res, next){
 			if (err) return console.log(err);
 			res.status(200).send('OK.');
 		});
-	});	
+	});
 
 
 
@@ -230,6 +159,3 @@ router.post('/create/file', function (req, res, next){
 
 
 module.exports = router;
-
-
-

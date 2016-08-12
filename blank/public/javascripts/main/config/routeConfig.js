@@ -4,31 +4,31 @@ var aitch3Framework = angular.module('aitch3Framework')
 .config(['$routeProvider', '$locationProvider',
 	function($routeProvider, $locationProvider) {
 		$routeProvider.when('/', {
-			templateUrl: 'templates/views/index.html',
+			templateUrl: 'templates/main/index.html',
 			controller: 'indexCtrl',
 			controllerAs: 'index'
 		});
 
 		$routeProvider.when('/blog', {
-			templateUrl: 'templates/views/blog.html',
+			templateUrl: 'templates/main/blog.html',
 			controller: 'blogCtrl',
 			controllerAs: 'blog'
 		});
 
 		$routeProvider.when('/testing', {
-			templateUrl: 'templates/views/testing.html',
+			templateUrl: 'templates/main/testing.html',
 			controller: 'testingCtrl',
 			controllerAs: 'testing'
 		});
 
 		$routeProvider.when('/login', {
-			templateUrl: 'templates/views/login.html',
+			templateUrl: 'templates/main/login.html',
 			controller: 'logCtrl',
 			controllerAs: 'log'
 		});
 
 		$routeProvider.when('/register', {
-			templateUrl: 'templates/views/register.html',
+			templateUrl: 'templates/main/register.html',
 			controller: 'logCtrl',
 			controllerAs: 'log'
 		});

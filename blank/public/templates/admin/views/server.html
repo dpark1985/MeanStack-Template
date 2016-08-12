@@ -13,13 +13,13 @@
 								<tbody>
 									<tr>
 										<th rowspan="3">CPUs</th>
-										<td>{{adminSub.osData.cpus.model}}</td>
+										<td>{{server.osData.cpus.model}}</td>
 									</tr>
 									<tr>
-										<td>{{adminSub.osData.cpus.speed}} MHz</td>
+										<td>{{server.osData.cpus.speed}} MHz</td>
 									</tr>
 									<tr>
-										<td>{{adminSub.osData.cpus.counts}} cores</td>
+										<td>{{server.osData.cpus.counts}} cores</td>
 									</tr>
 								</tbody>
 							</table>
@@ -30,13 +30,13 @@
 								<tbody>
 									<tr>
 										<th rowspan="3">Memory</th>
-										<td>Total Mem: {{adminSub.osData.memoryies.totalmem.mem | number:2}} {{adminSub.osData.memoryies.totalmem.unit}}</td>
+										<td>Total Mem: {{server.osData.memoryies.totalmem.mem | number:2}} {{server.osData.memoryies.totalmem.unit}}</td>
 									</tr>
 									<tr>
-										<td>Used Mem: {{adminSub.osData.memoryies.usedmem.mem | number:2}} {{adminSub.osData.memoryies.usedmem.unit}}</td>
+										<td>Used Mem: {{server.osData.memoryies.usedmem.mem | number:2}} {{server.osData.memoryies.usedmem.unit}}</td>
 									</tr>
 									<tr>
-										<td>Free Mem: {{adminSub.osData.memoryies.freemem.mem | number:2}} {{adminSub.osData.memoryies.freemem.unit}}</td>
+										<td>Free Mem: {{server.osData.memoryies.freemem.mem | number:2}} {{server.osData.memoryies.freemem.unit}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -47,15 +47,15 @@
 								<tbody>
 									<tr>
 										<th>Opereating System Platform</th>
-										<td>{{adminSub.osData.platform}}</td>
+										<td>{{server.osData.platform}}</td>
 									</tr>
 									<tr>
-										<th>Opereating System Name</th>
-										<td>{{adminSub.osData.type}}</td>
+										<th>Opereating System Type</th>
+										<td>{{server.osData.type}}</td>
 									</tr>
 									<tr>
 										<th>System uptime</th>
-										<td>{{adminSub.osData.uptime}}</td>
+										<td>{{server.osData.uptime}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -83,13 +83,13 @@
 								<tbody>
 									<tr>
 										<th rowspan="3">CPUs</th>
-										<td>{{adminSub.osData.cpus.model}}</td>
+										<td>{{server.osData.cpus.model}}</td>
 									</tr>
 									<tr>
-										<td>{{adminSub.osData.cpus.speed}} MHz</td>
+										<td>{{server.osData.cpus.speed}} MHz</td>
 									</tr>
 									<tr>
-										<td>{{adminSub.osData.cpus.counts}} cores</td>
+										<td>{{server.osData.cpus.counts}} cores</td>
 									</tr>
 								</tbody>
 							</table>
@@ -100,13 +100,13 @@
 								<tbody>
 									<tr>
 										<th rowspan="3">Heap Memory Status</th>
-										<td>RSS: {{adminSub.serverData.heap.rss.mem | number:2}} {{adminSub.serverData.heap.rss.unit}}</td>
+										<td>RSS: {{server.serverData.heap.rss.mem | number:2}} {{server.serverData.heap.rss.unit}}</td>
 									</tr>
 									<tr>
-										<td>Total Heap Mem: {{adminSub.serverData.heap.heapTotal.mem | number:2}} {{adminSub.serverData.heap.heapTotal.unit}}</td>
+										<td>Total Heap Mem: {{server.serverData.heap.heapTotal.mem | number:2}} {{server.serverData.heap.heapTotal.unit}}</td>
 									</tr>
 									<tr>
-										<td>Used Heap Mem: {{adminSub.serverData.heap.heapUsed.mem | number:2}} {{adminSub.serverData.heap.heapUsed.unit}}</td>
+										<td>Used Heap Mem: {{server.serverData.heap.heapUsed.mem | number:2}} {{server.serverData.heap.heapUsed.unit}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -117,19 +117,19 @@
 								<tbody>
 									<tr>
 										<th>Server dir</th>
-										<td>{{adminSub.serverData.path}}</td>
+										<td>{{server.serverData.path}}</td>
 									</tr>
 									<tr>
 										<th>Server pid</th>
-										<td>{{adminSub.serverData.pid}}</td>
+										<td>{{server.serverData.pid}}</td>
 									</tr>
 									<tr>
 										<th>Server uptime</th>
-										<td>{{adminSub.serverData.uptime}}</td>
+										<td>{{server.serverData.uptime}}</td>
 									</tr>
 									<tr>
 										<th>Server version</th>
-										<td>{{adminSub.serverData.version}}</td>
+										<td>{{server.serverData.version}}</td>
 									</tr>
 								</tbody>
 							</table>
