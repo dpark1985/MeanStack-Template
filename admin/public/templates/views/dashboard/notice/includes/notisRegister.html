@@ -1,0 +1,17 @@
+
+<div ng-controller="notisRegisterCtrl as nrc">
+  <h1>공지사항 등록</h1>
+  <div class="form-group">
+    <label for="adTitle">공지사항 제목</label>
+    <input type="text" class="form-control" id="adTitle" autocomplete="new-password" placeholder="공지사항 제목" ng-model="nrc.noteInfo.title">
+  </div>
+
+  <div class="form-group">
+    <label for="adHref">공지사항 클릭-리다이렉트 href 주소</label>
+    <input type="text" class="form-control" id="adHref" autocomplete="new-password" placeholder="공지사항 클릭-리다이렉트 href 주소" ng-model="nrc.noteInfo.href">
+  </div>
+
+  <p class="marginTop50">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="line-height: 14px;" ng-click="nrc.submit()">공지사항 등록</button>
+  </p>
+</div>

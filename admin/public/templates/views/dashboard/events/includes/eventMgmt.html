@@ -1,0 +1,46 @@
+
+<div ng-controller="eventMgmtCtrl as emc">
+  <div class="row marginTop50">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-primary btn-lg btn-block lineHeight18" ng-click="emc.checkExpired()">만료 이벤트 정리</button>
+    </div>
+  </div>
+  <div class="row placeholders marginTop50">
+    <div class="col-xs-6 col-md-2 col-md-offset-1 placeholder">
+      <div class="statIndicatorBox activatedBox verticalCenter" ng-click="emc.tabActivatedClick()">
+        <h2>{{emc.eventStatusCount[0].activated}}</h2>
+      </div>
+      <h4>활성화 이벤트</h4>
+      <span class="text-muted">포스팅되어 있는 이벤트 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox verticalCenter" ng-class="[{'penddingBox': emc.eventStatusCount[1].pending == 0}, {'rejectedBox': emc.eventStatusCount[1].pending > 0}]" ng-click="emc.tabPendingClick()">
+        <h2>{{emc.eventStatusCount[1].pending}}</h2>
+      </div>
+      <h4>승인대기</h4>
+      <span class="text-muted">승인대기중인 이벤트 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="emc.tabRejectedClick()">
+        <h2>{{emc.eventStatusCount[2].rejected}}</h2>
+      </div>
+      <h4>승인거절</h4>
+      <span class="text-muted">승인거절된 이벤트 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="emc.tabExpiredClick()">
+        <h2>{{emc.eventStatusCount[3].expired}}</h2>
+      </div>
+      <h4>이벤트 만료</h4>
+      <span class="text-muted">만료된 이벤트 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="emc.tabAllEventsClick()">
+        <h2>{{emc.eventStatusCount[4].allEvents}}</h2>
+      </div>
+      <h4>전체 이벤트</h4>
+      <span class="text-muted">전체 이벤트 목록</span>
+    </div>
+  </div>
+
+</div>

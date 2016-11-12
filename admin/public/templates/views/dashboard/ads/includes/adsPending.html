@@ -1,0 +1,33 @@
+
+<div ng-controller="adsPendingListCtrl as aplc">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">등록일</th>
+        <th class="text-center">제목</th>
+        <th class="text-center">광고주</th>
+        <th class="text-center">광고 개시 날짜</th>
+        <th class="text-center">광고 종료 날짜</th>
+        <th class="text-center">활성화</th>
+        <th class="text-center">승인 거절</th>
+        <th class="text-center">자세히</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="list in aplc.allPendingAdsList | orderBy: reverse:true track by $index">
+        <td class="text-center">{{aplc.allPendingAdsList.length - $index}}</td>
+        <td class="text-center">{{list.registDate | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
+        <td>{{list.title}}</td>
+        <td class="text-center">{{list.author}}</td>
+        <td class="text-center">{{list.adDate.startD | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
+        <td class="text-center">{{list.adDate.endD | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
+        <td class="text-center"><button class="btn btn-success" ng-click="aplc.activateAd(list)">활성화</button></td>
+        <td class="text-center"><button class="btn btn-danger" ng-click="aplc.rejectAd(list)">거절</button></td>
+        <td class="text-center"><button class="btn btn-primary" ng-click="aplc.detail(list)">자세히</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

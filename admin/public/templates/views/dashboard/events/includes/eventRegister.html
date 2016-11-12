@@ -1,0 +1,136 @@
+
+<div ng-controller="eventRegisterCtrl as erc">
+  <h1>이벤트 등록</h1>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-5 col-xs-5">
+        <label for="category1">카테고리1</label>
+        <select id="category1" class="form-control" ng-options="main as main.title for main in erc.categories[0].list" ng-model="erc.eventInfo.category"></select>
+      </div>
+      <div class="col-md-5 col-xs-5">
+        <label for="category2">카테고리2</label>
+        <div ng-repeat="category in erc.categories">
+          <select ng-if="erc.eventInfo.category.sub == category.category" class="form-control" id="category2" ng-options="sub.title for sub in category.list" ng-model="erc.eventInfo.subCategory"></select>
+        </div>
+      </div>
+      <div class="col-md-2 col-xs-2">
+        <label for="categoryPlus">카테고리 추가/삭제</label>
+        <button type="button" class="btn btn-primary btn-block" id="categoryPlus" data-toggle="modal" data-target="#categoryPlusModal"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="eventTitle">이벤트 이름</label>
+    <input type="text" class="form-control" id="eventTitle" autocomplete="new-password" placeholder="이벤트 이름" ng-model="erc.eventInfo.title">
+  </div>
+
+  <div class="form-group">
+    <label for="eventDate">이벤트 날짜</label>
+    <div class="row" id="eventDate">
+      <div class="col-md-6 col-xs-6">
+        <div class='input-group date' id='startDate'>
+            <input type='text' class="form-control">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-6">
+        <div class='input-group date' id='endDate'>
+            <input type='text' class="form-control">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="eventAddr">주소</label>
+    <div id="eventAddr">
+      <div class="row">
+        <div class="col-md-2 col-xs-3">
+          <input type='text' class="form-control" autocomplete="new-password" ng-model="erc.eventInfo.addr.zipcode">
+        </div>
+        <div class="col-md-2 col-xs-3">
+          <button class="btn btn-default" ng-click="erc.DaumPostcode()">우편번호 찾기</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-xs-6">
+          <input type='text' class="form-control" autocomplete="new-password" ng-model="erc.eventInfo.addr.jibunAddr">
+        </div>
+        <div class="col-md-6 col-xs-6">
+          <input type='text' class="form-control" autocomplete="new-password" ng-model="erc.eventInfo.addr.roadAddr">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="eventGPS">주소 GPS</label>
+    <div id="map" style="width:100%;height:350px;"></div>
+    <div class="row" id="eventGPS">
+      <div class="col-md-6 col-xs-6">
+        <label for="eventGPSlat">위도</label>
+        <input type="text" class="form-control" id="eventGPSlat" autocomplete="new-password" ng-model="erc.eventInfo.gps.lat" >
+      </div>
+      <div class="col-md-6 col-xs-6">
+        <label for="eventGPSlng">경도</label>
+        <input type="text" class="form-control" id="eventGPSlng" autocomplete="new-password" ng-model="erc.eventInfo.gps.lng" >
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="eventHosts">주최</label>
+    <input type="text" class="form-control" id="eventHosts" autocomplete="new-password" placeholder="주최" ng-model="erc.eventInfo.hosts" >
+  </div>
+
+  <div class="form-group">
+    <label for="eventSupervisions">주관</label>
+    <input type="text" class="form-control" id="eventSupervisions" autocomplete="new-password" placeholder="주관" ng-model="erc.eventInfo.supervisions" >
+  </div>
+
+  <div class="form-group">
+    <label for="eventSponsors">후원</label>
+    <input type="text" class="form-control" id="eventSponsors" autocomplete="new-password" placeholder="후원" ng-model="erc.eventInfo.sponsors" >
+  </div>
+
+  <div class="form-group">
+    <label for="eventPhones">전화번호</label>
+    <input type="text" class="form-control" id="eventPhones" autocomplete="new-password" placeholder="전화번호" ng-model="erc.eventInfo.phones" >
+  </div>
+
+  <div class="form-group">
+    <label for="eventEmails">이메일</label>
+    <input type="text" class="form-control" id="eventEmails" autocomplete="new-password" placeholder="이메일" ng-model="erc.eventInfo.emails" >
+  </div>
+
+  <div class="form-group">
+    <label for="eventDesc">설명</label>
+    <textarea class="form-control" rows="6" id="eventDesc" autocomplete="new-password" ng-attr-placeholder="설명" ng-model="erc.eventInfo.desc"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="eventsImage">사진첨부</label>
+    <div class="row" id="eventsImage">
+      <div class="col-md-6 col-xs-6">
+        <button type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          썸네일 이미지 업로드(Single)<input type="file" id="eventsImageThumb" class="fileInput" accept="image/gif, image/jpeg, image/png" fileread="erc.eventInfo.imgThumbSrc">
+        </button>
+      </div>
+      <div class="col-md-6 col-xs-6">
+        <button type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          이미지 업로드(Multiple)<input type="file" id="eventsImagesSerise" class="fileInput" multiple accept="image/gif, image/jpeg, image/png" fileread="erc.eventInfo.imgSeriesSrc">
+        </button>
+      </div>
+    </div>
+  </div>
+  <p class="marginTop50">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="line-height: 14px;" ng-click="erc.submit()">이벤트 등록</button>
+  </p>
+</div>

@@ -1,0 +1,80 @@
+
+<div ng-controller="adsRegisterCtrl as arc">
+  <h1>광고 등록</h1>
+  <div class="form-group">
+    <label for="adTitle">광고 이름</label>
+    <input type="text" class="form-control" id="adTitle" autocomplete="new-password" placeholder="광고 이름" ng-model="arc.adInfo.title">
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-6 col-xs-6">
+        <label for="adAutor">광고 주</label>
+        <input type="text" class="form-control" id="adAutor" autocomplete="new-password" placeholder="광고 주(상호, 이름)" ng-model="arc.adInfo.author">
+      </div>
+      <div class="col-md-6 col-xs-6">
+        <label for="adAutor">광고 주 전화번호</label>
+        <input type="text" class="form-control" id="adAutor" autocomplete="new-password" placeholder="광고 주 전화번호" ng-model="arc.adInfo.phones">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="eventDate">광고 기간</label>
+    <div class="row" id="eventDate">
+      <div class="col-md-6 col-xs-6">
+        <div class='input-group date' id='startDate'>
+            <input type='text' class="form-control">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-6">
+        <div class='input-group date' id='endDate'>
+            <input type='text' class="form-control">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="adHref">광고 클릭-리다이렉트 href 주소</label>
+    <input type="text" class="form-control" id="adHref" autocomplete="new-password" placeholder="광고 클릭-리다이렉트 href 주소" ng-model="arc.adInfo.href">
+  </div>
+
+  <div class="form-group">
+    <label for="adLocation">광고 위치</label>
+    <div class="row" id="adLocation">
+      <div class="col-md-6">
+        <select class="form-control" ng-options="main as main.location for main in arc.adLocation" ng-model="arc.adInfo.location"></select>
+      </div>
+      <div class="col-md-6">
+        <label>
+          <input type="checkbox" ng-model="arc.registAdonAll"> 모든 위치 광고 등록
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="adImage">광고 이미지 등록</label>
+    <div class="row">
+      <div class="col-md-2">
+        <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          광고 이미지 등록(Single)<input type="file" id="eventsImageThumb" class="fileInput" accept="image/gif, image/jpeg, image/png" fileread="arc.adInfo.adImage">
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <p class="marginTop50">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="line-height: 14px;" ng-click="arc.submit()">광고 등록</button>
+  </p>
+
+
+</div>

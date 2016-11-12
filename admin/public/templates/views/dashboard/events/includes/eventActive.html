@@ -1,0 +1,31 @@
+
+<div ng-controller="eventActiveListCtrl as ealc">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">등록일</th>
+        <th class="text-center">제목</th>
+        <th class="text-center">이벤트 날짜</th>
+        <th class="text-center">남은 기간</th>
+        <th class="text-center">승인취소</th>
+        <th class="text-center">만료</th>
+        <th class="text-center">자세히</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="list in ealc.allActiveEventsList | orderBy: reverse:true track by $index">
+        <td class="text-center">{{ealc.allActiveEventsList.length - $index}}</td>
+        <td class="text-center">{{list.registDate | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
+        <td>{{list.title}}</td>
+        <td class="text-center">{{list.eventDate.text}}</td>
+        <td class="text-center">{{list.dLeft}} 일</td>
+        <td class="text-center"><button class="btn btn-danger" ng-click="ealc.deActivate(list);">승인취소</button></td>
+        <td class="text-center"><button class="btn btn-danger" ng-click="ealc.expire(list);">만료</button></td>
+        <td class="text-center"><button class="btn btn-primary" ng-click="ealc.detail(list)">자세히</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

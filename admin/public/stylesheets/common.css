@@ -1,0 +1,92 @@
+.height100 {
+  height: 100%;
+}
+
+.margin0 {
+  margin: 0;
+}
+
+.marginTop50 {
+  margin-top: 50px;
+}
+
+.marginBottom100 {
+  margin-bottom: 100px;
+}
+
+.textAlignRight {
+  text-align: right;
+}
+
+.textAlignLeft {
+  text-align: left;
+}
+
+.fileInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 15px;
+  width: 100%;
+  opacity: 0;
+}
+
+.width100 {
+  width: 100%;
+}
+
+.verticalCenter {
+  display: flex;
+  align-items: center;
+}
+
+.lineHeight18 {
+  line-height: 18px;
+}
+
+hr {
+  border-top: 1px solid #d0cccc;
+  margin: 20px -20px;
+}
+
+.statIndicatorBox {
+  width: 195px;
+  height: 195px;
+  margin:0 auto;
+  border-radius: 50%;
+  color: white;
+  margin-bottom: 20px;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.activatedBox {
+  border: 1px solid #5cb85c;
+  background-color: #5cb85c;
+}
+
+.penddingBox {
+  border: 1px solid #428bca;
+  background-color: #428bca;
+}
+
+.rejectedBox {
+  border: 1px solid #d9534f;
+  background-color: #d9534f;
+}
+
+.statIndicatorBox:hover {
+  opacity: 1;
+}
+
+.statIndicatorBox h2 {
+  margin: 0 auto;
+}
+
+
+a.statIndicatorBox:hover {
+  text-decoration: none;
+  color: #fff;
+}

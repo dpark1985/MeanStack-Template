@@ -1,9 +1,0 @@
-<% if(typeof errors !== 'undefined') { %>
-    <div class="alert alert-danger" role="alert">
-        <% errors.forEach(function (error) { %>
-            <li>
-                <%= JSON.stringify(error) %>
-            </li>
-        <% }); %>
-    </div>
-<% } %>

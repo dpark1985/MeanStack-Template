@@ -1,0 +1,42 @@
+
+<div ng-controller="adsMgmtCtrl as amc">
+
+  <div class="row placeholders marginTop50">
+    <div class="col-xs-6 col-md-2 col-md-offset-1 placeholder">
+      <div class="statIndicatorBox activatedBox verticalCenter" ng-click="amc.tabActivatedClick()">
+        <h2>{{amc.adStatusCount[0].activated}}</h2>
+      </div>
+      <h4>활성화 광고</h4>
+      <span class="text-muted">포스팅되어 있는 광고 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox verticalCenter" ng-class="[{'penddingBox': amc.adStatusCount[1].pending == 0}, {'rejectedBox': amc.adStatusCount[1].pending > 0}]" ng-click="amc.tabPendingClick()">
+        <h2>{{amc.adStatusCount[1].pending}}</h2>
+      </div>
+      <h4>승인대기</h4>
+      <span class="text-muted">승인대기중인 광고 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="amc.tabRejectedClick()">
+        <h2>{{amc.adStatusCount[2].rejected}}</h2>
+      </div>
+      <h4>승인거절</h4>
+      <span class="text-muted">승인거절된 광고 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="amc.tabExpiredClick()">
+        <h2>{{amc.adStatusCount[3].expired}}</h2>
+      </div>
+      <h4>광고 종료</h4>
+      <span class="text-muted">종료된 광고 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="amc.tabAllEventsClick()">
+        <h2>{{amc.adStatusCount[4].allAds}}</h2>
+      </div>
+      <h4>전체 광고</h4>
+      <span class="text-muted">전체 광고 목록</span>
+    </div>
+  </div>
+
+</div>
