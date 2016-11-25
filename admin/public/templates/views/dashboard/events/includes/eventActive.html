@@ -9,6 +9,10 @@
         <th class="text-center">제목</th>
         <th class="text-center">이벤트 날짜</th>
         <th class="text-center">남은 기간</th>
+        <th class="text-center">조회 수</th>
+        <th class="text-center">좋아요</th>
+        <th class="text-center">달력저장</th>
+        <th class="text-center">푸시알림</th>
         <th class="text-center">승인취소</th>
         <th class="text-center">만료</th>
         <th class="text-center">자세히</th>
@@ -21,6 +25,10 @@
         <td>{{list.title}}</td>
         <td class="text-center">{{list.eventDate.text}}</td>
         <td class="text-center">{{list.dLeft}} 일</td>
+        <td class="text-center">{{list.visits}}</td>
+        <td class="text-center">{{list.favorits}}</td>
+        <td class="text-center">{{list.calSaved}}</td>
+        <td class="text-center"><button class="btn" ng-class="{'btn-primary': !list.notificationSent, 'btn-danger': list.notificationSent}" ng-click="ealc.pushNotification(list);" disable="list.notificationSent">{{(list.notificationSent)? "Sent": "Push"}}</button></td>
         <td class="text-center"><button class="btn btn-danger" ng-click="ealc.deActivate(list);">승인취소</button></td>
         <td class="text-center"><button class="btn btn-danger" ng-click="ealc.expire(list);">만료</button></td>
         <td class="text-center"><button class="btn btn-primary" ng-click="ealc.detail(list)">자세히</button></td>

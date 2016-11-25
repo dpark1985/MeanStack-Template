@@ -126,7 +126,8 @@ var h3Framework = angular.module('h3Framework')
         var tempDate = new Date();
         var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
         for(var i=0; i<$eplc.allPendingEventsList.length; i++){
-          var eventDate = new Date($eplc.allPendingEventsList[i].eventDate.startD.year, $eplc.allPendingEventsList[i].eventDate.startD.month-1, $eplc.allPendingEventsList[i].eventDate.startD.date);
+          var tempDate2 = new Date($eplc.allPendingEventsList[i].eventDate.startD);
+          var eventDate = new Date(tempDate2.getFullYear(), tempDate2.getMonth(), tempDate2.getDate());
           if(eventDate-today > 0){
             var dDay = "-" + (eventDate-today)/(1000*60*60*24);
           } else if (eventDate-today == 0) {

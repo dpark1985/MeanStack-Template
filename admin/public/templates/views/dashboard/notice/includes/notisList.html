@@ -10,6 +10,7 @@
         <th class="text-center">활성화</th>
         <th class="text-center">승인</th>
         <th class="text-center">거절</th>
+        <th class="text-center">삭제</th>
         <th class="text-center">자세히</th>
       </tr>
     </thead>
@@ -26,7 +27,8 @@
 
         <td class="text-center" ng-class="[{'text-danger': list.isRejected},{'text-success': !list.isRejected}]">{{(list.isRejected)? '거절': '-'}}</td>
 
-        <td class="text-center"><button class="btn btn-primary" ng-click="alc.detail(list)">자세히</button></td>
+        <td class="text-center"><button class="btn btn-danger" ng-click="nlc.delete(list)">삭제</button></td>
+        <td class="text-center"><button class="btn btn-primary" ng-click="nlc.detail(list)">자세히</button></td>
       </tr>
     </tbody>
   </table>

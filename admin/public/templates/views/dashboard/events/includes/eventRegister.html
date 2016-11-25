@@ -1,6 +1,6 @@
 
 <div ng-controller="eventRegisterCtrl as erc">
-  <h1>이벤트 등록</h1>
+  <h1>행사 등록</h1>
   <div class="form-group">
     <div class="row">
       <div class="col-md-5 col-xs-5">
@@ -69,10 +69,9 @@
     </div>
   </div>
 
-
   <div class="form-group">
     <label for="eventGPS">주소 GPS</label>
-    <div id="map" style="width:100%;height:350px;"></div>
+    <div id="map" style="width:80%;height:450px; margin:0 auto"></div>
     <div class="row" id="eventGPS">
       <div class="col-md-6 col-xs-6">
         <label for="eventGPSlat">위도</label>
@@ -111,8 +110,13 @@
   </div>
 
   <div class="form-group">
+    <label for="eventHomePage">홈페이지</label>
+    <input type="text" class="form-control" id="eventHomePage" autocomplete="new-password" placeholder="홈페이지" ng-model="erc.eventInfo.homepage" >
+  </div>
+
+  <div class="form-group">
     <label for="eventDesc">설명</label>
-    <textarea class="form-control" rows="6" id="eventDesc" autocomplete="new-password" ng-attr-placeholder="설명" ng-model="erc.eventInfo.desc"></textarea>
+    <div ckeditor="erc.options" id="eventDesc" ng-model="erc.eventInfo.desc" ready="erc.ckReady()"></div>
   </div>
 
   <div class="form-group">

@@ -9,7 +9,8 @@ var h3Framework = angular.module('h3Framework', [
 	'ngRoute',
 	'ngAnimate',
 	'ngSanitize',
-	'ngCookies'
+	'ngCookies',
+	'ckeditor'
 ])
 
 .run(['$window', '$rootScope', '$wr_s', function($window, $rootScope, $wr_s) {

@@ -1,6 +1,6 @@
 var h3Framework = angular.module('h3Framework')
 
-.controller('eventActiveListCtrl', ['$scope', '$wr_event', '$wr_s', function ($scope, $wr_event, $wr_s) {
+.controller('eventActiveListCtrl', ['$scope', '$wr_event', '$wr_push', '$wr_s', function ($scope, $wr_event, $wr_push, $wr_s) {
   var $ealc = this;
 
   $ealc.daumMap = function(latlng, id) {
@@ -17,6 +17,26 @@ var h3Framework = angular.module('h3Framework')
           };
       var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
       resolve(true);
+    });
+  };
+
+  $ealc.pushNotification = function(data) {
+    $wr_push.doPushNotification(data).then(function (res) {
+      if(res.data.pushNotification){
+        $scope.$parent.events.modalContent = {
+          title: "상태 변경",
+          context: "정상적으로 이벤트 상태가 변경되었습니다.",
+          state: true
+        };
+        $('#eventStateModal').modal('show');
+      } else {
+        $scope.$parent.events.modalContent = {
+          title: "상태 변경",
+          context: "문제가 발생하였습니다. 확인해주세요.",
+          state: false
+        };
+        $('#eventStateModal').modal('show');
+      }
     });
   };
 
@@ -91,7 +111,8 @@ var h3Framework = angular.module('h3Framework')
         var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
 
         for(var i=0; i<$ealc.allActiveEventsList.length; i++){
-          var eventDate = new Date($ealc.allActiveEventsList[i].eventDate.endD.year, $ealc.allActiveEventsList[i].eventDate.endD.month-1, $ealc.allActiveEventsList[i].eventDate.endD.date);
+          var tempDate2 = new Date($ealc.allActiveEventsList[i].eventDate.endD);
+          var eventDate = new Date(tempDate2.getFullYear(), tempDate2.getMonth(), tempDate2.getDate());
           if(eventDate-today > 0){
             var dDay = (eventDate-today)/(1000*60*60*24);
           } else if (eventDate-today == 0) {

@@ -1,0 +1,33 @@
+<div ng-controller="erPendingListCtrl as erplc">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">등록일</th>
+        <th class="text-center">제목</th>
+        <th class="text-center">개인정보동의</th>
+        <th class="text-center">제보자 이름</th>
+        <th class="text-center">전화번호</th>
+        <th class="text-center">등록완료</th>
+        <th class="text-center">등록취소</th>
+        <th class="text-center">자세히</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="list in erplc.examedEventsReport | orderBy: reverse:true track by $index">
+        <td class="text-center">{{erplc.examedEventsReport.length - $index}}</td>
+        <td class="text-center">{{list.registDate | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
+        <td>{{list.title}}</td>
+        <td class="text-center" ng-class="[{'text-danger': !list.options.termsAgree},{'text-success': list.options.termsAgree}]">{{(list.options.termsAgree)? '동의' : '비동의'}}</td>
+        <td class="text-center" ng-class="[{'text-danger': !list.options.termsAgree},{'text-success': list.options.termsAgree}]">{{list.options.userName}}</td>
+        <td class="text-center" ng-class="[{'text-danger': !list.options.termsAgree},{'text-success': list.options.termsAgree}]">{{list.options.userPhone}}</td>
+
+        <td class="text-center"><button class="btn btn-success" ng-click="erplc.regist(list)">등록</button></td>
+        <td class="text-center"><button class="btn btn-danger" ng-click="erplc.reject(list)">취소</button></td>
+        <td class="text-center"><button class="btn btn-primary" ng-click="erplc.detail(list)">자세히</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

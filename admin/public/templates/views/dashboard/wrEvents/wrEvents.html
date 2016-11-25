@@ -1,0 +1,176 @@
+<h1 class="page-header">이벤트</h1>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist" id="eventTabs">
+  <li role="presentation" ng-repeat="tab in wrEvents.tabConfig" ng-class="{active: tab.active}"><a href="#" aria-controls="{{tab.en}}" role="tab" data-toggle="tab" ng-click="wrEvents.tabClick(tab)">{{tab.name}}</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div ng-repeat="tab in wrEvents.tabConfig" ng-if="tab.active" role="tabpanel" class="tab-pane" ng-class="{active: tab.active}" id="{{tab.en}}" ng-include="tab.templateUrl"></div>
+</div><!-- Tab Content -->
+
+<!-- 카테고리 추가/삭제 모달 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="categoryPlusModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">카테고리 추가</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <select class="form-control" ng-options="main as main.title for main in wrEvents.categories[0].list" ng-model="wrEvents.categoryPlusMain"></select>
+            <ul ng-repeat="category in wrEvents.categories">
+              <li ng-if="wrEvents.categoryPlusMain.sub == category.category" ng-repeat="sub in category.list">{&#34;title&#34;: &#34;{{sub.title}}&#34;, &#34;value&#34;: &#34;{{sub.value}}}&#34;</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="categoryPlusMain">카테고리1</label>
+              <input type="text" class="form-control" id="categoryPlusMain" autocomplete="new-password" ng-model="wrEvents.newMainCategory" placeholder="[추가]=입력 필수 [삭제]=입력 X">
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="wrEvents.addMainCategory()">추가</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeMainCategoryModal">삭제</button>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="categoryPlusSub">카테고리2</label>
+              <input type="text" class="form-control" id="categoryPlusSub" autocomplete="new-password" ng-model="wrEvents.newSubCategory" placeholder="[추가/삭제]=입력 필수">
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="wrEvents.addSubCategory()">추가</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeSubCategoryModal">삭제</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- 데이터 상태 변경 : 성공/실패 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="wrEventStateModal">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header" ng-class="{'bg-danger': !wrEvents.modalContent.state, 'bg-success': wrEvents.modalContent.state}">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{wrEvents.modalContent.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 col-xs-12 text-center">
+            <p>{{wrEvents.modalContent.context}}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 디테일 모달 / 수정기능 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="detailsModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button ng-if="wrEvents.editDisabled" type="button" class="btn btn-danger editBtn" ng-click="wrEvents.enableEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <button ng-if="!wrEvents.editDisabled" type="button" class="btn btn-info editBtn" ng-click="wrEvents.disableEdit()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{wrEvents.selectedItem.title}}</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="wrEventTitle">이벤트 이름</label>
+            <input class="form-control"id="wrEventTitle" ng-model="wrEvents.selectedItem.title" ng-disabled="wrEvents.editDisabled">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="wrEventHomepage">홈페이지</label>
+            <input class="form-control"id="wrEventHomepage" ng-model="wrEvents.selectedItem.homepage" ng-disabled="wrEvents.editDisabled">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="wrEventDesc">설명</label>
+            <textarea class="form-control" rows="6" id="wrEventDesc" ng-model="wrEvents.selectedItem.desc" ng-disabled="wrEvents.editDisabled"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="wrEventThumbNailImg">이미지 파일(썸네일)</label>
+          <div class="row" id="wrEventThumbNailImg">
+            <div class="col-md-12">
+              <img class="width100 img-thumbnail" ng-src="{{wrEvents.selectedItem.imgThumbSrc[0].src}}">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button ng-if="!wrEvents.editDisabled" type="button" class="btn btn-danger" ng-click="wrEvents.editData()">데이터 수정</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 디테일 모달 / 수정기능 없음 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="detailsModalWithoutEdit">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{wrEvents.selectedItem.title}}</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="wrEventTitle">이벤트 이름</label>
+            <input class="form-control"id="wrEventTitle" ng-model="wrEvents.selectedItem.title" ng-disabled="wrEvents.editDisabled">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="wrEventHomepage">홈페이지</label>
+            <input class="form-control"id="wrEventHomepage" ng-model="wrEvents.selectedItem.homepage" ng-disabled="wrEvents.editDisabled">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="wrEventDesc">설명</label>
+            <textarea class="form-control" rows="6" id="wrEventDesc" ng-model="wrEvents.selectedItem.desc" ng-disabled="wrEvents.editDisabled"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="wrEventThumbNailImg">이미지 파일(썸네일)</label>
+          <div class="row" id="wrEventThumbNailImg">
+            <div class="col-md-12">
+              <img class="width100 img-thumbnail" ng-src="{{wrEvents.selectedItem.imgThumbSrc[0].src}}">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

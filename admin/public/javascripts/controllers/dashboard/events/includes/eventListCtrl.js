@@ -35,7 +35,7 @@ var h3Framework = angular.module('h3Framework')
     }, function(err) {
       console.log(err);
     });
-  }
+  };
 
   $elc.init = function () {
     $elc.allEventList = null;

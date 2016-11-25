@@ -45,10 +45,17 @@ var h3Framework = angular.module('h3Framework')
         if(fullRoadAddr !== ''){
             fullRoadAddr += extraRoadAddr;
         }
+
         $scope.$apply(function() {
           $erc.eventInfo.addr.zipcode = data.zonecode;
-          $erc.eventInfo.addr.roadAddr = fullRoadAddr;
-          $erc.eventInfo.addr.jibunAddr = data.jibunAddress;
+          $erc.eventInfo.addr.roadAddr = fullRoadAddr.split(" ");
+          $erc.eventInfo.addr.jibunAddr = data.jibunAddress.split(" ");
+
+          $erc.eventInfo.addr.roadAddr.shift();
+          $erc.eventInfo.addr.jibunAddr.shift();
+
+          $erc.eventInfo.addr.roadAddr = $erc.eventInfo.addr.roadAddr.join(" ");
+          $erc.eventInfo.addr.jibunAddr = $erc.eventInfo.addr.jibunAddr.join(" ");
         });
       }
     }).open();
@@ -142,33 +149,24 @@ var h3Framework = angular.module('h3Framework')
 
   $erc.submit = function() {
 
-    if($erc.eventInfo.hosts) $erc.eventInfo.hosts = $erc.eventInfo.hosts.trim().split(",");
-    if($erc.eventInfo.supervisions) $erc.eventInfo.supervisions = $erc.eventInfo.supervisions.trim().split(",");
-    if($erc.eventInfo.sponsors) $erc.eventInfo.sponsors = $erc.eventInfo.sponsors.trim().split(",");
+    if($erc.eventInfo.hosts) $erc.eventInfo.hosts = $erc.eventInfo.hosts.split(",");
+    if($erc.eventInfo.supervisions) $erc.eventInfo.supervisions = $erc.eventInfo.supervisions.split(",");
+    if($erc.eventInfo.sponsors) $erc.eventInfo.sponsors = $erc.eventInfo.sponsors.split(",");
     if($erc.eventInfo.phones) $erc.eventInfo.phones = $erc.eventInfo.phones.trim().split(",");
     if($erc.eventInfo.emails) $erc.eventInfo.emails = $erc.eventInfo.emails.trim().split(",");
+    if($erc.eventInfo.homepage) $erc.eventInfo.homepage = $erc.eventInfo.homepage.trim().split(",");
 
     var startD = new Date($('#startDate').data('DateTimePicker').date()._d);
-    $erc.eventInfo.eventDate.startD.year = startD.getFullYear();
-    $erc.eventInfo.eventDate.startD.month = startD.getMonth()+1;
-    $erc.eventInfo.eventDate.startD.date = startD.getDate();
-    $erc.eventInfo.eventDate.startD.day = startD.getDay();
+    $erc.eventInfo.eventDate.startD = startD;
 
     var endD = new Date($('#endDate').data('DateTimePicker').date()._d);
-    $erc.eventInfo.eventDate.endD.year = endD.getFullYear();
-    $erc.eventInfo.eventDate.endD.month = endD.getMonth()+1;
-    $erc.eventInfo.eventDate.endD.date = endD.getDate();
-    $erc.eventInfo.eventDate.endD.day = endD.getDay();
+    $erc.eventInfo.eventDate.endD = endD
 
     $erc.eventInfo.eventDate.text =
-      $erc.eventInfo.eventDate.startD.year + "년 " +
-      $erc.eventInfo.eventDate.startD.month + "월 " +
-      $erc.eventInfo.eventDate.startD.date + "일 ~ " +
-      $erc.eventInfo.eventDate.endD.year + "년 " +
-      $erc.eventInfo.eventDate.endD.month + "월 " +
-      $erc.eventInfo.eventDate.endD.date + "일";
-
-
+      (startD.getMonth()+1) + "월 " +
+      startD.getDate() + "일 ~ " +
+      (endD.getMonth()+1) + "월 " +
+      endD.getDate() + "일";
 
     $wr_event.doRegistNewEvent($erc.eventInfo).then(function (res) {
       if(res.data.registNewEvent){
@@ -193,7 +191,17 @@ var h3Framework = angular.module('h3Framework')
     $wr_s.reloadPage();
   });
 
+  $erc.ckReady = function () {
+    console.log('ckEditor Ready');
+  };
+
   $erc.eventRegisterInit = function() {
+    $erc.options = {
+       language: 'ko',
+       allowedContent: true,
+       entities: false
+     };
+
     $('#startDate').datetimepicker();
     $('#endDate').datetimepicker({
       useCurrent: false
@@ -210,18 +218,8 @@ var h3Framework = angular.module('h3Framework')
       $erc.eventInfo = {
         title: null,
         eventDate: {
-          startD: {
-            year: null,
-            month: null,
-            date: null,
-            day: null
-          },
-          endD: {
-            year: null,
-            month: null,
-            date: null,
-            day: null
-          },
+          startD: null,
+          endD: null,
           text: null
         },
         addr: {
@@ -238,13 +236,10 @@ var h3Framework = angular.module('h3Framework')
         sponsors: null,
         phones: null,
         emails: null,
+        homepage: null,
         desc: null,
         imgThumbSrc: null,
         imgSeriesSrc: null,
-        isActive: false,
-        isApproved: false,
-        isRejected: false,
-        isExpired: false,
         category: $erc.categories[0].list[0],
         subCategory: null
       };

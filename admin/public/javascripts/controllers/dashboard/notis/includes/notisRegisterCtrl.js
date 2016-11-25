@@ -1,6 +1,6 @@
 var h3Framework = angular.module('h3Framework')
 
-.controller('notisRegisterCtrl', ['$scope', '$wr_s', '$wr_notis', function ($scope, $wr_s, $wr_notis) {
+.controller('notisRegisterCtrl', ['$scope', '$wr_notis', '$wr_s', function ($scope, $wr_notis, $wr_s) {
   $nrc = this;
 
 

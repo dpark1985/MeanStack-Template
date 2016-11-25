@@ -157,6 +157,7 @@
   <!-- Daum Zip Code -->
   <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 
+
   <!-- Angular  -->
   <script type="text/javascript" src="libraries/angular/angular.min.js"></script>
   <script type="text/javascript" src="libraries/angular/angular-animate.min.js"></script>
@@ -169,13 +170,21 @@
   <script type="text/javascript" src="javascripts/config/routeConfig.js"></script>
   <script type="text/javascript" src="javascripts/config/mainCtrl.js"></script>
 
+  <!-- CK Editor -->
+  <script type="text/javascript" src="libraries/ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="libraries/angular-ckeditor/angular-ckeditor.min.js"></script>
+
   <!-- Services -->
   <script type="text/javascript" src="javascripts/services/adminApiFactories.js"></script>
   <script type="text/javascript" src="javascripts/services/overViewApiFactories.js"></script>
   <script type="text/javascript" src="javascripts/services/eventApiFactories.js"></script>
   <script type="text/javascript" src="javascripts/services/adsApiFactories.js"></script>
   <script type="text/javascript" src="javascripts/services/notisApiFactories.js"></script>
+  <script type="text/javascript" src="javascripts/services/eventReportApiFactories.js"></script>
+  <script type="text/javascript" src="javascripts/services/inquiryReportApiFactories.js"></script>
   <script type="text/javascript" src="javascripts/services/adminServices.js"></script>
+  <script type="text/javascript" src="javascripts/services/wrEventApiFactories.js"></script>
+  <script type="text/javascript" src="javascripts/services/pushNotificationApiFactories.js"></script>
 
   <!-- Directives -->
   <script type="text/javascript" src="javascripts/directives/navDirective.js"></script>
@@ -186,8 +195,10 @@
   <script type="text/javascript" src="javascripts/controllers/navCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/dashCtrl.js"></script>
 
+  <!-- Controllers : overview -->
   <script type="text/javascript" src="javascripts/controllers/dashboard/overView/overViewCtrl.js"></script>
 
+  <!-- Controllers : events -->
   <script type="text/javascript" src="javascripts/controllers/dashboard/events/eventsCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/events/includes/eventMgmtCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/events/includes/eventActiveListCtrl.js"></script>
@@ -197,6 +208,7 @@
   <script type="text/javascript" src="javascripts/controllers/dashboard/events/includes/eventListCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/events/includes/eventRegisterCtrl.js"></script>
 
+  <!-- Controllers : ads -->
   <script type="text/javascript" src="javascripts/controllers/dashboard/ads/adsCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/ads/includes/adsMgmtCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/ads/includes/adsActiveListCtrl.js"></script>
@@ -206,6 +218,17 @@
   <script type="text/javascript" src="javascripts/controllers/dashboard/ads/includes/adsListCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/ads/includes/adsRegisterCtrl.js"></script>
 
+  <!-- Controllers : wrEvents -->
+  <script type="text/javascript" src="javascripts/controllers/dashboard/wrEvents/wrEventsCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/wrEvents/includes/wrEventsMgmtCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/wrEvents/includes/wrEventsActiveListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/wrEvents/includes/wrEventsPendingListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/wrEvents/includes/wrEventsRejectListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/wrEvents/includes/wrEventsExpireListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/wrEvents/includes/wrEventsListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/wrEvents/includes/wrEventsRegisterCtrl.js"></script>
+
+  <!-- Controllers : notification -->
   <script type="text/javascript" src="javascripts/controllers/dashboard/notis/notisCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/notis/includes/notisMgmtCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/notis/includes/notisActiveListCtrl.js"></script>
@@ -213,6 +236,23 @@
   <script type="text/javascript" src="javascripts/controllers/dashboard/notis/includes/notisRejectListCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/notis/includes/notisListCtrl.js"></script>
   <script type="text/javascript" src="javascripts/controllers/dashboard/notis/includes/notisRegisterCtrl.js"></script>
+
+  <!-- Controllers : inquiry -->
+  <script type="text/javascript" src="javascripts/controllers/dashboard/inquiries/inquiryCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/inquiries/includes/icMgmtCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/inquiries/includes/icNewListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/inquiries/includes/icPendingListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/inquiries/includes/icSuccessListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/inquiries/includes/icAllListCtrl.js"></script>
+
+  <!-- Controllers : event report -->
+  <script type="text/javascript" src="javascripts/controllers/dashboard/eventReport/eventReportCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/eventReport/includes/erMgmtCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/eventReport/includes/erNewListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/eventReport/includes/erPendingListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/eventReport/includes/erSuccessListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/eventReport/includes/erRejectListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/eventReport/includes/erAllListCtrl.js"></script>
 
 </body>
 

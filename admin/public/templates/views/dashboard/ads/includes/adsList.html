@@ -11,6 +11,7 @@
         <th class="text-center">승인</th>
         <th class="text-center">거절</th>
         <th class="text-center">종료</th>
+        <th class="text-center">삭제</th>
         <th class="text-center">자세히</th>
       </tr>
     </thead>
@@ -30,6 +31,7 @@
         <td class="text-center" ng-if="list.isApproved" ng-class="[{'text-info': list.isExpired},{'text-success': !list.isExpired}]">{{(list.isExpired)? '만료': '-'}}</td>
         <td class="text-center text-muted" ng-if="!list.isApproved">-</td>
 
+        <td class="text-center"><button class="btn btn-danger" ng-click="alc.delete(list)">삭제</button></td>
         <td class="text-center"><button class="btn btn-primary" ng-click="alc.detail(list)">자세히</button></td>
       </tr>
     </tbody>

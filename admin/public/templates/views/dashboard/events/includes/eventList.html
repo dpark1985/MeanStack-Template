@@ -7,6 +7,9 @@
         <th class="text-center">#</th>
         <th class="text-center">등록일</th>
         <th class="text-center">제목</th>
+        <th class="text-center">조회 수</th>
+        <th class="text-center">좋아요</th>
+        <th class="text-center">달력저장</th>
         <th class="text-center">활성화</th>
         <th class="text-center">승인</th>
         <th class="text-center">거절</th>
@@ -19,6 +22,9 @@
         <td class="text-center">{{elc.allEventList.length - $index}}</td>
         <td class="text-center">{{list.registDate | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
         <td>{{list.title}}</td>
+        <td class="text-center">{{list.visits}}</td>
+        <td class="text-center">{{list.favorits}}</td>
+        <td class="text-center">{{list.calSaved}}</td>
 
         <td class="text-center" ng-class="[{'text-success': list.isActive},{'text-danger': !list.isActive}]">{{(list.isActive)? '활성화': '비활성화'}}</td>
 

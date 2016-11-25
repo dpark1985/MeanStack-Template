@@ -1,0 +1,40 @@
+
+<div ng-controller="wrEventsMgmtCtrl as wremc">
+  <div class="row placeholders marginTop50">
+    <div class="col-xs-6 col-md-2 col-md-offset-1 placeholder">
+      <div class="statIndicatorBox activatedBox verticalCenter" ng-click="wremc.tabActivatedClick()">
+        <h2>{{wremc.eventStatusCount[0].activated}}</h2>
+      </div>
+      <h4>활성화 이벤트</h4>
+      <span class="text-muted">포스팅되어 있는 이벤트 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox verticalCenter" ng-class="[{'penddingBox': wremc.eventStatusCount[1].pending == 0}, {'rejectedBox': wremc.eventStatusCount[1].pending > 0}]" ng-click="wremc.tabPendingClick()">
+        <h2>{{wremc.eventStatusCount[1].pending}}</h2>
+      </div>
+      <h4>승인대기</h4>
+      <span class="text-muted">승인대기중인 이벤트 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="wremc.tabRejectedClick()">
+        <h2>{{wremc.eventStatusCount[2].rejected}}</h2>
+      </div>
+      <h4>승인거절</h4>
+      <span class="text-muted">승인거절된 이벤트 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="wremc.tabExpiredClick()">
+        <h2>{{wremc.eventStatusCount[3].expired}}</h2>
+      </div>
+      <h4>이벤트 만료</h4>
+      <span class="text-muted">만료된 이벤트 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="wremc.tabAllEventsClick()">
+        <h2>{{wremc.eventStatusCount[4].allEvents}}</h2>
+      </div>
+      <h4>전체 이벤트</h4>
+      <span class="text-muted">전체 이벤트 목록</span>
+    </div>
+  </div>
+</div>

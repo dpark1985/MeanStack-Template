@@ -1,4 +1,4 @@
-<h1 class="page-header">이벤트</h1>
+<h1 class="page-header">행사</h1>
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist" id="eventTabs">
@@ -266,6 +266,11 @@
         </div>
 
         <div class="form-group">
+          <label for="homepage">홈페이지</label>
+          <input type="text" class="form-control" id="homepage" ng-model="events.selectedItem.homepage" ng-disabled="events.editDisabled">
+        </div>
+
+        <div class="form-group">
           <label for="thumbNailImg">이미지 파일(썸네일)</label>
           <div class="row" id="thumbNailImg">
             <div class="col-md-3">
@@ -385,6 +390,11 @@
             <label for="desc">설명</label>
             <textarea class="form-control" rows="6" id="desc" ng-model="events.selectedItem.desc" ng-disabled="events.editDisabled"></textarea>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label for="homepage">홈페이지</label>
+          <input type="text" class="form-control" id="homepage" ng-model="events.selectedItem.homepage" ng-disabled="events.editDisabled">
         </div>
 
         <div class="form-group">

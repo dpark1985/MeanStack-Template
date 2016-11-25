@@ -46,8 +46,15 @@
 
         <div class="row">
           <div class="col-md-12">
-            <label for="adHref">공지사항 제목</label>
-            <input type="text" class="form-control" id="adHref" autocomplete="new-password" ng-value="notis.selectedItem.href" ng-disabled="notis.editDisabled">
+            <label for="adTitle">공지사항 제목</label>
+            <input type="text" class="form-control" id="adTitle" autocomplete="new-password" ng-value="notis.selectedItem.title" ng-disabled="notis.editDisabled">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="adDesc">공지사항 내용</label>
+            <input type="text" class="form-control" id="adDesc" autocomplete="new-password" ng-value="notis.selectedItem.desc" ng-disabled="notis.editDisabled">
           </div>
         </div>
 

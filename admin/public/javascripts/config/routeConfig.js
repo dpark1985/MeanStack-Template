@@ -10,9 +10,10 @@ var h3Framework = angular.module('h3Framework')
 			{path: '/dashboard/analytices', templateUrl: 'templates/views/dashboard/analytics/analytics.html', controller: '', controllerAs: ''},
 			{path: '/dashboard/events', templateUrl: 'templates/views/dashboard/events/events.html', controller: 'eventsCtrl', controllerAs: 'events'},
 			{path: '/dashboard/ads', templateUrl: 'templates/views/dashboard/ads/ads.html', controller: 'adsCtrl', controllerAs: 'ads'},
+			{path: '/dashboard/wrEvents', templateUrl: 'templates/views/dashboard/wrEvents/wrEvents.html', controller: 'wrEventsCtrl', controllerAs: 'wrEvents'},
 			{path: '/dashboard/notice', templateUrl: 'templates/views/dashboard/notice/notice.html', controller: 'notisCtrl', controllerAs: 'notis'},
-			{path: '/dashboard/inquiries', templateUrl: 'templates/views/dashboard/inquiries/inquiries.html', controller: '', controllerAs: ''},
-			{path: '/dashboard/eventReports', templateUrl: 'templates/views/dashboard/eventReports/eventReports.html', controller: '', controllerAs: ''},
+			{path: '/dashboard/inquiries', templateUrl: 'templates/views/dashboard/inquiries/inquiries.html', controller: 'inquiryCtrl', controllerAs: 'ic'},
+			{path: '/dashboard/eventReports', templateUrl: 'templates/views/dashboard/eventReports/eventReports.html', controller: 'eventReportCtrl', controllerAs: 'er'},
 		]
 
 		for(var i=0; i<routeConfig.length; i++){

@@ -10,7 +10,6 @@ var h3Framework = angular.module('h3Framework')
 		$wr_s.showLoading();
 
 		$wr_overView.getOverViewStatusCount().then(function (res) {
-			console.log(res);
 			$wr_s.hideLoading();
 			if(res.data.overViewStatusCount){
 				$over.overViewStatusCount = res.data.values;
