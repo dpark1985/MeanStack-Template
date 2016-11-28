@@ -1,6 +1,6 @@
 <h1 class="page-header">전체요약</h1>
 
-<div class="row placeholders">
+<div class="row placeholders" ng-init="over.init()">
   <div class="col-xs-6 col-md-2 placeholder">
     <a class="statIndicatorBox activatedBox verticalCenter" href="/dashboard/events">
       <h2>{{over.overViewStatusCount[0].eventsCount}}</h2>
@@ -45,131 +45,62 @@
   </div>
 </div>
 
-<h2 class="sub-header">Section title</h2>
-<div class="table-responsive">
+<h2 class="sub-header">애플리케이션 로그</h2>
+<div class="table-responsive" ng-init="over.init()">
   <table class="table table-striped">
     <thead>
       <tr>
         <th>#</th>
-        <th>Header</th>
-        <th>Header</th>
-        <th>Header</th>
-        <th>Header</th>
+        <th>Date</th>
+        <th>Count</th>
+        <th>Android</th>
+        <th>IOS</th>
+        <th>Log</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1,001</td>
-        <td>Lorem</td>
-        <td>ipsum</td>
-        <td>dolor</td>
-        <td>sit</td>
-      </tr>
-      <tr>
-        <td>1,002</td>
-        <td>amet</td>
-        <td>consectetur</td>
-        <td>adipiscing</td>
-        <td>elit</td>
-      </tr>
-      <tr>
-        <td>1,003</td>
-        <td>Integer</td>
-        <td>nec</td>
-        <td>odio</td>
-        <td>Praesent</td>
-      </tr>
-      <tr>
-        <td>1,003</td>
-        <td>libero</td>
-        <td>Sed</td>
-        <td>cursus</td>
-        <td>ante</td>
-      </tr>
-      <tr>
-        <td>1,004</td>
-        <td>dapibus</td>
-        <td>diam</td>
-        <td>Sed</td>
-        <td>nisi</td>
-      </tr>
-      <tr>
-        <td>1,005</td>
-        <td>Nulla</td>
-        <td>quis</td>
-        <td>sem</td>
-        <td>at</td>
-      </tr>
-      <tr>
-        <td>1,006</td>
-        <td>nibh</td>
-        <td>elementum</td>
-        <td>imperdiet</td>
-        <td>Duis</td>
-      </tr>
-      <tr>
-        <td>1,007</td>
-        <td>sagittis</td>
-        <td>ipsum</td>
-        <td>Praesent</td>
-        <td>mauris</td>
-      </tr>
-      <tr>
-        <td>1,008</td>
-        <td>Fusce</td>
-        <td>nec</td>
-        <td>tellus</td>
-        <td>sed</td>
-      </tr>
-      <tr>
-        <td>1,009</td>
-        <td>augue</td>
-        <td>semper</td>
-        <td>porta</td>
-        <td>Mauris</td>
-      </tr>
-      <tr>
-        <td>1,010</td>
-        <td>massa</td>
-        <td>Vestibulum</td>
-        <td>lacinia</td>
-        <td>arcu</td>
-      </tr>
-      <tr>
-        <td>1,011</td>
-        <td>eget</td>
-        <td>nulla</td>
-        <td>Class</td>
-        <td>aptent</td>
-      </tr>
-      <tr>
-        <td>1,012</td>
-        <td>taciti</td>
-        <td>sociosqu</td>
-        <td>ad</td>
-        <td>litora</td>
-      </tr>
-      <tr>
-        <td>1,013</td>
-        <td>torquent</td>
-        <td>per</td>
-        <td>conubia</td>
-        <td>nostra</td>
-      </tr>
-      <tr>
-        <td>1,014</td>
-        <td>per</td>
-        <td>inceptos</td>
-        <td>himenaeos</td>
-        <td>Curabitur</td>
-      </tr>
-      <tr>
-        <td>1,015</td>
-        <td>sodales</td>
-        <td>ligula</td>
-        <td>in</td>
-        <td>libero</td>
+      <tr ng-repeat="visit in over.overViewVisits  | orderBy: reverse:true track by $index | limitTo: 20">
+        <td>{{over.overViewVisits.length - $index}}</td>
+        <td>{{visit.date}}</td>
+        <td>{{visit.log.length}}</td>
+        <td>{{visit.android}}</td>
+        <td>{{visit.ios}}</td>
+        <td><button type="button" class="btn btn-primary" ng-click="over.viewLog(visit)">로그</button></td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="logModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{over.logData.date}}</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <th class="text-center">#</th>
+            <th class="text-center">TimeStemp</th>
+            <th class="text-center">Platform</th>
+            <th class="text-center">Platform Version</th>
+            <th class="text-center">App Version</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="log in over.logData.log | orderBy: reverse:tru track by $index | limitTo: 20">
+              <td class="text-center">{{over.logData.log.length - $index}}</td>
+              <td class="text-center">{{log.timeStemp}}</td>
+              <td class="text-center" ng-if="log.platform">{{log.platform[2]}}</td>
+              <td class="text-center" ng-if="log.version">{{(log.version.android)? log.version.android.str : log.version.ios.str}}</td>
+              <td class="text-center" ng-if="log.appVersion">{{log.appVersion}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

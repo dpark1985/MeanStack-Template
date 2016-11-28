@@ -6,6 +6,10 @@ var h3Framework = angular.module('h3Framework')
 
     getOverViewStatusCount : function() {
       return $http({method: 'GET', url: '/wr/api/v1/overView/overViewStatusCount'});
+    },
+
+    getOverViewVisits: function() {
+      return $http({method: 'GET', url: '/wr/api/v1/overView/overViewVisits'});
     }
 
 

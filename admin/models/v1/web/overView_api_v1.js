@@ -67,4 +67,12 @@ router.get('/overViewStatusCount', function (req, res, next) {
   });
 });
 
+router.get('/overViewVisits', function (req, res, next) {
+  req.db.appInfo.find({}, function (err, data) {
+    if(err) res.json({"overViewVisits": false});
+
+    res.json({"overViewVisits": true, "list": data});
+  })
+});
+
 module.exports = router;

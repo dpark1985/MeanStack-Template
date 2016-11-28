@@ -17,6 +17,7 @@ router.post('/registNewAd', function (req, res, next) {
 
   req.body.adImage = [];
   req.body.registDate = new Date();
+  req.body.visits = 0;
 
   req.db.ads.insert(req.body, function(err, data) {
     if(err) res.json({"doRegistNewAd" : false});

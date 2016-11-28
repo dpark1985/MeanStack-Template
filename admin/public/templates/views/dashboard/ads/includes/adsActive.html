@@ -10,6 +10,7 @@
         <th class="text-center">광고주</th>
         <th class="text-center">광고 개시 날짜</th>
         <th class="text-center">광고 종료 날짜</th>
+        <th class="text-center">조회수</th>
         <th class="text-center">종료</th>
         <th class="text-center">자세히</th>
       </tr>
@@ -22,6 +23,7 @@
         <td class="text-center">{{list.author}}</td>
         <td class="text-center">{{list.adDate.startD | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
         <td class="text-center">{{list.adDate.endD | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
+        <td class="text-center">{{list.visits}}</td>
         <td class="text-center"><button class="btn btn-danger" ng-click="aalc.expire(list);">종료</button></td>
         <td class="text-center"><button class="btn btn-primary" ng-click="aalc.detail(list)">자세히</button></td>
       </tr>

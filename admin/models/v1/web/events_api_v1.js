@@ -394,16 +394,16 @@ router.post('/unRejectEvent', function (req, res, next) {
 });
 
 router.post('/deleteEvent', function (req, res, next) {
-  req.db.events.find({_id: req.db.ObjectId(req.body._id)}, function(err, data){
+  req.db.events.findOne({_id: req.db.ObjectId(req.body._id)}, function(err, data){
     if(err) res.json({"doDelete": false});
 
-    var temp1 = data[0].imgThumbSrc[0].src.split('/');
+    var temp1 = data.imgThumbSrc[0].src.split('/');
     temp1.pop();
     var dirPath = 'public/' + temp1.join('/');
 
-    fs.unlinkSync('public/'+data[0].imgThumbSrc[0].src);
-    for(var i=0; i<data[0].imgSeriesSrc.length; i++){
-      fs.unlinkSync('public/'+data[0].imgSeriesSrc[i].src);
+    fs.unlinkSync('public/'+data.imgThumbSrc[0].src);
+    for(var i=0; i<data.imgSeriesSrc.length; i++){
+      fs.unlinkSync('public/'+data.imgSeriesSrc[i].src);
     }
     fs.rmdirSync(dirPath);
 

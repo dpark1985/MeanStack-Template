@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/registNewNoti', function (req, res, next) {
   req.body.registDate = new Date();
+  req.body.visits = 0;
 
   req.db.notis.insert(req.body, function(err, data) {
     if(err) res.json({"registNewNoti" : false});

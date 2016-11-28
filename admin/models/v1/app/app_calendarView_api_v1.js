@@ -12,8 +12,8 @@ router.get('/', function (req, res, next) {
 
 });
 
-router.get('/calendarViewEventsData', function (req, res, next) {
-  req.db.events.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false},
+router.post('/calendarViewEventsData', function (req, res, next) {
+  req.db.events.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false, "category.value": req.body.category},
   function(err, data) {
     if(err) res.json({"allActiveEventsList" : false});
 

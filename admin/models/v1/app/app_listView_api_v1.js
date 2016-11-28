@@ -13,8 +13,8 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.get('/listViewEventsData', function (req, res, next) {
-  req.db.events.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false}).sort({
+router.post('/listViewEventsData', function (req, res, next) {
+  req.db.events.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false, "category.value": req.body.category}).sort({
     registDate: -1
   }, function(err, data) {
     if(err) res.json({"allActiveEventsList" : false});
@@ -31,6 +31,8 @@ router.get('/listViewEventsData', function (req, res, next) {
 
     res.json({"allActiveEventsList" : true, "list": data});
   });
+
+
 });
 
 module.exports = router;

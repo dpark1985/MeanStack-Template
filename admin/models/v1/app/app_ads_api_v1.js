@@ -98,6 +98,22 @@ router.get('/allAdsList', function (req, res, next) {
 
 });
 
+router.post('/visits', function (req, res, next) {
+  req.db.ads.find({_id: req.db.ObjectId(req.body._id)}, function (err, data) {
+    if(err) res.json({"visit": false});
+
+    req.db.ads.update({_id: req.db.ObjectId(req.body._id)}, {
+      $inc: {
+        visits: 1
+      }
+    }, function (err2, data2) {
+      if(err2)res.json({"visit": false});
+
+      res.json({"visit": true});
+    });
+  });
+});
+
 
 
 module.exports = router;

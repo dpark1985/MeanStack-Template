@@ -24,6 +24,21 @@ router.get('/wrEventsList', function (req, res, next) {
   });
 });
 
+router.post('/visits', function (req, res, next) {
+  req.db.wrEvents.find({_id: req.db.ObjectId(req.body._id)}, function (err, data) {
+    if(err) res.json({"visit": false});
+
+    req.db.wrEvents.update({_id: req.db.ObjectId(req.body._id)}, {
+      $inc: {
+        visits: 1
+      }
+    }, function (err2, data2) {
+      if(err2)res.json({"visit": false});
+
+      res.json({"visit": true});
+    });
+  });
+});
 
 
 

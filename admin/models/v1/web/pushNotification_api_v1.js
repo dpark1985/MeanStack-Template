@@ -16,6 +16,15 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/doPush', function (req, res, next) {
+
+  req.db.events.update({_id: req.db.ObjectId(req.body._id)}, {
+    $set: {
+      notificationSent: true
+    }
+  }, function (err, data) {
+
+  });
+
   req.db.devices.find({}, function (err, data) {
     if(err) res.json({pushNotification: false});
 
