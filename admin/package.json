@@ -4,7 +4,7 @@
   "description": "Wonju Romance Admin Web Server + DB Server",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "nohup node ./bin/www &"
   },
   "dependencies": {
     "base64-img": "1.0.3",

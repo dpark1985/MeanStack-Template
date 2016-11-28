@@ -2,6 +2,6 @@
 module.exports = {
 
 	getServerIp: function(){
-		return "http://175.206.34.229:2016/";;
+		return "http://52.78.106.236:2016/";
 	}
 }
