@@ -62,12 +62,20 @@ var h3Framework = angular.module('h3Framework')
   };
 
   $erc.getAdminGeoLocation = function() {
+
+    $erc.daumMap({lat:37.337327184723506, lng:127.94423270747922}, 'map');
+
+/*
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition($erc.setAdminPosition);
+    } else {
+      $erc.daumMap({lat: 37.337327184723506, lng: 127.94423270747922}, 'map');
     }
+*/
   };
 
   $erc.setAdminPosition = function(position) {
+	console.log(posotion.coords);
     $erc.daumMap({lat: position.coords.latitude, lng: position.coords.longitude}, 'map');
   };
 

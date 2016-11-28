@@ -88,7 +88,7 @@
             <th class="text-center">App Version</th>
           </thead>
           <tbody>
-            <tr ng-repeat="log in over.logData.log | orderBy: reverse:tru track by $index | limitTo: 20">
+            <tr ng-repeat="log in over.logData.log |  orderBy: reverse | limitTo: 20">
               <td class="text-center">{{over.logData.log.length - $index}}</td>
               <td class="text-center">{{log.timeStemp}}</td>
               <td class="text-center" ng-if="log.platform">{{log.platform[2]}}</td>
