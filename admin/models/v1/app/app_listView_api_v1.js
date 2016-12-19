@@ -20,15 +20,18 @@ router.post('/listViewEventsData', function (req, res, next) {
     }, function(err, data) {
       if(err) res.json({"allActiveEventsList" : false});
 
-      for(var i=0; i<data.length; i++){
-        data[i].imgThumbSrc[0].src = serverIp.getServerIp() + data[i].imgThumbSrc[0].src;
-      }
+      if(data.length > 0){
+        for(var i=0; i<data.length; i++){
+          data[i].imgThumbSrc[0].src = serverIp.getServerIp() + data[i].imgThumbSrc[0].src;
+        }
 
-      for(var j=0; j<data.length; j++){
-        for(var k=0; k<data[j].imgSeriesSrc.length; k++){
-          data[j].imgSeriesSrc[k].src = serverIp.getServerIp() + data[j].imgSeriesSrc[k].src;
+        for(var j=0; j<data.length; j++){
+          for(var k=0; k<data[j].imgSeriesSrc.length; k++){
+            data[j].imgSeriesSrc[k].src = serverIp.getServerIp() + data[j].imgSeriesSrc[k].src;
+          }
         }
       }
+
 
       res.json({"allActiveEventsList" : true, "list": data});
     });
