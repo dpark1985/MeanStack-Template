@@ -52,14 +52,14 @@ router.get('/checkAppVersion', function (req, res, next) {
 });
 
 router.get('/appTitle', function (req, res, next) {
-  req.db.titleImg.find({}, function (err, data) {
+  req.db.titleImg.find({"isActive": true, "isApproved": true, "isRejected": false, "isExpired": false}, function (err, data) {
 
     if(data.length > 0){
       for(var i=0; i<data.length; i++){
         data[i].titleImage[0].src = serverIp.getServerIp() + data[i].titleImage[0].src;
       }
     }
-  
+
     res.json({'list': data});
   });
 });
