@@ -89,9 +89,12 @@ router.get('/allAdsList', function (req, res, next) {
   function(err, data) {
     if(err) res.json({"allActiveAdsList" : false, "err": error});
 
-    for(var i=0; i<data.length; i++){
-      data[i].adImage[0].src = serverIp.getServerIp() + data[i].adImage[0].src;
+    if(data.length > 0){
+      for(var i=0; i<data.length; i++){
+        data[i].adImage[0].src = serverIp.getServerIp() + data[i].adImage[0].src;
+      }
     }
+
 
     res.json({"allActiveAdsList" : true, "list": data});
   });

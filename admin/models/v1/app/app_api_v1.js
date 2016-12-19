@@ -53,11 +53,13 @@ router.get('/checkAppVersion', function (req, res, next) {
 
 router.get('/appTitle', function (req, res, next) {
   req.db.titleImg.find({}, function (err, data) {
-    for(var i=0; i<data.length; i++){
-      data[i].titleImage[0].src = serverIp.getServerIp() + data[i].titleImage[0].src;
+
+    if(data.length > 0){
+      for(var i=0; i<data.length; i++){
+        data[i].titleImage[0].src = serverIp.getServerIp() + data[i].titleImage[0].src;
+      }
     }
-
-
+  
     res.json({'list': data});
   });
 });

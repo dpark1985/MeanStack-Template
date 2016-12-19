@@ -16,9 +16,12 @@ router.get('/wrEventsList', function (req, res, next) {
   req.db.wrEvents.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false}, function (err, data) {
     if(err) res.json({"wrEventsList": false});
 
-    for(var i=0; i<data.length; i++){
-      data[i].imgThumbSrc[0].src = serverIp.getServerIp() + data[i].imgThumbSrc[0].src;
+    if(data.length > 0) {
+      for(var i=0; i<data.length; i++){
+        data[i].imgThumbSrc[0].src = serverIp.getServerIp() + data[i].imgThumbSrc[0].src;
+      }
     }
+
 
     res.json({"wrEventsList": true, "list": data});
   });
