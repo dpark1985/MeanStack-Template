@@ -52,7 +52,7 @@ router.get('/checkAppVersion', function (req, res, next) {
 });
 
 router.get('/appTitle', function (req, res, next) {
-  req.db.titleImg.find({"isActive": true, "isApproved": true, "isRejected": false, "isExpired": false}, function (err, data) {
+  req.db.titleImg.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false}, function (err, data) {
 
     if(data.length > 0){
       for(var i=0; i<data.length; i++){
