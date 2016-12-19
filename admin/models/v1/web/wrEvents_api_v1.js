@@ -13,36 +13,36 @@ router.get('/', function (req, res, next) {
 
 
 router.post('/registNewEvent', function (req, res, next) {
-  var thumbNailImg = req.body.imgThumbSrc;
-
+  var wrEventImg = req.body.imgThumbSrc;
   var timeStemp = Date.now();
 
   req.body.imgThumbSrc = [];
   req.body.registDate = new Date();
   req.body.visits = 0;
-  req.body.isActive = false,
-  req.body.isApproved = false,
-  req.body.isRejected = false,
-  req.body.isExpired = false
+  req.body.isActive = false;
+  req.body.isApproved = false;
+  req.body.isRejected = false;
+  req.body.isExpired = false;
 
+  if(wrEventImg[0]){
+    var fileType = wrEventImg[0].split(',')[0];
+    var fileData = wrEventImg[0].split(',')[1];
+  }
 
   req.db.wrEvents.insert(req.body, function (err, data) {
     if(err) res.json({"registNewEvent" : false});
 
     var titleStr = "";
-
     for(var i=0; i<req.body.title.split(' ').length; i++){
       titleStr += "_" + req.body.title.split(' ')[i];
     }
-
     var imgPath = "./public/dbImg/wrEvents/" + timeStemp + titleStr;
 
-    // data._id
-    var thumbPromise = new Promise(function (resolve, reject) {
-      for(var i=0; i<thumbNailImg.length; i++){
-        var imgFileName = "thumb" + titleStr + "_" + i + "_" + timeStemp;
-        req.base64Img.img(thumbNailImg[i], imgPath, imgFileName, function (imgErr, filePath){
-          if(imgErr) reject("thumbNailImg");
+    if(fileType.indexOf('image/png') > 0) {
+      for(var i=0; i<wrEventImg.length; i++) {
+        var imgFileName = "wrEvent" + titleStr + "_" + i + "_" + timeStemp;
+        req.base64Img.img(wrEventImg[i], imgPath, imgFileName, function (imgErr, filePath){
+          if(imgErr) res.json({"registNewEvent" : false});
 
           filePath = filePath.replace("public/", "");
           req.db.wrEvents.update({_id: req.db.ObjectId(data._id)}, {
@@ -52,18 +52,72 @@ router.post('/registNewEvent', function (req, res, next) {
               }
             }
           }, function (err2, data2) {
-            if(err2) reject("thumbNailImg");
+            if(err2) res.json({"registNewEvent" : false});
+
+            res.json({"registNewEvent" : true});
           });
         });
       };
-      resolve(true);
-    });
+    } else if(fileType.indexOf('image/svg+xml') > 0) {
+      var tempDir = imgPath.split('/');
+      tempDir.pop();
+      var dir = tempDir.join('/');
 
-    Promise.all([thumbPromise]).then(function (values) {
-      res.json({"registNewEvent" : true});
-    }, function (error) {
-      res.json({"registNewEvent" : false, "err": error});
-    });
+      fs.stat(dir, function (statErr) {
+        if(statErr){
+          fs.mkdir(dir, function (mkDirErr) {
+            if(mkDirErr) res.json({"registNewEvent" : false});
+
+            fs.mkdir(imgPath, function(mkErr) {
+              if(mkErr) res.json({"registNewEvent" : false});
+
+              fs.writeFile(imgPath+'/wrEvent.svg', req.base64Svg.decode(fileData), 'utf8', function(fileErr){
+                if (fileErr) throw fileErr;
+
+                var filePath = imgPath+'/wrEvent.svg';
+                filePath = filePath.replace("./public/", "");
+                req.db.wrEvents.update({_id: req.db.ObjectId(data._id)}, {
+                  $push: {
+                    imgThumbSrc: {
+                      src: filePath
+                    }
+                  }
+                }, function(err2, data2) {
+                  if(err2) res.json({"registNewEvent" : false});
+
+                  res.json({"registNewEvent" : true});
+                });
+              });
+            });
+          });
+        } else {
+          fs.mkdir(imgPath, function(mkErr) {
+            if(mkErr) res.json({"registNewEvent" : false});
+
+            fs.writeFile(imgPath+'/wrEvent.svg', req.base64Svg.decode(fileData), 'utf8', function(fileErr){
+              if (fileErr) throw fileErr;
+
+              var filePath = imgPath+'/wrEvent.svg';
+              filePath = filePath.replace("./public/", "");
+              req.db.wrEvents.update({_id: req.db.ObjectId(data._id)}, {
+                $push: {
+                  imgThumbSrc: {
+                    src: filePath
+                  }
+                }
+              }, function(err2, data2) {
+                if(err2) res.json({"registNewEvent" : false});
+
+                res.json({"registNewEvent" : true});
+              });
+            });
+          });
+        }
+      });
+
+
+
+    }
   });
 });
 
@@ -187,21 +241,39 @@ router.post('/unRejectEvent', function (req, res, next) {
 });
 
 router.post('/deleteEvent', function (req, res, next) {
-  req.db.wrEvents.find({_id: req.db.ObjectId(req.body._id)}, function(err, data){
+  req.db.wrEvents.findOne({_id: req.db.ObjectId(req.body._id)}, function(err, data){
     if(err) res.json({"doDelete": false});
 
-    var temp1 = data[0].imgThumbSrc[0].src.split('/');
-    temp1.pop();
-    var dirPath = 'public/' + temp1.join('/');
+    if(data.imgThumbSrc[0]){
+      var temp1 = data.imgThumbSrc[0].src.split('/');
+      temp1.pop();
+      var dirPath = 'public/' + temp1.join('/');
 
-    fs.unlinkSync('public/'+data[0].imgThumbSrc[0].src);
-    fs.rmdirSync(dirPath);
+      fs.stat('./public/'+data.imgThumbSrc[0].src, function (statErr, stats) {
+        if(statErr) {
+          req.db.wrEvents.remove({_id: req.db.ObjectId(req.body._id)}, (err2, data2) => {
+            if(err2) res.json({"doDelete": false});
 
-    req.db.wrEvents.remove({_id: req.db.ObjectId(req.body._id)}, (err2, data2) => {
-      if(err2) res.json({"doDelete": false});
+            res.json({"doDelete": true});
+          });
+        } else {
+          fs.unlinkSync('public/'+data.imgThumbSrc[0].src);
+          fs.rmdirSync(dirPath);
 
-      res.json({"doDelete": true});
-    });
+          req.db.wrEvents.remove({_id: req.db.ObjectId(req.body._id)}, (err2, data2) => {
+            if(err2) res.json({"doDelete": false});
+
+            res.json({"doDelete": true});
+          });
+        }
+      });
+    } else {
+      req.db.wrEvents.remove({_id: req.db.ObjectId(req.body._id)}, (err2, data2) => {
+        if(err2) res.json({"doDelete": false});
+
+        res.json({"doDelete": true});
+      });
+    }
   });
 });
 

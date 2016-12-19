@@ -8,6 +8,7 @@ var h3Framework = angular.module('h3Framework')
 			// {path: '/dashboard',			templateUrl: 'templates/views/dashboard/dashboard.html',			controller: 'dashCtrl',				controllerAs: 'dash'},
 			{path: '/dashboard/overview', templateUrl: 'templates/views/dashboard/overview/overview.html', controller: 'overViewCtrl', controllerAs: 'over'},
 			{path: '/dashboard/analytices', templateUrl: 'templates/views/dashboard/analytics/analytics.html', controller: '', controllerAs: ''},
+			{path: '/dashboard/appTitle', templateUrl: 'templates/views/dashboard/appTitle/appTitle.html', controller: 'appTitleCtrl', controllerAs: 'appTitle'},
 			{path: '/dashboard/events', templateUrl: 'templates/views/dashboard/events/events.html', controller: 'eventsCtrl', controllerAs: 'events'},
 			{path: '/dashboard/ads', templateUrl: 'templates/views/dashboard/ads/ads.html', controller: 'adsCtrl', controllerAs: 'ads'},
 			{path: '/dashboard/wrEvents', templateUrl: 'templates/views/dashboard/wrEvents/wrEvents.html', controller: 'wrEventsCtrl', controllerAs: 'wrEvents'},

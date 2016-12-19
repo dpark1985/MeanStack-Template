@@ -1,0 +1,27 @@
+
+<div ng-controller="appTitleExpireListCtrl as atelc">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">등록일</th>
+        <th class="text-center">제목</th>
+        <th class="text-center">만료취소</th>
+        <th class="text-center">광고 삭제</th>
+        <th class="text-center">자세히</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="list in atelc.allExpiredList | orderBy: reverse:true track by $index">
+        <td class="text-center">{{atelc.allExpiredList.length - $index}}</td>
+        <td class="text-center">{{list.registDate | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
+        <td>{{list.title}}</td>
+        <td class="text-center"><button class="btn btn-danger" ng-click="atelc.unExpire(list);">만료취소</button></td>
+        <td class="text-center"><button class="btn btn-danger" ng-click="atelc.delete(list);">광고삭제</button></td>
+        <td class="text-center"><button class="btn btn-primary" ng-click="atelc.detail(list)">자세히</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

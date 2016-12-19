@@ -13,8 +13,8 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.post('/mapViewEventsData', function (req, res, next) {
-  req.db.events.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false, "category.value": req.body.category},
+router.get('/mapViewEventsData', function (req, res, next) {
+  req.db.events.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false},
   function(err, data) {
     if(err) res.json({"allActiveEventsList" : false});
 

@@ -9,6 +9,7 @@ var h3Framework = angular.module('h3Framework')
 	];
 
 	$dash.secondMenuConfig = [
+		{name: '앱인트로이미지', en: 'appTitle', href: '/dashboard/appTitle', active: false},
 		{name: '행사', en: 'events', href: '/dashboard/events', active: false},
 		{name: '광고', en: 'ads', href: '/dashboard/ads', active: false},
 		{name: '이벤트', en: 'wrEvents', href: '/dashboard/wrEvents', active: false},

@@ -32,7 +32,7 @@ router.post('/initCategories', function (req, res, next) {
       category: "subCategory1",
       list: [
         {title: "공연", value: 1},
-        {title: "음악", value: 2},
+        {title: "음악회", value: 2},
         {title: "영화", value: 3},
         {title: "강연", value: 4},
         {title: "축제", value: 5},
@@ -54,7 +54,8 @@ router.post('/initCategories', function (req, res, next) {
         {title: "테니스", value: 4},
         {title: "배드민턴", value: 5},
         {title: "볼링", value: 6},
-        {title: "걷기", value: 7},
+        {title: "마라톤", value: 7},
+        {title: "걷기", value: 8},
       ]
     }, function(err, data){
       if(err) reject(false);
@@ -211,23 +212,26 @@ router.post('/registNewEvent', function (req, res, next) {
   req.body.isExpired = false;
   req.body.notificationSent = false;
 
+  if(thumbNailImg[0]){
+    var fileType1 = thumbNailImg[0].split(',')[0];
+    var fileData1 = thumbNailImg[0].split(',')[1];
+  }
+
 
   req.db.events.insert(req.body, function (err, data) {
     if(err) res.json({"registNewEvent" : false});
 
     var titleStr = "";
-
     for(var i=0; i<req.body.title.split(' ').length; i++){
       titleStr += "_" + req.body.title.split(' ')[i];
     }
-
     var imgPath = "./public/dbImg/events/" + timeStemp + titleStr;
 
     // data._id
     var thumbPromise = new Promise(function (resolve, reject) {
-      for(var i=0; i<thumbNailImg.length; i++){
+      if(fileType1.indexOf('image/png') > 0) {
         var imgFileName = "thumb" + titleStr + "_" + i + "_" + timeStemp;
-        req.base64Img.img(thumbNailImg[i], imgPath, imgFileName, function (imgErr, filePath){
+        req.base64Img.img(thumbNailImg[0], imgPath, imgFileName, function (imgErr, filePath){
           if(imgErr) reject("thumbNailImg");
 
           filePath = filePath.replace("public/", "");
@@ -241,8 +245,30 @@ router.post('/registNewEvent', function (req, res, next) {
             if(err2) reject("thumbNailImg");
           });
         });
-      };
-      resolve(true);
+        resolve(true);
+      } else if(fileType1.indexOf('image/svg+xml') > 0) {
+        fs.mkdir(imgPath, function(mkErr) {
+          if(mkErr) reject("thumbNailImg");
+
+          fs.writeFile(imgPath+'/thumb.svg', req.base64Svg.decode(fileData1), 'utf8', function(fileErr) {
+            if (fileErr) reject("thumbNailImg");
+
+            var filePath = imgPath+'/thumb.svg';
+            filePath = filePath.replace("./public/", "");
+            req.db.events.update({_id: req.db.ObjectId(data._id)}, {
+              $push: {
+                imgThumbSrc: {
+                  src: filePath
+                }
+              }
+            }, function (err2, data2) {
+              if(err2) reject("thumbNailImg");
+
+              resolve(true);
+            });
+          });
+        });
+      }
     });
 
     var serisePromise = new Promise(function (resolve, reject) {
@@ -269,6 +295,7 @@ router.post('/registNewEvent', function (req, res, next) {
     Promise.all([thumbPromise, serisePromise]).then(function (values) {
       res.json({"registNewEvent" : true});
     }, function (error) {
+      console.log(error);
       res.json({"registNewEvent" : false, "err": error});
     });
   });
@@ -397,22 +424,39 @@ router.post('/deleteEvent', function (req, res, next) {
   req.db.events.findOne({_id: req.db.ObjectId(req.body._id)}, function(err, data){
     if(err) res.json({"doDelete": false});
 
-    var temp1 = data.imgThumbSrc[0].src.split('/');
-    temp1.pop();
-    var dirPath = 'public/' + temp1.join('/');
+    if(data.imgThumbSrc[0]) {
+      var temp1 = data.imgThumbSrc[0].src.split('/');
+      temp1.pop();
+      var dirPath = 'public/' + temp1.join('/');
 
-    fs.unlinkSync('public/'+data.imgThumbSrc[0].src);
-    for(var i=0; i<data.imgSeriesSrc.length; i++){
-      fs.unlinkSync('public/'+data.imgSeriesSrc[i].src);
+      fs.stat('./public/'+data.imgThumbSrc[0].src, function (statErr, stats) {
+        if(statErr) {
+          req.db.events.remove({_id: req.db.ObjectId(req.body._id)}, function (err2, data2){
+            if(err2) res.json({"doDelete": false});
+
+            res.json({"doDelete": true});
+          });
+        } else {
+          fs.unlinkSync('public/'+data.imgThumbSrc[0].src);
+          for(var i=0; i<data.imgSeriesSrc.length; i++){
+            fs.unlinkSync('public/'+data.imgSeriesSrc[i].src);
+          }
+          fs.rmdirSync(dirPath);
+
+          req.db.events.remove({_id: req.db.ObjectId(req.body._id)}, function (err2, data2){
+            if(err2) res.json({"doDelete": false});
+
+            res.json({"doDelete": true});
+          });
+        }
+      })
+    } else {
+      req.db.events.remove({_id: req.db.ObjectId(req.body._id)}, function (err2, data2){
+        if(err2) res.json({"doDelete": false});
+
+        res.json({"doDelete": true});
+      });
     }
-    fs.rmdirSync(dirPath);
-
-    req.db.events.remove({_id: req.db.ObjectId(req.body._id)}, function (err2, data2){
-      if(err2) res.json({"doDelete": false});
-
-      res.json({"doDelete": true});
-    });
-
   });
 });
 

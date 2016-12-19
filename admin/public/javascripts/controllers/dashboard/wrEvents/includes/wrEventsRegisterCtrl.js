@@ -6,6 +6,7 @@ var h3Framework = angular.module('h3Framework')
 
   $wrerc.submit = function() {
     $wr_wrEvent.doRegistNewEvent($wrerc.eventInfo).then(function (res) {
+      console.log(res);
       if(res.data.registNewEvent){
         $scope.$parent.wrEvents.modalContent = {
           title: "이벤트 등록",

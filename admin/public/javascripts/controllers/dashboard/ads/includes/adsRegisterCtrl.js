@@ -5,7 +5,7 @@ var h3Framework = angular.module('h3Framework')
 
   $arc.submit = function() {
     if($arc.registAdonAll) {
-      $arc.adInfo.location = {"location" : "AllView", "value": 3};
+      $arc.adInfo.location = [{"location" : "AllView", "value": 0}];
     }
     var startD = new Date($('#startDate').data('DateTimePicker').date()._d);
     var endD = new Date($('#endDate').data('DateTimePicker').date()._d);
@@ -57,6 +57,11 @@ var h3Framework = angular.module('h3Framework')
     $arc.adLocation = [
       {"location" : "MainView", "value": 1},
       {"location" : "ListView", "value": 2},
+      {"location" : "favoritView", "value": 3},
+      {"location" : "watchView", "value": 4},
+      {"location" : "searchView", "value": 5},
+      {"location" : "settingsView", "value": 6},
+      {"location" : "categoriesView", "value": 7},
     ];
 
     $arc.adInfo = {
@@ -64,16 +69,12 @@ var h3Framework = angular.module('h3Framework')
       author: null,
       phones: null,
       href: null,
-      location: $arc.adLocation[0],
+      location: [$arc.adLocation[0]],
       adImage: null,
       adDate: {
         startD: null,
         endD: null
-      },
-      isActive: false,
-      isApproved: false,
-      isExpired: false,
-      isRejected: false,
+      }
     };
   };
 

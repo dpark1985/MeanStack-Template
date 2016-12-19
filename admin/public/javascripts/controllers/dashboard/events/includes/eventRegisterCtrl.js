@@ -3,6 +3,12 @@ var h3Framework = angular.module('h3Framework')
 .controller('eventRegisterCtrl', ['$scope', '$location', '$wr_event', '$wr_s', function ($scope, $location, $wr_event, $wr_s) {
   var $erc = this;
 
+  $erc.openCategoryModal = function() {
+
+    $scope.$parent.events.categories = $erc.categories;
+    $('#categoryPlusModal').modal('show');
+  }
+
   $erc.daumMap = function(latlng, id) {
     var mapContainer = document.getElementById(id);
 
@@ -244,7 +250,7 @@ var h3Framework = angular.module('h3Framework')
         sponsors: null,
         phones: null,
         emails: null,
-        homepage: null,
+        href: null,
         desc: null,
         imgThumbSrc: null,
         imgSeriesSrc: null,

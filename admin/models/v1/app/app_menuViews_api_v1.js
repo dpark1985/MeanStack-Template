@@ -19,12 +19,11 @@ router.get('/noticeList', function (req, res, next) {
   }, function (err, data) {
       if(err) res.json({"allActiveNotisList" : false});
 
-      var noticeData = [];
-      for(var i=0; i<5; i++){
-        if(data[i]){
-          noticeData.push(data[i]);
-        }
+      var noticeData = data;
+      for(var i=0; i<noticeData.length; i++){
+        noticeData[i].imgThumbSrc[0].src = serverIp.getServerIp() + noticeData[i].imgThumbSrc[0].src;
       }
+
       res.json({"allActiveNotisList" : true, "list": noticeData});
   });
 });

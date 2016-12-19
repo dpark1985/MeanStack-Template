@@ -72,15 +72,15 @@
     <div class="row">
       <div class="col-sm-3 col-md-2 sidebar" ng-if="dash.userData">
         <ul class="nav nav-sidebar">
-          <li ng-repeat="menu in dash.firstMenuConfig" ng-class="{active: menu.active}"><a ng-href="{{menu.href}}" ng-click="dash.menuClick(menu)">{{menu.name}} <span class="sr-only" ng-if="menu.active">(current)</span></a></li>
+          <li ng-repeat="menu in dash.firstMenuConfig" ng-class="{'active': menu.active}"><a ng-href="{{menu.href}}" ng-click="dash.menuClick(menu)">{{menu.name}} <span class="sr-only" ng-if="menu.active">(current)</span></a></li>
         </ul>
         <hr>
         <ul class="nav nav-sidebar">
-          <li ng-repeat="menu in dash.secondMenuConfig" ng-class="{active: menu.active}"><a ng-href="{{menu.href}}" ng-click="dash.menuClick(menu)">{{menu.name}} <span class="sr-only" ng-if="menu.active">(current)</span></a></li>
+          <li ng-repeat="menu in dash.secondMenuConfig" ng-class="{'active': menu.active, 'bg-danger': (menu.en == 'events')? true: false}"><a ng-href="{{menu.href}}" ng-class="{'text-danger': (menu.en == 'events')? true: false}" ng-click="dash.menuClick(menu)">{{menu.name}} <span class="sr-only" ng-if="menu.active">(current)</span></a></li>
         </ul>
         <hr>
         <ul class="nav nav-sidebar">
-          <li ng-repeat="menu in dash.thridMenuConfig" ng-class="{active: menu.active}"><a ng-href="{{menu.href}}" ng-click="dash.menuClick(menu)">{{menu.name}} <span class="sr-only" ng-if="menu.active">(current)</span></a></li>
+          <li ng-repeat="menu in dash.thridMenuConfig" ng-class="{'active': menu.active}"><a ng-href="{{menu.href}}" ng-click="dash.menuClick(menu)">{{menu.name}} <span class="sr-only" ng-if="menu.active">(current)</span></a></li>
         </ul>
       </div>
       <!-- dashCtrl menuConfig -->
@@ -185,6 +185,7 @@
   <script type="text/javascript" src="javascripts/services/adminServices.js"></script>
   <script type="text/javascript" src="javascripts/services/wrEventApiFactories.js"></script>
   <script type="text/javascript" src="javascripts/services/pushNotificationApiFactories.js"></script>
+  <script type="text/javascript" src="javascripts/services/appTitleApiFactories.js"></script>
 
   <!-- Directives -->
   <script type="text/javascript" src="javascripts/directives/navDirective.js"></script>
@@ -197,6 +198,16 @@
 
   <!-- Controllers : overview -->
   <script type="text/javascript" src="javascripts/controllers/dashboard/overView/overViewCtrl.js"></script>
+
+  <!-- Controllers : appTitle -->
+  <script type="text/javascript" src="javascripts/controllers/dashboard/appTitle/appTitleCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/appTitle/includes/appTitleMgmtCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/appTitle/includes/appTitleActiveListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/appTitle/includes/appTitlePendingListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/appTitle/includes/appTitleRejectListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/appTitle/includes/appTitleExpireListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/appTitle/includes/appTitleListCtrl.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard/appTitle/includes/appTitleRegisterCtrl.js"></script>
 
   <!-- Controllers : events -->
   <script type="text/javascript" src="javascripts/controllers/dashboard/events/eventsCtrl.js"></script>

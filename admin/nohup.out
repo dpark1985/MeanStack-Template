@@ -659,3 +659,7 @@
 [0mGET /android-icon-144x144.png [36m304 [0m2.307 ms - -[0m
 [0mGET /android-icon-192x192.png [36m304 [0m2.912 ms - -[0m
 [0mGET /wr/api/v1/events/eventStatusCount [36m304 [0m3.161 ms - -[0m
+[0mGET / [32m200 [0m20.439 ms - 15989[0m
+[0mGET / [36m304 [0m15.546 ms - -[0m
+[0mGET /wr/api/v1/admin/isLoggedIn [36m304 [0m2.103 ms - -[0m
+[0mGET /wr/api/v1/admin/isAdminExist [36m304 [0m55.330 ms - -[0m

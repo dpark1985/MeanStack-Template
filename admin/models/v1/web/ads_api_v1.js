@@ -18,6 +18,17 @@ router.post('/registNewAd', function (req, res, next) {
   req.body.adImage = [];
   req.body.registDate = new Date();
   req.body.visits = 0;
+  req.body.isActive = false,
+  req.body.isApproved = false,
+  req.body.isRejected = false,
+  req.body.isExpired = false;
+
+  // console.log(adImg);
+
+  if(adImg[0]){
+    var fileType = adImg[0].split(',')[0];
+    var fileData = adImg[0].split(',')[1];
+  }
 
   req.db.ads.insert(req.body, function(err, data) {
     if(err) res.json({"doRegistNewAd" : false});
@@ -26,12 +37,11 @@ router.post('/registNewAd', function (req, res, next) {
     for(var i=0; i<req.body.title.split(' ').length; i++){
       titleStr += "_" + req.body.title.split(' ')[i];
     }
-
     var imgPath = "./public/dbImg/ads/" + timeStemp + titleStr;
 
-    for(var i=0; i<adImg.length; i++){
+    if(fileType.indexOf('image/png') > 0) {
       var imgFileName = "ad" + titleStr + "_" + i + "_" + timeStemp;
-      req.base64Img.img(adImg[i], imgPath, imgFileName, function(imgErr, filePath){
+      req.base64Img.img(adImg[0], imgPath, imgFileName, function(imgErr, filePath){
         if(imgErr) res.json({"doRegistNewAd" : false});
 
         filePath = filePath.replace("public/", "");
@@ -47,8 +57,63 @@ router.post('/registNewAd', function (req, res, next) {
           res.json({"doRegistNewAd" : true});
         });
       });
-    }
+    } else if(fileType.indexOf('image/svg+xml') > 0) {
+      var tempDir = imgPath.split('/');
+      tempDir.pop();
+      var dir = tempDir.join('/');
 
+      fs.stat(dir, function (statErr) {
+        if(statErr) {
+          fs.mkdir(dir, function (mkDirErr) {
+            if(mkDirErr) res.json({"doRegistNewAd" : false});
+
+            fs.mkdir(imgPath, function(mkErr) {
+              if(mkErr) res.json({"doRegistNewAd" : false});
+
+              fs.writeFile(imgPath+'/adImg.svg', req.base64Svg.decode(fileData), 'utf8', function(fileErr){
+                if (fileErr) throw fileErr;
+
+                var filePath = imgPath+'/adImg.svg';
+                filePath = filePath.replace("./public/", "");
+                req.db.ads.update({_id: req.db.ObjectId(data._id)}, {
+                  $push: {
+                    adImage: {
+                      src: filePath
+                    }
+                  }
+                }, function(err2, data2) {
+                  if(err2) res.json({"doRegistNewAd" : false});
+
+                  res.json({"doRegistNewAd" : true});
+                });
+              });
+            });
+          });
+        } else {
+          fs.mkdir(imgPath, function(mkErr) {
+            if(mkErr) res.json({"doRegistNewAd" : false});
+
+            fs.writeFile(imgPath+'/adImg.svg', req.base64Svg.decode(fileData), 'utf8', function(fileErr){
+              if (fileErr) throw fileErr;
+
+              var filePath = imgPath+'/adImg.svg';
+              filePath = filePath.replace("./public/", "");
+              req.db.ads.update({_id: req.db.ObjectId(data._id)}, {
+                $push: {
+                  adImage: {
+                    src: filePath
+                  }
+                }
+              }, function(err2, data2) {
+                if(err2) res.json({"doRegistNewAd" : false});
+
+                res.json({"doRegistNewAd" : true});
+              });
+            });
+          });
+        }
+      });
+    }
   });
 });
 
@@ -80,7 +145,7 @@ router.post('/activateAd', function (req, res, next) {
     if(err) res.json({"activateAd": false});
 
     res.json({"activateAd": true});
-  })
+  });
 });
 
 router.post('/rejectAd', function (req, res, next) {
@@ -159,23 +224,39 @@ router.post('/unRejectAd', function (req, res, next) {
 });
 
 router.post('/deleteAd', function (req, res, next) {
-  req.db.ads.find({_id: req.db.ObjectId(req.body._id)}, function(err, data){
+  req.db.ads.findOne({_id: req.db.ObjectId(req.body._id)}, function(err, data){
     if(err) res.json({"doDelete": false});
 
-    var temp1 = data[0].adImage[0].src.split('/');
-    temp1.pop();
-    var dirPath = 'public/' + temp1.join('/');
+    if(data.adImage[0]){
+      var temp1 = data.adImage[0].src.split('/');
+      temp1.pop();
+      var dirPath = 'public/' + temp1.join('/');
 
+      fs.stat('./public/'+data.adImage[0].src, function (statErr, stats){
+        if(statErr) {
+          req.db.ads.remove({_id: req.db.ObjectId(req.body._id)}, function (err2, data2){
+            if(err2) res.json({"doDelete": false});
 
-    fs.unlinkSync('public/'+data[0].adImage[0].src);
-    fs.rmdirSync(dirPath);
+            res.json({"doDelete": true});
+          });
+        } else {
+          fs.unlinkSync('public/'+data.adImage[0].src);
+          fs.rmdirSync(dirPath);
 
-    req.db.ads.remove({_id: req.db.ObjectId(req.body._id)}, function (err2, data2){
-      if(err2) res.json({"doDelete": false});
+          req.db.ads.remove({_id: req.db.ObjectId(req.body._id)}, function (err2, data2){
+            if(err2) res.json({"doDelete": false});
 
-      res.json({"doDelete": true});
-    });
+            res.json({"doDelete": true});
+          });
+        }
+      });
+    } else {
+      req.db.ads.remove({_id: req.db.ObjectId(req.body._id)}, function (err2, data2){
+        if(err2) res.json({"doDelete": false});
 
+        res.json({"doDelete": true});
+      });
+    }
   });
 });
 

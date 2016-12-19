@@ -32,8 +32,6 @@ var h3Framework = angular.module('h3Framework')
         $wr_s.showServerError();
       }
     });
-
-    $wr_s.hideLoading();
   };
 
   $amc.init();

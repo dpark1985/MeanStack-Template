@@ -21,12 +21,15 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
+            <h3>카테고리1</h3>
             <select class="form-control" ng-options="main as main.title for main in events.categories[0].list" ng-model="events.categoryPlusMain"></select>
+            <h3>카테고리2</h3>
             <ul ng-repeat="category in events.categories">
               <li ng-if="events.categoryPlusMain.sub == category.category" ng-repeat="sub in category.list">{&#34;title&#34;: &#34;{{sub.title}}&#34;, &#34;value&#34;: &#34;{{sub.value}}}&#34;</li>
             </ul>
           </div>
         </div>
+        <hr>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">

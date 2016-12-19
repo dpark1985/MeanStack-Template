@@ -23,7 +23,7 @@ router.get('/mainViewAdsList', function (req, res, next) {
   });
 
   var allViewAdsListPromise = new Promise (function (resolve, reject) {
-    req.db.ads.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false, "location.value": 3},
+    req.db.ads.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false, "location.value": 0},
     function(err, data) {
       if(err) reject(true);
 
@@ -59,7 +59,7 @@ router.get('/listViewAdsList', function (req, res, next) {
   });
 
   var allViewAdsListPromise = new Promise (function (resolve, reject) {
-    req.db.ads.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false, "location.value": 3},
+    req.db.ads.find({"isApproved": true, "isActive": true, "isExpired" : false, "isRejected": false, "location.value": 0},
     function(err, data) {
       if(err) reject(true);
 

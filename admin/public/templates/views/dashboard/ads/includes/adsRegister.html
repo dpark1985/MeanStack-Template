@@ -50,7 +50,7 @@
     <label for="adLocation">광고 위치</label>
     <div class="row" id="adLocation">
       <div class="col-md-6">
-        <select class="form-control" ng-options="main as main.location for main in arc.adLocation" ng-model="arc.adInfo.location"></select>
+        <select multiple class="form-control" ng-options="main as main.location for main in arc.adLocation" ng-model="arc.adInfo.location"></select>
       </div>
       <div class="col-md-6">
         <label>
@@ -63,9 +63,14 @@
   <div class="form-group">
     <label for="adImage">광고 이미지 등록</label>
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-6">
         <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
-          광고 이미지 등록(Single)<input type="file" id="eventsImageThumb" class="fileInput" accept="image/gif, image/jpeg, image/png" fileread="arc.adInfo.adImage">
+          광고 이미지 등록(Single SVG=360*63)<input type="file" id="eventsImageThumb" class="fileInput" fileread="arc.adInfo.adImage">
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          광고 이미지 등록(Single PNG=540*94.5)<input type="file" id="eventsImageThumb" class="fileInput" accept="image/gif, image/jpeg, image/png" fileread="arc.adInfo.adImage">
         </button>
       </div>
     </div>

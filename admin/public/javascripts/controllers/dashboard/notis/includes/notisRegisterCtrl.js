@@ -5,10 +5,6 @@ var h3Framework = angular.module('h3Framework')
 
 
   $nrc.submit = function() {
-
-
-    console.log($nrc.noteInfo);
-
     $wr_notis.doRegistNewNoti($nrc.noteInfo).then(function(res) {
       if(res.data.registNewNoti) {
         $scope.$parent.notis.modalContent = {
@@ -37,12 +33,9 @@ var h3Framework = angular.module('h3Framework')
   $nrc.notisRegisterInit = function() {
     $nrc.noteInfo = {
       title: null,
+      desc: null,
       href: null,
-
-      isActive: false,
-      isApproved: false,
-      isRejected: false,
-
+      imgThumbSrc: null
     };
   };
 
