@@ -59,7 +59,6 @@ router.get('/appTitle', function (req, res, next) {
         data[i].titleImage[0].src = serverIp.getServerIp() + data[i].titleImage[0].src;
       }
     }
-
     res.json({'list': data});
   });
 });
