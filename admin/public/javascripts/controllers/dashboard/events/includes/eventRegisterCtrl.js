@@ -168,7 +168,7 @@ var h3Framework = angular.module('h3Framework')
     if($erc.eventInfo.sponsors) $erc.eventInfo.sponsors = $erc.eventInfo.sponsors.split(",");
     if($erc.eventInfo.phones) $erc.eventInfo.phones = $erc.eventInfo.phones.trim().split(",");
     if($erc.eventInfo.emails) $erc.eventInfo.emails = $erc.eventInfo.emails.trim().split(",");
-    if($erc.eventInfo.homepage) $erc.eventInfo.homepage = $erc.eventInfo.homepage.trim().split(",");
+    if($erc.eventInfo.href) $erc.eventInfo.href = $erc.eventInfo.href.trim().split(",");
 
     var startD = new Date($('#startDate').data('DateTimePicker').date()._d);
     $erc.eventInfo.eventDate.startD = startD;
