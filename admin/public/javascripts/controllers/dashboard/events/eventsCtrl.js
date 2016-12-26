@@ -1,6 +1,6 @@
 var h3Framework = angular.module('h3Framework')
 
-.controller('eventsCtrl', ['$wr_s', function ($wr_s) {
+.controller('eventsCtrl', ['$wr_s', '$wr_event', function ($wr_s, $wr_event) {
   var $events = this;
 
   $events.tabSelected = 'eventMgmt';
@@ -42,6 +42,82 @@ var h3Framework = angular.module('h3Framework')
   $('#detailsModal').on('hidden.bs.modal', function (e) {
     $events.disableEdit();
   });
+
+  $events.addMainCategory = function() {
+    if($events.newMainCategory){
+      $wr_event.doAddMainCategory({
+        newMainCategory: $erc.newMainCategory
+      }).then(function (res) {
+        if(res.data.newMainCategory){
+          $wr_event.getCategories().then(function (res) {
+            $events.categories = res.data;
+            $events.newMainCategory = null;
+          });
+        }
+      });
+    }
+  };
+
+  $events.addSubCategory = function() {
+    if($events.newSubCategory){
+      $wr_event.doAddSubCategory({
+        category: $events.categoryPlusMain.sub,
+        item: $events.newSubCategory
+      }).then(function (res) {
+        if(res.data.newSubCategory){
+          $wr_event.getCategories().then(function (res) {
+            $events.categories = res.data;
+            $events.newSubCategory = null
+          });
+        }
+      });
+    }
+  };
+
+  $events.removeMainCategory = function() {
+    $wr_event.doRemoveMainCategory($erc.categoryPlusMain).then(function (res) {
+      if(res.data.removeMainCategory) {
+        $wr_event.getCategories().then(function (res) {
+          $events.categories = res.data;
+          $('#removeMainCategoryModal').modal('hide');
+          $('.modal-backdrop.fade.in').css("display", "none");
+        });
+      }
+    });
+  };
+
+  $events.removeSubCategory = function() {
+    var checkFlag = false;
+    if($events.newSubCategory) {
+      for(var i=0; i<$events.categories.length; i++){
+        if($events.categories[i].category == $events.categoryPlusMain.sub){
+          for(var j=0; j<$events.categories[i].list.length; j++){
+            if($events.categories[i].list[j].title == $events.newSubCategory){
+              checkFlag = true;
+              $wr_event.doRemoveSubCategory({
+                mainCategory: $events.categoryPlusMain,
+                subCategoryTitle: $events.newSubCategory
+              }).then(function (res) {
+                if(res.data.removeSubCategory) {
+                  $wr_event.getCategories().then(function (res) {
+                    $events.categories = res.data;
+                    $events.newSubCategory = null
+                    $('#removeSubCategoryModal').modal('hide');
+                    $('.modal-backdrop.fade.in').css("display", "none");
+                  });
+                }
+              });
+            }
+          }
+        }
+      }
+      if(!checkFlag) {
+        $events.newSubCategory = null
+        $('#removeSubCategoryModal').modal('hide');
+        $('.modal-backdrop.fade.in').css("display", "none");
+      }
+    }
+  };
 
   $events.clearActive = function(tabConfig){
     for(var i=0; i<tabConfig.length; i++){
