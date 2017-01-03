@@ -1,0 +1,33 @@
+
+<div ng-controller="icMgmtCtrl as icmc">
+  <div class="row placeholders marginTop50">
+    <div class="col-xs-6 col-md-2 col-md-offset-1 placeholder">
+      <div class="statIndicatorBox verticalCenter" ng-class="[{'penddingBox': icmc.inquiryReportStatusCount[0].newInquiries == 0}, {'rejectedBox': icmc.inquiryReportStatusCount[0].newInquiries > 0}]" ng-click="icmc.tabActivatedClick()">
+        <h2>{{icmc.inquiryReportStatusCount[0].newInquiries}}</h2>
+      </div>
+      <h4>새로운 문의사항</h4>
+      <span class="text-muted">App을 통해 새로 등록된 문의사항</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox verticalCenter" ng-class="[{'penddingBox': icmc.inquiryReportStatusCount[1].examedInquiries == 0}, {'activatedBox': icmc.inquiryReportStatusCount[1].examedInquiries > 0}]" ng-click="icmc.tabPendingClick()">
+        <h2>{{icmc.inquiryReportStatusCount[1].examedInquiries}}</h2>
+      </div>
+      <h4>검토중</h4>
+      <span class="text-muted">검토중인 문의사항 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="icmc.tabRejectedClick()">
+        <h2>{{icmc.inquiryReportStatusCount[2].registeredInquiries}}</h2>
+      </div>
+      <h4>검토 완료</h4>
+      <span class="text-muted">검토 완료된 문의사항 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="icmc.tabExpiredClick()">
+        <h2>{{icmc.inquiryReportStatusCount[3].allInquiries}}</h2>
+      </div>
+      <h4>전체 문의사항</h4>
+      <span class="text-muted">전체 문의사항 목록</span>
+    </div>
+  </div>
+</div>

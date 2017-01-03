@@ -1,0 +1,39 @@
+
+<div ng-controller="appTitleRegisterCtrl as atrc">
+  <h1>타이틀 등록</h1>
+  <div class="form-group">
+    <label for="adTitle">앱타이틀 이름</label>
+    <input type="text" class="form-control" id="adTitle" autocomplete="new-password" placeholder="광고 이름" ng-model="atrc.titleInfo.title">
+  </div>
+
+
+  <div class="form-group">
+    <label for="adHref">타이틀 클릭-리다이렉트 href 주소</label>
+    <input type="text" class="form-control" id="adHref" autocomplete="new-password" placeholder="광고 클릭-리다이렉트 href 주소" ng-model="atrc.titleInfo.href">
+  </div>
+
+
+
+  <div class="form-group">
+    <label for="adImage">타이틀 이미지 등록</label>
+    <div class="row">
+      <div class="col-md-6">
+        <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          타이틀 이미지 등록(Single SVG=360*310)<input type="file" id="eventsImageThumb" class="fileInput" fileread="atrc.titleInfo.titleImage">
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          타이틀 이미지 등록(Single PNG=540*465)<input type="file" id="eventsImageThumb" class="fileInput" accept="image/gif, image/jpeg, image/png" fileread="atrc.titleInfo.titleImage">
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <p class="marginTop50">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="line-height: 14px;" ng-click="atrc.submit()">등록</button>
+  </p>
+
+
+</div>

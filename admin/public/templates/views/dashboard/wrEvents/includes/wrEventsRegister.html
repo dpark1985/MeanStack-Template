@@ -1,0 +1,38 @@
+
+<div ng-controller="wrEventsRegisterCtrl as wrerc">
+  <h1>이벤트 등록</h1>
+
+  <div class="form-group">
+    <label for="eventTitle">이벤트 이름</label>
+    <input type="text" class="form-control" id="eventTitle" autocomplete="new-password" placeholder="이벤트 이름" ng-model="wrerc.eventInfo.title">
+  </div>
+
+  <div class="form-group">
+    <label for="eventHomePage">홈페이지</label>
+    <input type="text" class="form-control" id="eventHomePage" autocomplete="new-password" placeholder="홈페이지" ng-model="wrerc.eventInfo.href" >
+  </div>
+
+  <div class="form-group">
+    <label for="eventDesc">설명</label>
+    <div ckeditor="wrerc.options" id="eventDesc" ng-model="wrerc.eventInfo.desc" ready="wrerc.ckReady()"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="eventsImage">사진첨부</label>
+    <div class="row" id="eventsImage">
+      <div class="col-md-6">
+        <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          이벤트 이미지 등록(Single SVG=360*63)<input type="file" id="eventsImageThumb" class="fileInput" fileread="wrerc.eventInfo.imgThumbSrc">
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          이벤트 이미지 등록(Single PNG=540*94.5)<input type="file" id="eventsImageThumb" class="fileInput" accept="image/gif, image/jpeg, image/png" fileread="wrerc.eventInfo.imgThumbSrc">
+        </button>
+      </div>
+    </div>
+  </div>
+  <p class="marginTop50">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="line-height: 14px;" ng-click="wrerc.submit()">이벤트 등록</button>
+  </p>
+</div>

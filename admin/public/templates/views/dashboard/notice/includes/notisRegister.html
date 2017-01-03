@@ -1,0 +1,38 @@
+
+<div ng-controller="notisRegisterCtrl as nrc">
+  <h1>공지사항 등록</h1>
+  <div class="form-group">
+    <label for="adTitle">공지사항 제목</label>
+    <input type="text" class="form-control" id="adTitle" autocomplete="new-password" placeholder="공지사항 제목" ng-model="nrc.noteInfo.title">
+  </div>
+
+  <div class="form-group">
+    <label for="adDesc">공지사항 내용</label>
+    <input type="text" class="form-control" id="adDesc" autocomplete="new-password" placeholder="공지사항 클릭-리다이렉트 href 주소" ng-model="nrc.noteInfo.desc">
+  </div>
+
+  <div class="form-group">
+    <label for="adHref">공지사항 클릭-리다이렉트 href 주소</label>
+    <input type="text" class="form-control" id="adHref" autocomplete="new-password" placeholder="공지사항 클릭-리다이렉트 href 주소" ng-model="nrc.noteInfo.href">
+  </div>
+
+  <div class="form-group">
+    <label for="eventsImage">사진첨부</label>
+    <div class="row" id="eventsImage">
+      <div class="col-md-6">
+        <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          이벤트 이미지 등록(Single SVG=360*63)<input type="file" id="eventsImageThumb" class="fileInput" fileread="nrc.noteInfo.imgThumbSrc">
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button id="adImage" type="button" class="btn btn-primary btn-block" style="line-height: 14px;">
+          이벤트 이미지 등록(Single PNG=540*94.5)<input type="file" id="eventsImageThumb" class="fileInput" accept="image/gif, image/jpeg, image/png" fileread="nrc.noteInfo.imgThumbSrc">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p class="marginTop50">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="line-height: 14px;" ng-click="nrc.submit()">공지사항 등록</button>
+  </p>
+</div>

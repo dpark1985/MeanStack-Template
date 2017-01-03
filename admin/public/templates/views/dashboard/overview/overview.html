@@ -1,0 +1,106 @@
+<h1 class="page-header">전체요약</h1>
+
+<div class="row placeholders" ng-init="over.init()">
+  <div class="col-xs-6 col-md-2 placeholder">
+    <a class="statIndicatorBox activatedBox verticalCenter" href="/dashboard/events">
+      <h2>{{over.overViewStatusCount[0].eventsCount}}</h2>
+    </a>
+    <h4>행사</h4>
+    <span class="text-muted">Something else</span>
+  </div>
+  <div class="col-xs-6 col-md-2 placeholder">
+    <a class="statIndicatorBox activatedBox verticalCenter" href="/dashboard/ads">
+      <h2>{{over.overViewStatusCount[1].adsCount}}</h2>
+    </a>
+    <h4>광고</h4>
+    <span class="text-muted">Something else</span>
+  </div>
+  <div class="col-xs-6 col-md-2 placeholder">
+    <a class="statIndicatorBox activatedBox verticalCenter" href="/dashboard/wrEvents">
+      <h2>{{over.overViewStatusCount[2].wrEventsCount}}</h2>
+    </a>
+    <h4>이벤트</h4>
+    <span class="text-muted">Something else</span>
+  </div>
+  <div class="col-xs-6 col-md-2 placeholder">
+    <a class="statIndicatorBox activatedBox verticalCenter" href="/dashboard/notice">
+      <h2>{{over.overViewStatusCount[3].notisCount}}</h2>
+    </a>
+    <h4>공지사항</h4>
+    <span class="text-muted">Something else</span>
+  </div>
+  <div class="col-xs-6 col-md-2 placeholder">
+    <a class="statIndicatorBox verticalCenter" ng-class="{'penddingBox' : over.overViewStatusCount[4].inquiryReportCount == 0, 'rejectedBox': over.overViewStatusCount[4].inquiryReportCount > 0}" href="/dashboard/inquiries">
+      <h2>{{over.overViewStatusCount[4].inquiryReportCount}}</h2>
+    </a>
+    <h4>문의하기</h4>
+    <span class="text-muted">Something else</span>
+  </div>
+  <div class="col-xs-6 col-md-2 placeholder">
+    <a class="statIndicatorBox verticalCenter" ng-class="{'penddingBox' : over.overViewStatusCount[5].eventReportCount == 0, 'rejectedBox': over.overViewStatusCount[5].eventReportCount > 0}"  href="/dashboard/eventReports">
+      <h2>{{over.overViewStatusCount[5].eventReportCount}}</h2>
+    </a>
+    <h4>이벤트 제보</h4>
+    <span class="text-muted">Something else</span>
+  </div>
+</div>
+
+<h2 class="sub-header">애플리케이션 로그</h2>
+<div class="table-responsive" ng-init="over.init()">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date</th>
+        <th>Count</th>
+        <th>Android</th>
+        <th>IOS</th>
+        <th>Log</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="visit in over.overViewVisits  | orderBy: reverse:true track by $index | limitTo: 20">
+        <td>{{over.overViewVisits.length - $index}}</td>
+        <td>{{visit.date}}</td>
+        <td>{{visit.log.length}}</td>
+        <td>{{visit.android}}</td>
+        <td>{{visit.ios}}</td>
+        <td><button type="button" class="btn btn-primary" ng-click="over.viewLog(visit)">로그</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="logModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{over.logData.date}}</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <th class="text-center">#</th>
+            <th class="text-center">TimeStemp</th>
+            <th class="text-center">Platform</th>
+            <th class="text-center">Platform Version</th>
+            <th class="text-center">App Version</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="log in over.logData.log |  orderBy: reverse | limitTo: 20">
+              <td class="text-center">{{over.logData.log.length - $index}}</td>
+              <td class="text-center">{{log.timeStemp}}</td>
+              <td class="text-center" ng-if="log.platform">{{log.platform[2]}}</td>
+              <td class="text-center" ng-if="log.version">{{(log.version.android)? log.version.android.str : log.version.ios.str}}</td>
+              <td class="text-center" ng-if="log.appVersion">{{log.appVersion}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

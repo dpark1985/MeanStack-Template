@@ -1,0 +1,39 @@
+<div ng-controller="erMgmtCtrl as ermc">
+  <div class="row placeholders marginTop50">
+    <div class="col-xs-6 col-md-2 col-md-offset-1 placeholder">
+      <div class="statIndicatorBox verticalCenter" ng-class="[{'penddingBox': ermc.eventReportStatusCount[0].newEventsReport == 0}, {'rejectedBox': ermc.eventReportStatusCount[0].newEventsReport > 0}]" ng-click="ermc.tabActivatedClick()">
+        <h2>{{ermc.eventReportStatusCount[0].newEventsReport}}</h2>
+      </div>
+      <h4>새로운 이벤트 제보</h4>
+      <span class="text-muted">App을 통해 새로 등록된 이벤트 제보</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox verticalCenter" ng-class="[{'penddingBox': ermc.eventReportStatusCount[1].examedEventsReport == 0}, {'activatedBox': ermc.eventReportStatusCount[1].examedEventsReport > 0}]" ng-click="ermc.tabPendingClick()">
+        <h2>{{ermc.eventReportStatusCount[1].examedEventsReport}}</h2>
+      </div>
+      <h4>검토중</h4>
+      <span class="text-muted">검토중인 이벤트 제보 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="ermc.tabRejectedClick()">
+        <h2>{{ermc.eventReportStatusCount[2].registeredEventsReport}}</h2>
+      </div>
+      <h4>등록 완료</h4>
+      <span class="text-muted">등록 완료된 이벤트 제보 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="ermc.tabExpiredClick()">
+        <h2>{{ermc.eventReportStatusCount[3].rejectedEventsReport}}</h2>
+      </div>
+      <h4>등록 취소</h4>
+      <span class="text-muted">등록 취소된 이벤트 제보 목록</span>
+    </div>
+    <div class="col-xs-6 col-md-2 placeholder">
+      <div class="statIndicatorBox penddingBox verticalCenter" ng-click="ermc.tabAllEventsClick()">
+        <h2>{{ermc.eventReportStatusCount[4].allEventsReport}}</h2>
+      </div>
+      <h4>전체 이벤트 제보</h4>
+      <span class="text-muted">전체 이벤트 제보 목록</span>
+    </div>
+  </div>
+</div>

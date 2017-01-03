@@ -1,0 +1,38 @@
+
+<div ng-controller="notisListCtrl as nlc">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">등록일</th>
+        <th class="text-center">제목</th>
+        <th class="text-center">조회수</th>
+        <th class="text-center">활성화</th>
+        <th class="text-center">승인</th>
+        <th class="text-center">거절</th>
+        <th class="text-center">삭제</th>
+        <th class="text-center">자세히</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="list in nlc.allNotisList | orderBy: reverse:true track by $index">
+        <td class="text-center">{{nlc.allNotisList.length - $index}}</td>
+        <td class="text-center">{{list.registDate | date: 'yyyy-MM-dd @HH:m:s'}}</td>
+        <td>{{list.title}}</td>
+        <td class="text-center">{{list.visits}}</td>
+
+        <td class="text-center" ng-class="[{'text-success': list.isActive},{'text-danger': !list.isActive}]">{{(list.isActive)? '활성화': '비활성화'}}</td>
+
+        <td class="text-center" ng-if="!list.isRejected && !list.isExpired" ng-class="[{'text-success': list.isApproved},{'text-danger': !list.isApproved}]">{{(list.isApproved)? '승인': '미승인'}}</td>
+        <td class="text-center text-muted" ng-if="list.isRejected || list.isExpired">-</td>
+
+        <td class="text-center" ng-class="[{'text-danger': list.isRejected},{'text-success': !list.isRejected}]">{{(list.isRejected)? '거절': '-'}}</td>
+
+        <td class="text-center"><button class="btn btn-danger" ng-click="nlc.delete(list)">삭제</button></td>
+        <td class="text-center"><button class="btn btn-primary" ng-click="nlc.detail(list)">자세히</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

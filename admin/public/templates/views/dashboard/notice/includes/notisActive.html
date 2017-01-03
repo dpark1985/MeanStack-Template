@@ -1,0 +1,27 @@
+
+<div ng-controller="notisActiveListCtrl as nalc">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">등록일</th>
+        <th class="text-center">제목</th>
+        <th class="text-center">조회수</th>
+        <th class="text-center">활성화 취소</th>
+        <th class="text-center">자세히</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="list in nalc.allActiveNotisList | orderBy: reverse:true track by $index">
+        <td class="text-center">{{nalc.allActiveNotisList.length - $index}}</td>
+        <td class="text-center">{{list.registDate | date: 'yyyy-MM-dd @HH:mm:ss'}}</td>
+        <td>{{list.title}}</td>
+        <td class="text-center">{{list.visits}}</td>
+        <td class="text-center"><button class="btn btn-danger" ng-click="nalc.deActivate(list);">활성화 취소</button></td>
+        <td class="text-center"><button class="btn btn-primary" ng-click="nalc.detail(list)">자세히</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

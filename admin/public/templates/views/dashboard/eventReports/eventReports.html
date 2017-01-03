@@ -1,0 +1,91 @@
+<h1 class="page-header">이벤트 제보</h1>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist" id="eventTabs">
+  <li role="presentation" ng-repeat="tab in er.tabConfig" ng-class="{active: tab.active}"><a href="#" aria-controls="{{tab.en}}" role="tab" data-toggle="tab" ng-click="er.tabClick(tab)">{{tab.name}}</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div ng-repeat="tab in er.tabConfig" ng-if="tab.active" role="tabpanel" class="tab-pane" ng-class="{active: tab.active}" id="{{tab.en}}" ng-include="tab.templateUrl"></div>
+</div><!-- Tab Content -->
+
+<!-- 데이터 상태 변경 : 성공/실패 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="eventReportStateModal">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header" ng-class="{'bg-success': er.modalContent.state, 'bg-danger': !er.modalContent.state}">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{er.modalContent.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 col-xs-12 text-center">
+            <p>{{er.modalContent.context}}.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- 디테일 모달 / 수정기능 없음 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="detailsModalWithoutEdit">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{er.selectedItem.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row marginBottom20">
+          <div class="col-md-12">
+            <label for="userEventName">이벤트 제목</label>
+            <input type="text" class="form-control" id="userEventName" ng-model="er.selectedItem.title" ng-disabled="er.editDisabled">
+          </div>
+        </div>
+
+        <div class="row marginBottom20">
+          <div class="col-md-12">
+            <label for="userEventDesc">이벤트 설명</label>
+            <textarea type="text" class="form-control" rows="6" id="userEventDesc" ng-model="er.selectedItem.desc" ng-disabled="er.editDisabled"></textarea>
+          </div>
+        </div>
+
+        <div class="row marginBottom20">
+          <div class="col-md-4">
+            <label for="userTermsAgree"><input type="checkbox" ng-model="er.selectedItem.options.termsAgree">개인정보동의</label>
+          </div>
+          <div class="col-md-4">
+            <label for="userName">사용자 이름</label>
+            <input type="text" class="form-control" id="userName" ng-model="er.selectedItem.options.userName" ng-disabled="er.editDisabled">
+          </div>
+          <div class="col-md-4">
+            <label for="userPhone">사용자 전화번호</label>
+            <input type="text" class="form-control" id="userPhone" ng-model="er.selectedItem.options.userPhone" ng-disabled="er.editDisabled">
+          </div>
+        </div>
+
+        <div class="row marginBottom20">
+          <div class="col-md-4">
+            <img ng-src="{{er.selectedItem.img[0].src}}" class="img-thumbnail">
+          </div>
+          <div class="col-md-4">
+            <img ng-src="{{er.selectedItem.img[1].src}}" class="img-thumbnail">
+          </div>
+          <div class="col-md-4">
+            <img ng-src="{{er.selectedItem.img[2].src}}"class="img-thumbnail">
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

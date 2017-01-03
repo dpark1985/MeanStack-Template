@@ -1,0 +1,62 @@
+<div class="container index">
+
+  <div class="card card-container" ng-if="index.adminExist">
+    <img id="profile-img" class="profile-img-card" src="images/logo/logo_full_black.png" />
+    <p id="profile-name" class="profile-name-card"></p>
+    <form class="form-signin" ng-submit="index.doLogin()">
+      <span id="reauth-email" class="reauth-email"></span>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" autocomplete="new-password" value="" required autofocus ng-model="index.login.login">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" autocomplete="new-password" value="" required ng-model="index.login.password">
+      <div id="remember" class="checkbox">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+    </form><!-- /form -->
+      <a href="#" class="forgot-password">
+          Forgot the password?
+      </a>
+  </div><!-- /card-container -->
+
+  <div class="card card-container" ng-if="!index.adminExist">
+    <img id="profile-img" class="profile-img-card" src="images/logo/logo_full_black.png" />
+    <p id="profile-name" class="profile-name-card"></p>
+    <form class="form-signin" ng-submit="index.createAccount()">
+      <span id="reauth-email" class="reauth-email"></span>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus ng-model="index.admin.login">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" autocomplete="new-password" required ng-model="index.admin.password">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" autocomplete="new-password" required ng-model="index.admin.passwordc">
+      <div id="remember" class="checkbox">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Create Admin</button>
+    </form><!-- /form -->
+      <a href="#" class="forgot-password">
+          Forgot the password?
+      </a>
+  </div><!-- /card-container -->
+
+  <div class="modal fade" id="modal-warning" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header newAccountError">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">로그인 에러</h4>
+        </div>
+        <div class="modal-body">
+        	<ul>
+        		<li ng-repeat="err in index.errMsg">{{err}}</li>
+        	</ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+</div>

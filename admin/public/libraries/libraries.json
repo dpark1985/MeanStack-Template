@@ -1,0 +1,10 @@
+{
+	"angular" : "~1.5.2",
+	"angular-ui-ace" : "~0.2.3",
+	"bootstrap" : "~3.4.4",
+	"font-awsome" : "~4.7.0",
+	"jquery" : "~1.11.3",
+	"jquery-ui" : "~1.12.2",
+	"moment" : "",
+	"bootstrap-datetimepicker" : "",
+}

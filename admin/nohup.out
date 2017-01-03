@@ -1,0 +1,15 @@
+/home/ubuntu/wonjuromance/admin/node_modules/express/lib/router/index.js:458
+      throw new TypeError('Router.use() requires middleware function but got a ' + gettype(fn));
+      ^
+
+TypeError: Router.use() requires middleware function but got a Object
+    at Function.use (/home/ubuntu/wonjuromance/admin/node_modules/express/lib/router/index.js:458:13)
+    at EventEmitter.<anonymous> (/home/ubuntu/wonjuromance/admin/node_modules/express/lib/application.js:219:21)
+    at Array.forEach (native)
+    at EventEmitter.use (/home/ubuntu/wonjuromance/admin/node_modules/express/lib/application.js:216:7)
+    at Object.<anonymous> (/home/ubuntu/wonjuromance/admin/app.js:118:5)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)

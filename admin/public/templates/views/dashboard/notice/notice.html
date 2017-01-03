@@ -1,0 +1,107 @@
+<h1 class="page-header">공지사항</h1>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist" id="eventTabs">
+  <li role="presentation" ng-repeat="tab in notis.tabConfig" ng-class="{active: tab.active}"><a href="#" aria-controls="{{tab.en}}" role="tab" data-toggle="tab" ng-click="notis.tabClick(tab)">{{tab.name}}</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div ng-repeat="tab in notis.tabConfig" ng-if="tab.active" role="tabpanel" class="tab-pane" ng-class="{active: tab.active}" id="{{tab.en}}" ng-include="tab.templateUrl"></div>
+</div><!-- Tab Content -->
+
+<!-- 데이터 상태 변경 : 성공/실패 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="notiStateModal">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header" ng-class="{'bg-success': notis.modalContent.state, 'bg-danger': !notis.modalContent.state}">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{notis.modalContent.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 col-xs-12 text-center">
+            <p>{{notis.modalContent.context}}.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 디테일 모달 / 수정기능 없음 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="detailsModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button ng-if="notis.editDisabled" type="button" class="btn btn-danger editBtn" ng-click="notis.enableEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <button ng-if="!notis.editDisabled" type="button" class="btn btn-info editBtn" ng-click="notis.disableEdit()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{notis.selectedItem.title}}</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="adTitle">공지사항 제목</label>
+            <input type="text" class="form-control" id="adTitle" autocomplete="new-password" ng-value="notis.selectedItem.title" ng-disabled="notis.editDisabled">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="adDesc">공지사항 내용</label>
+            <input type="text" class="form-control" id="adDesc" autocomplete="new-password" ng-value="notis.selectedItem.desc" ng-disabled="notis.editDisabled">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="adHref">공지사항 클릭-리다이렉트 href 주소</label>
+            <input type="text" class="form-control" id="adHref" autocomplete="new-password" ng-value="notis.selectedItem.href" ng-disabled="notis.editDisabled">
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button ng-if="!notis.editDisabled" type="button" class="btn btn-danger" ng-click="notis.editData()">데이터 수정</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 디테일 모달 / 수정기능 없음 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="detailsModalWithoutEdit">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{notis.selectedItem.title}}</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="adHref">공지사항 제목</label>
+            <input type="text" class="form-control" id="adHref" autocomplete="new-password" ng-value="notis.selectedItem.href" ng-disabled="notis.editDisabled">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="adHref">공지사항 클릭-리다이렉트 href 주소</label>
+            <input type="text" class="form-control" id="adHref" autocomplete="new-password" ng-value="notis.selectedItem.href" ng-disabled="notis.editDisabled">
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

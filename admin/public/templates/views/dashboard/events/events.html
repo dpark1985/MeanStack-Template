@@ -1,0 +1,426 @@
+<h1 class="page-header">행사</h1>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist" id="eventTabs">
+  <li role="presentation" ng-repeat="tab in events.tabConfig" ng-class="{active: tab.active}"><a href="#" aria-controls="{{tab.en}}" role="tab" data-toggle="tab" ng-click="events.tabClick(tab)">{{tab.name}}</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div ng-repeat="tab in events.tabConfig" ng-if="tab.active" role="tabpanel" class="tab-pane" ng-class="{active: tab.active}" id="{{tab.en}}" ng-include="tab.templateUrl"></div>
+</div><!-- Tab Content -->
+
+<!-- 카테고리 추가/삭제 모달 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="categoryPlusModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">카테고리 추가</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h3>카테고리1</h3>
+            <select class="form-control" ng-options="main as main.title for main in events.categories[0].list" ng-model="events.categoryPlusMain"></select>
+            <h3>카테고리2</h3>
+            <ul ng-repeat="category in events.categories">
+              <li ng-if="events.categoryPlusMain.sub == category.category" ng-repeat="sub in category.list">{&#34;title&#34;: &#34;{{sub.title}}&#34;, &#34;value&#34;: &#34;{{sub.value}}}&#34;</li>
+            </ul>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="categoryPlusMain">카테고리1</label>
+              <input type="text" class="form-control" id="categoryPlusMain" autocomplete="new-password" ng-model="events.newMainCategory" placeholder="[추가]=입력 필수 [삭제]=입력 X">
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="events.addMainCategory()">추가</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeMainCategoryModal">삭제</button>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="categoryPlusSub">카테고리2</label>
+              <input type="text" class="form-control" id="categoryPlusSub" autocomplete="new-password" ng-model="events.newSubCategory" placeholder="[추가/삭제]=입력 필수">
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="events.addSubCategory()">추가</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeSubCategoryModal">삭제</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 메인 카테고리 삭제 확인 모달 -->
+<div class="modal fade" id="removeMainCategoryModal" tabindex="-1" role="dialog" aria-labelledby="removeMainCategoryModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="removeMainCategoryModalLabel">카테고리1: {{events.categoryPlusMain.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>카테고리1: <b><span class="text-danger">&#34;{{events.categoryPlusMain.title}}&#34;</span></b>를 삭제 하시겠습니까?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-danger" ng-click="events.removeMainCategory()">삭제</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 서브 카테고리 삭제 확인 모달 -->
+<div ng-if="events.newSubCategory" class="modal fade" id="removeSubCategoryModal" tabindex="-1" role="dialog" aria-labelledby="removeSubCategoryModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="removeSubCategoryModalLabel">카테고리2: {{events.newSubCategory}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>카테고리2: <b><span class="text-danger">&#34;{{events.newSubCategory}}&#34;</span></b>를 삭제 하시겠습니까?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-danger" ng-click="events.removeSubCategory()">삭제</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 데이터 상태 변경 : 성공/실패 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="eventStateModal">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header" ng-class="{'bg-danger': !events.modalContent.state, 'bg-success': events.modalContent.state}">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{events.modalContent.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 col-xs-12 text-center">
+            <p>{{events.modalContent.context}}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 디테일 모달 / 수정기능 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="detailsModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button ng-if="events.editDisabled" type="button" class="btn btn-danger editBtn" ng-click="events.enableEdit()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <button ng-if="!events.editDisabled" type="button" class="btn btn-info editBtn" ng-click="events.disableEdit()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{events.selectedItem.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row" ng-if="events.editDisabled">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="category1">카테고리1</label>
+              <input type="text" class="form-control" id="category1" ng-model="events.selectedItem.category.title" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="category2">카테고리2</label>
+              <input type="text" class="form-control" id="category2" ng-model="events.selectedItem.subCategory.title" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-if="!events.editDisabled">
+          <div class="col-md-6">
+            <label for="category1">카테고리1</label>
+            <select id="category1" class="form-control" ng-options="main as main.title for main in events.categories[0].list" ng-model="events.selectedItem.category"></select>
+          </div>
+          <div class="col-md-6">
+            <label for="category2">카테고리2</label>
+            <div ng-repeat="category in events.categories">
+              <select ng-if="events.selectedItem.category.sub == category.category" class="form-control" id="category2" ng-options="sub.title for sub in category.list" ng-model="events.selectedItem.subCategory"></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" ng-if="events.editDisabled">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="eventDate">이벤트 날짜</label>
+              <input type="text" class="form-control" id="eventDate" ng-model="events.selectedItem.eventDate.text" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-show="!events.editDisabled">
+          <div class="row" id="eventDate">
+            <div class="col-md-6 col-xs-6">
+              <label for="startDate">이벤트 시작 날짜</label>
+              <div class='input-group date' id='startDate'>
+                  <input type='text' class="form-control">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+              <label for="startDate">이벤트 종료 날짜</label>
+              <div class='input-group date' id='endDate'>
+                  <input type='text' class="form-control">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" ng-show="events.editDisabled">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="gibun">지번주소</label>
+              <input type="text" class="form-control" id="gibun" ng-model="events.selectedItem.addr.jibunAddr" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="road">도로명주소</label>
+              <input type="text" class="form-control" id="road" ng-model="events.selectedItem.addr.roadAddr" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-show="!events.editDisabled">
+          <label for="eventAddr">주소</label>
+          <div id="eventAddr">
+            <div class="row">
+              <div class="col-md-2 col-xs-3">
+                <input type='text' class="form-control" autocomplete="new-password" ng-model="events.selectedItem.addr.zipcode">
+              </div>
+              <div class="col-md-2 col-xs-3">
+                <button class="btn btn-default" ng-click="events.DaumPostcode()">우편번호 찾기</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <input type='text' class="form-control" autocomplete="new-password" ng-model="events.selectedItem.addr.jibunAddr">
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <input type='text' class="form-control" autocomplete="new-password" ng-model="events.selectedItem.addr.roadAddr">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="detailMap">지도</label>
+            <div id="detailMap" style="width:100%;height:250px;"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="hosts">주최</label>
+              <input type="text" class="form-control" id="hosts" ng-model="events.selectedItem.hosts" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="supervisions">주관</label>
+              <input type="text" class="form-control" id="supervisions" ng-model="events.selectedItem.supervisions" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="sponsors">후원</label>
+              <input type="text" class="form-control" id="sponsors" ng-model="events.selectedItem.sponsors" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="phones">전화번호</label>
+              <input type="text" class="form-control" id="phones" ng-model="events.selectedItem.phones" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="emails">이메일</label>
+              <input type="text" class="form-control" id="emails" ng-model="events.selectedItem.emails" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="desc">설명</label>
+            <textarea class="form-control" rows="6" id="desc" ng-model="events.selectedItem.desc" ng-disabled="events.editDisabled"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="homepage">홈페이지</label>
+          <input type="text" class="form-control" id="homepage" ng-model="events.selectedItem.homepage" ng-disabled="events.editDisabled">
+        </div>
+
+        <div class="form-group">
+          <label for="thumbNailImg">이미지 파일(썸네일)</label>
+          <div class="row" id="thumbNailImg">
+            <div class="col-md-3">
+              <img class="width100 img-thumbnail" ng-src="{{events.selectedItem.imgThumbSrc[0].src}}">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="seriesImg">이미지 파일(시리즈)</label>
+          <div class="row" id="seriesImg">
+            <div class="col-md-3" ng-repeat="img in events.selectedItem.imgSeriesSrc">
+              <img class="width100 img-thumbnail" ng-src="{{img.src}}">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button ng-if="!events.editDisabled" type="button" class="btn btn-danger" ng-click="events.editData()">데이터 수정</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 디테일 모달 / 수정기능 없음 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="detailsModalWithoutEdit">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{events.selectedItem.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="category1">카테고리1</label>
+              <input type="text" class="form-control" id="category1" ng-model="events.selectedItem.category.title" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="category2">카테고리2</label>
+              <input type="text" class="form-control" id="category2" ng-model="events.selectedItem.subCategory.title" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="eventDate">이벤트 날짜</label>
+              <input type="text" class="form-control" id="eventDate" ng-model="events.selectedItem.eventDate.text" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="gibun">지번주소</label>
+              <input type="text" class="form-control" id="gibun" ng-model="events.selectedItem.addr.jibunAddr" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="road">도로명주소</label>
+              <input type="text" class="form-control" id="road" ng-model="events.selectedItem.addr.roadAddr" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="detailMap">지도</label>
+            <div id="detailMap2" style="width:100%;height:250px;"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="hosts">주최</label>
+              <input type="text" class="form-control" id="hosts" ng-model="events.selectedItem.hosts" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="supervisions">주관</label>
+              <input type="text" class="form-control" id="supervisions" ng-model="events.selectedItem.supervisions" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="sponsors">후원</label>
+              <input type="text" class="form-control" id="sponsors" ng-model="events.selectedItem.sponsors" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="phones">전화번호</label>
+              <input type="text" class="form-control" id="phones" ng-model="events.selectedItem.phones" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="emails">이메일</label>
+              <input type="text" class="form-control" id="emails" ng-model="events.selectedItem.emails" ng-disabled="events.editDisabled">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="desc">설명</label>
+            <textarea class="form-control" rows="6" id="desc" ng-model="events.selectedItem.desc" ng-disabled="events.editDisabled"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="homepage">홈페이지</label>
+          <input type="text" class="form-control" id="homepage" ng-model="events.selectedItem.homepage" ng-disabled="events.editDisabled">
+        </div>
+
+        <div class="form-group">
+          <label for="thumbNailImg">이미지 파일(썸네일)</label>
+          <div class="row" id="thumbNailImg">
+            <div class="col-md-3">
+              <img class="width100 img-thumbnail" ng-src="{{events.selectedItem.imgThumbSrc[0].src}}">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="seriesImg">이미지 파일(시리즈)</label>
+          <div class="row" id="seriesImg">
+            <div class="col-md-3" ng-repeat="img in events.selectedItem.imgSeriesSrc">
+              <img class="width100 img-thumbnail" ng-src="{{img.src}}">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
