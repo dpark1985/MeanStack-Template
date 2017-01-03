@@ -13,7 +13,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/getCategory', function (req, res, next) {
-	req.db.categories.find({}, function(err, data) {
-    res.json(data);
-  });
+	req.db.categories.find({}, function (err, data) {
+		res.json(data);
+	});
 });
+
+module.exports = router;
