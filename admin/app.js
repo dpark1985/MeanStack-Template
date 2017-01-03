@@ -40,6 +40,7 @@ var app_map_api_v1            = require('./models/v1/app/app_mapView_api_v1');
 var app_menus_api_v1          = require('./models/v1/app/app_menuViews_api_v1');
 var app_wrEvents_api_v1       = require('./models/v1/app/app_wrEvents_api_v1');
 var app_push_api_v1           = require('./models/v1/app/app_push_api_v1');
+var app_category_api_v1       = require('./models/v1/app/app_category_api_v1');
 
 
 // import Database Config
@@ -114,6 +115,7 @@ app.use('/app/api/v1/map',              app_map_api_v1);
 app.use('/app/api/v1/menus',            app_menus_api_v1);
 app.use('/app/api/v1/wrEvents',         app_wrEvents_api_v1);
 app.use('/app/api/v1/push',             app_push_api_v1);
+app.use('/app/api/v1/category',         app_category_api_v1);
 
 app.use('/',                            views);
 
