@@ -75,7 +75,7 @@ router.post('/initCategories', function (req, res, next) {
 router.get('/initCategories', function (req, res, next) {
   req.db.categories.find({}, function(err, data) {
     res.json(data);
-  })
+  });
 });
 
 router.post('/addMainCategory', function (req, res, next) {
