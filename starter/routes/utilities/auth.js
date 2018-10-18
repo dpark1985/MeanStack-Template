@@ -11,7 +11,7 @@ exports.active = function(everyauth, db, crypto){
 	});
 
 	// Log out
-	everyauth.everymodule.logoutPath('/logout');
+	everyauth.everymodule.logoutPath('/logout');		// logout API uri ('/v3/auth/signout')
 	everyauth.everymodule.logoutRedirectPath('/');
 
 	// Rregistration Configuration
@@ -19,7 +19,6 @@ exports.active = function(everyauth, db, crypto){
 	auth.getRegisterPath('/register');
 	auth.postRegisterPath('/register');
 	auth.extractExtraRegistrationParams(function (req) {
-		//console.log(req);
 		return {
 			login: req.body.login,
 			password: req.body.password,
@@ -103,9 +102,9 @@ exports.active = function(everyauth, db, crypto){
 
 
 	// Login Configuration
-	auth.loginView('login');
-	auth.getLoginPath('/login');
-	auth.postLoginPath('/login');
+	auth.loginView('login');		// View Name [opt]
+	auth.getLoginPath('/login');		// View Path [opt]
+	auth.postLoginPath('/login');		// API URI
 	auth.authenticate(function (login, password){ 
 		var promise = this.Promise();
 		var errors = [];
